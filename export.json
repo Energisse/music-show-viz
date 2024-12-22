@@ -1,0 +1,413 @@
+{
+  "users": [
+    {
+      "user_id": "clement",
+      "username": "Clement Laurent",
+      "top_artists": [
+        {
+          "start": 1,
+          "end": 1,
+          "label": "4 weeks",
+          "count": 2,
+          "ranking": [
+            {
+              "name": "Artist1",
+              "link": "https://artist1-link.com",
+              "listening_duration": 3600,
+              "track_count": 20
+            },
+            {
+              "name": "Artist2",
+              "link": "https://artist2-link.com",
+              "listening_duration": 2400,
+              "track_count": 15
+            }
+          ]
+        },
+        {
+          "start": 2,
+          "end": 2,
+          "label": "6 months",
+          "count": 2,
+          "ranking": [
+            {
+              "name": "Artist1",
+              "link": "https://artist1-link.com",
+              "listening_duration": 3600,
+              "track_count": 20
+            },
+            {
+              "name": "Artist2",
+              "link": "https://artist2-link.com",
+              "listening_duration": 2400,
+              "track_count": 15
+            }
+          ]
+        }
+      ],
+      "top_genres": [
+        {
+          "start": 1,
+          "end": 1,
+          "label": "6 Months",
+          "count": 15,
+          "ranking": [
+            {
+              "name": "pop",
+              "duration": 30,
+              "percentage": 30
+            },
+            {
+              "name": "rock",
+              "duration": 25,
+              "percentage": 25
+            },
+            {
+              "name": "metal",
+              "duration": 20,
+              "percentage": 20
+            },
+            {
+              "name": "rap",
+              "duration": 15,
+              "percentage": 15
+            },
+            {
+              "name": "electro",
+              "duration": 10,
+              "percentage": 10
+            },
+            {
+              "name": "classic",
+              "duration": 0,
+              "percentage": 0
+            },
+            {
+              "name": "jazz",
+              "duration": 0,
+              "percentage": 0
+            }
+          ]
+        }
+      ],
+      "top_tracks": [
+        {
+          "start": 1,
+          "end": 1,
+          "label": "4 weeks",
+          "count": 2,
+          "ranking": [
+            {
+              "title": "jazz",
+              "genre": "",
+              "artists": [
+                {
+                  "name": "Artist name"
+                }
+              ],
+              "duration": 0,
+              "percentage": 0
+            }
+          ]
+        },
+        {
+          "start": 2,
+          "end": 2,
+          "label": "6 Months",
+          "count": 2,
+          "ranking": [
+            {
+              "title": "jazz",
+              "genre": "",
+              "artists": [
+                {
+                  "name": "Artist name"
+                }
+              ],
+              "duration": 0,
+              "percentage": 0
+            }
+          ]
+        }
+      ],
+      "average_listening_time": {
+        "dataMonth": [
+          {
+            "period": "2024-12-01",
+            "listens": 120
+          },
+          {
+            "period": "2024-12-02",
+            "listens": 135
+          },
+          {
+            "period": "2024-12-03",
+            "listens": 145
+          },
+          {
+            "period": "2024-12-04",
+            "listens": 160
+          },
+          {
+            "period": "2024-12-05",
+            "listens": 180
+          },
+          {
+            "period": "2024-12-06",
+            "listens": 200
+          },
+          {
+            "period": "2024-12-07",
+            "listens": 220
+          },
+          {
+            "period": "2024-12-08",
+            "listens": 180
+          },
+          {
+            "period": "2024-12-09",
+            "listens": 150
+          },
+          {
+            "period": "2024-12-10",
+            "listens": 170
+          },
+          {
+            "period": "2024-12-11",
+            "listens": 210
+          },
+          {
+            "period": "2024-12-12",
+            "listens": 230
+          },
+          {
+            "period": "2024-12-13",
+            "listens": 240
+          },
+          {
+            "period": "2024-12-14",
+            "listens": 200
+          },
+          {
+            "period": "2024-12-15",
+            "listens": 190
+          },
+          {
+            "period": "2024-12-16",
+            "listens": 160
+          },
+          {
+            "period": "2024-12-17",
+            "listens": 180
+          },
+          {
+            "period": "2024-12-18",
+            "listens": 210
+          },
+          {
+            "period": "2024-12-19",
+            "listens": 230
+          },
+          {
+            "period": "2024-12-20",
+            "listens": 240
+          },
+          {
+            "period": "2024-12-21",
+            "listens": 250
+          },
+          {
+            "period": "2024-12-22",
+            "listens": 260
+          },
+          {
+            "period": "2024-12-23",
+            "listens": 230
+          },
+          {
+            "period": "2024-12-24",
+            "listens": 220
+          },
+          {
+            "period": "2024-12-25",
+            "listens": 200
+          },
+          {
+            "period": "2024-12-26",
+            "listens": 210
+          },
+          {
+            "period": "2024-12-27",
+            "listens": 220
+          },
+          {
+            "period": "2024-12-28",
+            "listens": 230
+          },
+          {
+            "period": "2024-12-29",
+            "listens": 240
+          },
+          {
+            "period": "2024-12-30",
+            "listens": 250
+          },
+          {
+            "period": "2024-12-31",
+            "listens": 260
+          }
+        ],
+        "dataYear": [
+          {
+            "period": "Jan",
+            "listens": 3400
+          },
+          {
+            "period": "Feb",
+            "listens": 3200
+          },
+          {
+            "period": "Mar",
+            "listens": 4500
+          },
+          {
+            "period": "Apr",
+            "listens": 4100
+          },
+          {
+            "period": "May",
+            "listens": 4700
+          },
+          {
+            "period": "Jun",
+            "listens": 3900
+          },
+          {
+            "period": "Jul",
+            "listens": 5100
+          },
+          {
+            "period": "Aug",
+            "listens": 5300
+          },
+          {
+            "period": "Sep",
+            "listens": 4800
+          },
+          {
+            "period": "Oct",
+            "listens": 4600
+          },
+          {
+            "period": "Nov",
+            "listens": 4200
+          },
+          {
+            "period": "Dec",
+            "listens": 5000
+          }
+        ],
+        "dataDay": [
+          {
+            "period": "00:00",
+            "listens": 50
+          },
+          {
+            "period": "01:00",
+            "listens": 45
+          },
+          {
+            "period": "02:00",
+            "listens": 40
+          },
+          {
+            "period": "03:00",
+            "listens": 35
+          },
+          {
+            "period": "04:00",
+            "listens": 30
+          },
+          {
+            "period": "05:00",
+            "listens": 25
+          },
+          {
+            "period": "06:00",
+            "listens": 40
+          },
+          {
+            "period": "07:00",
+            "listens": 60
+          },
+          {
+            "period": "08:00",
+            "listens": 80
+          },
+          {
+            "period": "09:00",
+            "listens": 100
+          },
+          {
+            "period": "10:00",
+            "listens": 120
+          },
+          {
+            "period": "11:00",
+            "listens": 130
+          },
+          {
+            "period": "12:00",
+            "listens": 140
+          },
+          {
+            "period": "13:00",
+            "listens": 150
+          },
+          {
+            "period": "14:00",
+            "listens": 160
+          },
+          {
+            "period": "15:00",
+            "listens": 170
+          },
+          {
+            "period": "16:00",
+            "listens": 180
+          },
+          {
+            "period": "17:00",
+            "listens": 190
+          },
+          {
+            "period": "18:00",
+            "listens": 200
+          },
+          {
+            "period": "19:00",
+            "listens": 210
+          },
+          {
+            "period": "20:00",
+            "listens": 220
+          },
+          {
+            "period": "21:00",
+            "listens": 230
+          },
+          {
+            "period": "22:00",
+            "listens": 240
+          },
+          {
+            "period": "23:00",
+            "listens": 250
+          }
+        ]
+      }
+    }
+  ]
+}
+
+// Top 15 Clement's Genre for the last 6 months: json.users[0].top_genres[0].ranking
