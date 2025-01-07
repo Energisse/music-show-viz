@@ -1,0 +1,3345 @@
+{
+    "users": [
+        {
+            "user_id": "thomas",
+            "username": "Thomas Halvick",
+            "top_artists": [
+                {
+                    "start": "2024-11-22",
+                    "end": "2024-12-22",
+                    "label": "4 weeks",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Artist": "2TH",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Plvtinum",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "One Hope",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "OneRepublic",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Orelsan",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "PLAZA",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "PLK",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Paper Idol",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Petit Voyou",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pigeon John",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Reed Wonder",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Nuit Incolore",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Release",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Robert Grace",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Ron Solemn",
+                            "Listening Time": 0
+                        }
+                    ]
+                },
+                {
+                    "start": "2024-09-22",
+                    "end": "2024-12-22",
+                    "label": "3 months",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Artist": " Chri$tian Gate$",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pusher",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pink Elefants",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "PlayaPhonk",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Plvtinum",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Point North",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pompis",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Poo Bear",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Post Malone",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Prismo",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Proximity",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Psylosia",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pxrselow",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pierre de Maere",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "RAIZHELL",
+                            "Listening Time": 0
+                        }
+                    ]
+                },
+                {
+                    "start": "2024-06-22",
+                    "end": "2024-12-22",
+                    "label": "6 months",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Artist": " BENNETT",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pompis",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Prismo",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Princesse",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Poylow",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Powfu",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Poupie",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Post Malone",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Portugal. The Man",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Poo Bear",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pony Pony Run Run",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Ponko",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Point North",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Proximity",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Plvtinum",
+                            "Listening Time": 0
+                        }
+                    ]
+                },
+                {
+                    "start": "2023-11-22",
+                    "end": "2024-12-22",
+                    "label": "1 year",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Artist": " BENNETT",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Petr Kotvald",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Philippine",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Phoneboy",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "PiCKUPLiNES",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "PiNKII",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Picture Anime",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pidi",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pierre Garnier",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pierre Hugues José",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pierre de Maere",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "PierreGarnierVEVO",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pigeon John",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pink Elefants",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pink Fantasy",
+                            "Listening Time": 0
+                        }
+                    ]
+                },
+                {
+                    "start": "2002-01-01",
+                    "end": "2024-12-22",
+                    "label": "all time",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Artist": " BENNETT",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Petr Kotvald",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Philippine",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Phoneboy",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "PiCKUPLiNES",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "PiNKII",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Picture Anime",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pidi",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pierre Garnier",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pierre Hugues José",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pierre de Maere",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "PierreGarnierVEVO",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pigeon John",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pink Elefants",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Artist": "Pink Fantasy",
+                            "Listening Time": 0
+                        }
+                    ]
+                }
+            ],
+            "top_genres": [
+                {
+                    "start": "2024-11-22",
+                    "end": "2024-12-22",
+                    "label": "4 weeks",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Tags": "10s",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Survival",
+                                    "Artist": "Eminem",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "indie rock",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Bury Me Face Down",
+                                    "Artist": "grandson",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "I Feel Like I'm Drowning",
+                                    "Artist": "Two Feet",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Stronger",
+                                    "Artist": "The Score",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "indietronica",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Ordinaryish People",
+                                    "Artist": "AJR",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "interesting music to consider",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Red Run Cold",
+                                    "Artist": "World's First Cinema",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jewel is hot",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Friends",
+                                    "Artist": "Chase Atlantic",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jey owns this song",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "dying on the inside",
+                                    "Artist": "Nessa Barrett",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jungkook",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Never Let Go",
+                                    "Artist": "Jung Kook",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "k-pop",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "GOT THE THRILLS",
+                                    "Artist": "TWICE",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Smart",
+                                    "Artist": "LE SSERAFIM",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "older",
+                                    "Artist": "Isabel LaRosa",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "kc",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Church",
+                                    "Artist": "Chase Atlantic",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "kesha",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Drop Dead (with Kesha and Travis Barker)",
+                                    "Artist": "grandson",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "kivxqs favorite",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "DIE FOR ME",
+                                    "Artist": "Chase Atlantic",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "la la la",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "La La La",
+                                    "Artist": "AREA21",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "laia's song",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "STUCKINMYBRAIN",
+                                    "Artist": "Chase Atlantic",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "latin",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Señorita",
+                                    "Artist": "Shawn Mendes",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "latin pop",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Señorita",
+                                    "Artist": "Shawn Mendes",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "start": "2024-09-22",
+                    "end": "2024-12-22",
+                    "label": "3 months",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Tags": "-1001333387036",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Nails",
+                                    "Artist": "Call Me Karizma",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "justin bieber",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Confident",
+                                    "Artist": "Justin Bieber",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Hard 2 Face Reality",
+                                    "Artist": "Poo Bear",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "japanese",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Crystal Snow",
+                                    "Artist": "BTS",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jasiah",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "KULT (feat. Jasiah)",
+                                    "Artist": "Steve Aoki",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jewel is hot",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Friends",
+                                    "Artist": "Chase Atlantic",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jey owns this song",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "dying on the inside",
+                                    "Artist": "Nessa Barrett",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jimin",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Like Crazy",
+                                    "Artist": "Jimin",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Who",
+                                    "Artist": "Lauv",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jk",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Somebody",
+                                    "Artist": "Jung Kook",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jungkook",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Never Let Go",
+                                    "Artist": "Jung Kook",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Who",
+                                    "Artist": "Lauv",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "k pop",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Yes or No",
+                                    "Artist": "Jung Kook",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "italian",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "SUPERMODEL",
+                                    "Artist": "Måneskin",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "k-pop",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Agust D",
+                                    "Artist": "SUGA",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Attention",
+                                    "Artist": "NewJeans",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "older",
+                                    "Artist": "Isabel LaRosa",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "You Never Know",
+                                    "Artist": "BLACKPINK",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "VILLAIN",
+                                    "Artist": "K/DA",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "katy perry",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "E.T.",
+                                    "Artist": "Katy Perry",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "I Kissed A Girl",
+                                    "Artist": "Katy Perry",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "kc",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Church",
+                                    "Artist": "Chase Atlantic",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "kesha",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Drop Dead (with Kesha and Travis Barker)",
+                                    "Artist": "grandson",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "start": "2024-06-22",
+                    "end": "2024-12-22",
+                    "label": "6 months",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Tags": "#1",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Si No Estás",
+                                    "Artist": "iñigo quintero",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jk",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Somebody",
+                                    "Artist": "Jung Kook",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "k pop",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Yes or No",
+                                    "Artist": "Jung Kook",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "justin bieber",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "As Long As You Love Me",
+                                    "Artist": "Justin Bieber",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Confident",
+                                    "Artist": "Justin Bieber",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Hard 2 Face Reality",
+                                    "Artist": "Poo Bear",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Intentions",
+                                    "Artist": "Justin Bieber",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Let Me Love You",
+                                    "Artist": "DJ Snake",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jungle",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Call on Me (Ryan Riback Remix)",
+                                    "Artist": "Starley",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jungkook",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "My Time",
+                                    "Artist": "BTS",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Never Let Go",
+                                    "Artist": "Jung Kook",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Who",
+                                    "Artist": "Lauv",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jumpstyle",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Stamp On The Ground",
+                                    "Artist": "ItaloBrothers",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "joyful",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Tout le bonheur du monde",
+                                    "Artist": "Sinsemilia",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jimin",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Like Crazy",
+                                    "Artist": "Jimin",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Who",
+                                    "Artist": "Lauv",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jasmine thompson",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Ain't Nobody (Loves Me Better)",
+                                    "Artist": "Felix Jaehn",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jey owns this song",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "dying on the inside",
+                                    "Artist": "Nessa Barrett",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jewel is hot",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Friends",
+                                    "Artist": "Chase Atlantic",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jessie j",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Price Tag",
+                                    "Artist": "Jessie J",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jersey club",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Bling-Bang-Bang-Born",
+                                    "Artist": "Creepy Nuts",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jeon jungkook",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "My Time",
+                                    "Artist": "BTS",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "start": "2023-11-22",
+                    "end": "2024-12-22",
+                    "label": "1 year",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Tags": " pop",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "마지막처럼 (As If It's Your Last)",
+                                    "Artist": "BLACKPINK",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "humour",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Fous ta cagoule",
+                                    "Artist": "Fatal Bazooka",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "J'aime trop ton boule",
+                                    "Artist": "Fatal Bazooka",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jungkook",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "My Time",
+                                    "Artist": "BTS",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Never Let Go",
+                                    "Artist": "Jung Kook",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Who",
+                                    "Artist": "Lauv",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jumpstyle",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Stamp On The Ground",
+                                    "Artist": "ItaloBrothers",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Stamp on the Ground (Radio Edit)",
+                                    "Artist": "ItaloBrothers",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "joyful",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Tout le bonheur du monde",
+                                    "Artist": "Sinsemilia",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jon bellion",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Beautiful Now",
+                                    "Artist": "Zedd",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jk",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Somebody",
+                                    "Artist": "Jung Kook",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jimin",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Like Crazy",
+                                    "Artist": "Jimin",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Who",
+                                    "Artist": "Lauv",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jhope",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "j-hope 'Chicken Noodle Soup (feat. Becky G)' MV",
+                                    "Artist": "HYBE LABELS",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jey owns this song",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "dying on the inside",
+                                    "Artist": "Nessa Barrett",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jewel is hot",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Friends",
+                                    "Artist": "Chase Atlantic",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jessie j",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Price Tag",
+                                    "Artist": "Jessie J",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jersey club",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Bling-Bang-Bang-Born",
+                                    "Artist": "Creepy Nuts",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "HYPNOTIC DATA",
+                                    "Artist": "Odetari",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jeon jungkook",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "My Time",
+                                    "Artist": "BTS",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jennie",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "SPOT! (feat. JENNIE)",
+                                    "Artist": "ZICO",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "start": "2002-01-01",
+                    "end": "2024-12-22",
+                    "label": "all time",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Tags": " pop",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "마지막처럼 (As If It's Your Last)",
+                                    "Artist": "BLACKPINK",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "humour",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Fous ta cagoule",
+                                    "Artist": "Fatal Bazooka",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "J'aime trop ton boule",
+                                    "Artist": "Fatal Bazooka",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jungkook",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "My Time",
+                                    "Artist": "BTS",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Never Let Go",
+                                    "Artist": "Jung Kook",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Who",
+                                    "Artist": "Lauv",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jumpstyle",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Stamp On The Ground",
+                                    "Artist": "ItaloBrothers",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Stamp on the Ground (Radio Edit)",
+                                    "Artist": "ItaloBrothers",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "joyful",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Tout le bonheur du monde",
+                                    "Artist": "Sinsemilia",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jon bellion",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Beautiful Now",
+                                    "Artist": "Zedd",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jk",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Somebody",
+                                    "Artist": "Jung Kook",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jimin",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Like Crazy",
+                                    "Artist": "Jimin",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "Who",
+                                    "Artist": "Lauv",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jhope",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "j-hope 'Chicken Noodle Soup (feat. Becky G)' MV",
+                                    "Artist": "HYBE LABELS",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jey owns this song",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "dying on the inside",
+                                    "Artist": "Nessa Barrett",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jewel is hot",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Friends",
+                                    "Artist": "Chase Atlantic",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jessie j",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Price Tag",
+                                    "Artist": "Jessie J",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jersey club",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "Bling-Bang-Bang-Born",
+                                    "Artist": "Creepy Nuts",
+                                    "Listening Time": 0
+                                },
+                                {
+                                    "Song Title": "HYPNOTIC DATA",
+                                    "Artist": "Odetari",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jeon jungkook",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "My Time",
+                                    "Artist": "BTS",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        },
+                        {
+                            "Tags": "jennie",
+                            "Listening Time": 0,
+                            "list": [
+                                {
+                                    "Song Title": "SPOT! (feat. JENNIE)",
+                                    "Artist": "ZICO",
+                                    "Listening Time": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "top_tracks": [
+                {
+                    "start": "2024-11-22",
+                    "end": "2024-12-22",
+                    "label": "4 weeks",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Song Title": "#METOO",
+                            "Artist": "Vin's",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "RISE",
+                            "Artist": "League of Legends",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Robot",
+                            "Artist": "Confetti",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Rob A Bank (The FifthGuys Remix)",
+                            "Artist": "Confetti",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Rob A Bank",
+                            "Artist": "Confetti",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Riot!",
+                            "Artist": "Arrested Youth",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Right Now",
+                            "Artist": "Confetti",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Rescue Me",
+                            "Artist": "OneRepublic",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Reine des enfers",
+                            "Artist": "Yuzmv",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Red Run Cold",
+                            "Artist": "World's First Cinema",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "RUSH",
+                            "Artist": "Dutch Melrose",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "RULES",
+                            "Artist": "AViVA",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "RUDE",
+                            "Artist": "Confetti",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "RICOCHET",
+                            "Artist": "Chase Atlantic",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Rush",
+                            "Artist": "Confetti",
+                            "Listening Time": 0
+                        }
+                    ]
+                },
+                {
+                    "start": "2024-09-22",
+                    "end": "2024-12-22",
+                    "label": "3 months",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Song Title": "\"Where Are Ü Now?\" (Lyrics) - Chase Atlantic cover",
+                            "Artist": "JKO",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Remember the Name (feat. Styles of Beyond)",
+                            "Artist": "Fort Minor",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "RULES",
+                            "Artist": "AViVA",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "RUNRUNRUN",
+                            "Artist": "Dutch Melrose",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "RUSH",
+                            "Artist": "Dutch Melrose",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "RUSH - Sped Up Version",
+                            "Artist": "Dutch Melrose",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Raging on a Sunday",
+                            "Artist": "Bohnes",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Rappeler son ...",
+                            "Artist": "Fredz",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Ready to Kill",
+                            "Artist": "NEFFEX",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Rechute",
+                            "Artist": "Vald",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Red Run Cold",
+                            "Artist": "World's First Cinema",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Reed Wonder, Aurora Olivas - The Machine (Lyrics)",
+                            "Artist": "Taj Tracks",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Reel Me In",
+                            "Artist": "AVIVAA",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Regarde-moi",
+                            "Artist": "Lisa Pariente",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Regarde-moi",
+                            "Artist": "Moji x Sboy",
+                            "Listening Time": 0
+                        }
+                    ]
+                },
+                {
+                    "start": "2024-06-22",
+                    "end": "2024-12-22",
+                    "label": "6 months",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Song Title": "!I'll Be Back!",
+                            "Artist": "Rilès",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Problems (Remix)",
+                            "Artist": "DeathbyRomy",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Putain Klem",
+                            "Artist": "Klem Schen",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Put Me Under",
+                            "Artist": "grandson",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Put It on Me",
+                            "Artist": "Matt Maeson",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Push Your Love",
+                            "Artist": "FIFTY FIFTY",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Pumped Up Kicks",
+                            "Artist": "Foster the People",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Pump It",
+                            "Artist": "Black Eyed Peas",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Pull the Plug",
+                            "Artist": "VOILÀ",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Puis t'as dansé avec moi",
+                            "Artist": "Hoshi",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Psycho",
+                            "Artist": "Mia Rodriguez",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Prête-moi ta meuf",
+                            "Artist": "Max Boublil",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Prosecco",
+                            "Artist": "Petit Voyou",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Promets-moi",
+                            "Artist": "VITAA",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Promets-moi",
+                            "Artist": "Impar",
+                            "Listening Time": 0
+                        }
+                    ]
+                },
+                {
+                    "start": "2023-11-22",
+                    "end": "2024-12-22",
+                    "label": "1 year",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Song Title": "!",
+                            "Artist": "AVOKID (에이보키드)",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Personne",
+                            "Artist": "47Ter",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus jamais",
+                            "Artist": "GS",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus haut (Radio Edit)",
+                            "Artist": "Claudio Capéo",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus haut",
+                            "Artist": "Claudio Capéo",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus de sens",
+                            "Artist": "Angèle",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus de raison",
+                            "Artist": "Symon",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus de place pour ta peine",
+                            "Artist": "Eloïz",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus de larmes",
+                            "Artist": "Lomepal",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plume filante",
+                            "Artist": "Nuit Incolore",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plume",
+                            "Artist": "Ridsa",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plume",
+                            "Artist": "Nekfeu",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plume",
+                            "Artist": "Fredz",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Pluie",
+                            "Artist": "IZAID",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Pleurs du soir",
+                            "Artist": "Nuit Incolore",
+                            "Listening Time": 0
+                        }
+                    ]
+                },
+                {
+                    "start": "2002-01-01",
+                    "end": "2024-12-22",
+                    "label": "all time",
+                    "count": 15,
+                    "ranking": [
+                        {
+                            "Song Title": "!",
+                            "Artist": "AVOKID (에이보키드)",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Personne",
+                            "Artist": "47Ter",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus jamais",
+                            "Artist": "GS",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus haut (Radio Edit)",
+                            "Artist": "Claudio Capéo",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus haut",
+                            "Artist": "Claudio Capéo",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus de sens",
+                            "Artist": "Angèle",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus de raison",
+                            "Artist": "Symon",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus de place pour ta peine",
+                            "Artist": "Eloïz",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plus de larmes",
+                            "Artist": "Lomepal",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plume filante",
+                            "Artist": "Nuit Incolore",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plume",
+                            "Artist": "Ridsa",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plume",
+                            "Artist": "Nekfeu",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Plume",
+                            "Artist": "Fredz",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Pluie",
+                            "Artist": "IZAID",
+                            "Listening Time": 0
+                        },
+                        {
+                            "Song Title": "Pleurs du soir",
+                            "Artist": "Nuit Incolore",
+                            "Listening Time": 0
+                        }
+                    ]
+                }
+            ],
+            "average_listening_time": {
+                "dataMonth": [
+                    {
+                        "period": "2024-12-04",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-12-03",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-12-02",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-12-01",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-30",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-29",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-28",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-27",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-26",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-25",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-24",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-23",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-22",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-21",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-20",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-19",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-18",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-17",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-16",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-15",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-14",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-13",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-12",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-11",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-10",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-09",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-08",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-07",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-06",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-05",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-04",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-03",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-02",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11-01",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-31",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-30",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-29",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-28",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-27",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-26",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-25",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-24",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-23",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-22",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-21",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-20",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-19",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-18",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-17",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-16",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-15",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-14",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-13",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-12",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-11",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-10",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-09",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-08",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-07",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-06",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-05",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-04",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-03",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-02",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10-01",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-30",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-29",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-28",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-27",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-26",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-25",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-24",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-23",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-22",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-21",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-20",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-19",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-18",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-17",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-16",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-15",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-14",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-13",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-12",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-11",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-10",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-09",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-08",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-07",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-06",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-05",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-04",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-03",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-02",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09-01",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-31",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-30",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-29",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-28",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-27",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-26",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-25",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-24",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-23",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-22",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-21",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-20",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-19",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-18",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-17",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-16",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-15",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-14",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-13",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-12",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-11",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-10",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-09",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-08",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-07",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-06",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-05",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-04",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-03",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-02",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08-01",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-31",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-30",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-29",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-28",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-27",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-26",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-25",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-24",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-23",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-22",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-21",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-20",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-19",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-18",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-17",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-16",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-15",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-14",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-13",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-12",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-11",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-10",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-09",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-08",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-07",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-06",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-05",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-04",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-03",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-02",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07-01",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-30",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-29",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-28",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-27",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-26",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-25",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-24",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-23",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-22",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-21",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-20",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-19",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-18",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-17",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-16",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-15",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-14",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-13",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-12",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-11",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-10",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-09",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-08",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-07",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-06",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-05",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-04",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-03",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-02",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06-01",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-31",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-30",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-29",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-28",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-27",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-26",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-25",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-24",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-23",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-22",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-21",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-20",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-19",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-18",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-17",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-16",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-15",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-14",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-13",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-12",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-11",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-10",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-09",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-08",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-07",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-06",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-05",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-04",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-03",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-02",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05-01",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-30",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-29",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-28",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-27",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-26",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-25",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-24",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-23",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-22",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-21",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-20",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-19",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-18",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-17",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-16",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-15",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-14",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-13",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-12",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-11",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-10",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-09",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-08",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-07",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-06",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-05",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-04",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-03",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-02",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04-01",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-31",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-30",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-29",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-28",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-27",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-26",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-25",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-24",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-23",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-22",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-21",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-20",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-19",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-18",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-17",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-16",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-15",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-14",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-13",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-12",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-11",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-10",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-09",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-08",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-07",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-06",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-05",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-04",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-03",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-02",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03-01",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-29",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-28",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-27",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-26",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-25",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-24",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-23",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-22",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-21",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-20",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-19",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-18",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-17",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-16",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-15",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-14",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-13",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-12",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-11",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-10",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-09",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-08",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-07",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-06",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-05",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-04",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-03",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-02",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02-01",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-31",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-30",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-29",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-28",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-27",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-26",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-25",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-24",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-23",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-22",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-21",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-20",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-19",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-18",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-17",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-16",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-15",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-14",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-13",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-12",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-11",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-10",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-09",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-08",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-07",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-06",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-05",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-04",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-03",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-02",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01-01",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2023-12-31",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2023-12-30",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2023-12-29",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2023-12-28",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2023-12-27",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2023-12-26",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2023-12-25",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2023-12-24",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2023-12-23",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2023-12-22",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2023-12-21",
+                        "listens": 0
+                    }
+                ],
+                "dataYear": [
+                    {
+                        "period": "2023-12",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-01",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-02",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-03",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-04",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-05",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-06",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-07",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-08",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-09",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-10",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-11",
+                        "listens": 0
+                    },
+                    {
+                        "period": "2024-12",
+                        "listens": 0
+                    }
+                ],
+                "dataDay": [
+                    {
+                        "period": 0,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 1,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 2,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 3,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 4,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 5,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 6,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 7,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 8,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 9,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 10,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 11,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 12,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 13,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 14,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 15,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 16,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 17,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 18,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 19,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 20,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 21,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 22,
+                        "listens": 0.0
+                    },
+                    {
+                        "period": 23,
+                        "listens": 0.0
+                    }
+                ]
+            }
+        }
+    ]
+}
