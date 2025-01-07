@@ -11,7 +11,7 @@ def fetch_tags(title, artist):
     :param title:
     :param artist:
     """
-    api_key = "e27dd1592fbede0ff3a29b940b5d1935"  # Replace with your Last.fm API key
+    api_key = ""  # Replace with your Last.fm API key
     url = "http://ws.audioscrobbler.com/2.0/"
     params = {
         "method": "track.getInfo",
