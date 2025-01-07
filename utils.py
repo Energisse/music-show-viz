@@ -32,7 +32,7 @@ def fetch_tags(title, artist):
         return [f"Error: {e}"]
 
 
-def export_music_data_to_json(input_filename, output_filename):
+def export_music_data_to_json(input_filename, output_filename, user_id, username):
     """
     Function to process music data csv file and save it to a JSON file
     :param input_filename:
@@ -41,14 +41,15 @@ def export_music_data_to_json(input_filename, output_filename):
 
     # Read CSV file
     df = pd.read_csv(input_filename)
-    df['Date'] = pd.to_datetime(df['Date'])
+    df['Date'] = pd.to_datetime(df['Date'], format="mixed", utc=True)
+    df['Date'] = df['Date'].dt.tz_localize(None)
     df["Tags"] = df["Tags"].apply(ast.literal_eval)
 
     json_data = {
         "users": [
             {
-                "user_id": "clement",
-                "username": "Clément Laurent",
+                "user_id": user_id,
+                "username": username,
                 "top_artists": [],
                 "top_genres": [],
                 "top_tracks": [],
@@ -147,7 +148,7 @@ def export_music_data_to_json(input_filename, output_filename):
             )
 
             # Add the tracks to the genre's list
-            genre_list = df_genre_top_tracks[['Song Title', 'Listening Time']].to_dict(orient="records")
+            genre_list = df_genre_top_tracks[['Song Title', 'Artist', 'Listening Time']].to_dict(orient="records")
 
             # Append genre object with the "list" field
             top_genres_ranking.append({
@@ -176,25 +177,52 @@ def export_music_data_to_json(input_filename, output_filename):
         }
         json_data['users'][0]["top_tracks"].append(obj_top_tracks_lt)
 
-    # Calculate daily listening time and prepare the output
-    daily_listening_time = df.groupby(df['Date'].dt.date)['Listening Time'].sum().reset_index()
-    daily_listening_time = daily_listening_time.rename(columns={
-        "Date": "period",
-        "Listening Time": "listens"
-    }).sort_values("period", ascending=False)
+    # Process listening time data
+    df_daily = df.copy()
+    df_daily['Date'] = pd.to_datetime(df_daily['Date']).dt.date
 
-    daily_listening_time['period'] = daily_listening_time['period'].astype(str)
+    # Calculate daily listening time and prepare the output
+
+    daily_listening_time = (
+        df_daily.groupby('Date', as_index=False)['Listening Time']
+        .sum()
+        .sort_values('Date', ascending=False)
+    )
+
+    # Generate the full range of dates
+    min_date = daily_listening_time['Date'].min()
+    max_date = daily_listening_time['Date'].max()
+    date_range = pd.date_range(start=min_date, end=max_date).date  # Create a list of all dates
+
+    # Reindex to include all dates and fill missing values with 0
+    daily_listening_time = daily_listening_time.set_index('Date')
+    daily_listening_time = daily_listening_time.reindex(date_range, fill_value=0)
+    daily_listening_time.index.name = 'Date'  # Set index name back to 'Date'
+
+    # Reset the index and return to a flat structure
+    daily_listening_time = daily_listening_time.reset_index()
+
+    # Sort the DataFrame in descending order by date
+    daily_listening_time = daily_listening_time.rename(columns={"index": "Date"}).sort_values('Date', ascending=False)
+    daily_listening_time['Date'] = daily_listening_time['Date'].astype(str)
+
+    daily_listening_time.rename(columns={"Date": "period", "Listening Time": "listens"}, inplace=True)
+
     json_data['users'][0]["average_listening_time"]["dataMonth"] = daily_listening_time.to_dict(orient="records")
 
     # Calculate average monthly sums
     average_monthly_sums = df.groupby(df['Date'].dt.to_period('M'))['Listening Time'].sum().reset_index()
     average_monthly_sums['Date'] = average_monthly_sums['Date'].astype(str)
+    average_monthly_sums = average_monthly_sums.rename(columns={
+    "Date": "period",
+    "Listening Time": "listens"
+    })
     json_data['users'][0]["average_listening_time"]["dataYear"] = average_monthly_sums.to_dict(orient="records")
 
     # Calculate hourly sums
     hourly_sums = df.groupby(df['Date'].dt.hour)['Listening Time'].mean().reset_index()
     hourly_sums = hourly_sums[["Date", "Listening Time"]].rename(
-        columns={"Date": "Hour", "Listening Time": "Average Listening Time"})
+        columns={"Date": "period", "Listening Time": "listens"})
     json_data['users'][0]["average_listening_time"]["dataDay"] = hourly_sums.to_dict(orient="records")
 
     # Serializing json
