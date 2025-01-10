@@ -17,7 +17,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 export const colors = {
   clement: orange[800],
   celine: blue[800],
-  mathieu: purple[800],
+  matthieu: purple[800],
   thomas: green[800],
 };
 
@@ -73,8 +73,8 @@ function App() {
                         Création des graphiques en barres avec un axe vertical
                       </li>
                       <li>
-                        <span style={{ color: colors.mathieu }}>Mathieu</span>:
-                        Formatage et traitement des données collectées
+                        <span style={{ color: colors.matthieu }}>Matthieu</span>
+                        : Formatage et traitement des données collectées
                       </li>
                       <li>
                         <span style={{ color: colors.thomas }}>Thomas</span>:
@@ -103,8 +103,8 @@ function App() {
                         Spotify
                       </li>
                       <li>
-                        <span style={{ color: colors.mathieu }}>Mathieu</span>:
-                        Spotify
+                        <span style={{ color: colors.matthieu }}>Matthieu</span>
+                        : Spotify
                       </li>
                       <li>
                         <span style={{ color: colors.thomas }}>Thomas</span>:
@@ -154,6 +154,19 @@ function App() {
                           verticalAlign: "top",
                         }}
                       />
+                    </a>
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion>
+                <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
+                  <Typography variant="h4">Hébergement</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    Ce site est hébergé sur{" "}
+                    <a href="https://energisse.github.io/music-show-viz/">
+                      GitHub Pages
                     </a>
                   </Typography>
                 </AccordionDetails>
