@@ -1,46 +1,39 @@
 import { Grid2, Typography } from "@mui/material";
-import { useEffect, createRef, useMemo, useRef } from "react";
+import { useEffect, createRef, useMemo, useState } from "react";
 import * as d3 from "d3";
 import data from "./assets/data.json";
 import { colors } from "./App";
-import { ControlContextType, useControl } from "./controlContext";
+import {
+  FormBulleRadarContextType,
+  useFormBulleRadar,
+} from "./FormBulleRadarContext";
+import { useSelectedUsers } from "./selectedUsersControl";
 
 export default function Radar() {
   const container = createRef<HTMLDivElement>();
 
-  const svgRef = useRef<d3.Selection<
-    SVGSVGElement,
-    unknown,
-    null,
-    undefined
-  > | null>(null);
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
-  const {
-    selectedUsers: selectedUsersRaw,
-    top: topN,
-    period,
-    order,
-  } = useControl();
+  const { top: topN, period, order } = useFormBulleRadar();
+
+  const selectedUsersRaw = useSelectedUsers();
 
   const selectedUsers = useMemo(() => {
-    const users = Object.entries(selectedUsersRaw)
-      .filter(([, v]) => v)
-      .map(([k]) => k);
-
-    const index = users.findIndex((u) => u === order);
+    const index = selectedUsersRaw.findIndex((u) => u === order);
     if (index) {
       // Mettre l'utilisateur sélectionné en premier
-      return [...users.splice(index, 1), ...users];
+      return [...selectedUsersRaw.splice(index, 1), ...selectedUsersRaw];
     }
-    return users;
+    return selectedUsersRaw;
   }, [selectedUsersRaw, order]);
 
   const allAxes = useMemo(() => {
     // Fonction pour récupérer les Top N genres d'un utilisateur
     function getTopGenres(
       userData: (typeof data)["users"][number],
-      period: ControlContextType["period"],
-      topN: ControlContextType["top"]
+      period: FormBulleRadarContextType["period"],
+      topN: FormBulleRadarContextType["top"]
     ) {
       // Trouver la période correspondant à "period"
       const selectedPeriod = userData.top_genres.find(
@@ -90,9 +83,8 @@ export default function Radar() {
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const { width, height } = entry.contentRect;
-
-        svgRef.current?.attr("width", width.toString());
-        svgRef.current?.attr("height", height.toString());
+        setWidth(width);
+        setHeight(height);
       }
     });
 
@@ -104,17 +96,15 @@ export default function Radar() {
 
     //clear the chart
     d3.select(container.current).select(".chart").selectAll("*").remove();
-    const width = container.current!.clientWidth;
-    const height = container.current!.clientHeight;
 
-    svgRef.current = d3
+    const svg = d3
       .select(container.current)
       .select(".chart")
       .append("svg")
       .attr("width", width)
       .attr("height", height);
 
-    const zoomGroup = svgRef.current.append("g").attr("class", "zoom-group");
+    const zoomGroup = svg.append("g").attr("class", "zoom-group");
 
     const radius = Math.min(width, height) / 2 - margin;
     const centerX = width / 2;
@@ -123,8 +113,7 @@ export default function Radar() {
     const scale = d3.scaleLinear().domain([0, 100]).range([0, radius]);
 
     const tooltip = d3
-      .select(container.current)
-      .select(".chart")
+      .select("body")
       .append("div")
       .style("position", "absolute")
       .style("background", "#fff")
@@ -139,9 +128,7 @@ export default function Radar() {
     const pointsGroup = zoomGroup.append("g").attr("class", "points-group");
 
     // Créer un groupe pour les étiquettes des axes en dehors du groupe zoomable
-    const axisLabelsGroup = svgRef.current
-      .append("g")
-      .attr("class", "axis-labels-group");
+    const axisLabelsGroup = svg.append("g").attr("class", "axis-labels-group");
 
     // calculer les genres (axes) à afficher
     const angleSlice = (2 * Math.PI) / allAxes.length;
@@ -232,22 +219,8 @@ export default function Radar() {
         })
         .on("mousemove", (event) => {
           tooltip
-            .style(
-              "top",
-              `${
-                event.pageY -
-                container.current!.getBoundingClientRect().top -
-                20
-              }px`
-            )
-            .style(
-              "left",
-              `${
-                event.pageX -
-                container.current!.getBoundingClientRect().left +
-                10
-              }px`
-            );
+            .style("top", `${event.pageY - 20}px`)
+            .style("left", `${event.pageX + 10}px`);
         })
         .on("mouseout", function () {
           d3.select(this).style("opacity", 0.5).style("stroke-width", "1px");
@@ -301,22 +274,8 @@ export default function Radar() {
           })
           .on("mousemove", (event) => {
             tooltip
-              .style(
-                "top",
-                `${
-                  event.pageY -
-                  container.current!.getBoundingClientRect().top -
-                  20
-                }px`
-              )
-              .style(
-                "left",
-                `${
-                  event.pageX -
-                  container.current!.getBoundingClientRect().left +
-                  10
-                }px`
-              );
+              .style("top", `${event.pageY - 20}px`)
+              .style("left", `${event.pageX + 10}px`);
           })
           .on("mouseout", function () {
             tooltip.style("visibility", "hidden");
@@ -424,7 +383,7 @@ export default function Radar() {
           .current!.selectAll(".zoom-group")
           .attr("transform", event.transform);
         const zoomScale = event.transform.k;
-        svgRef.current!.selectAll(".points-group circle").attr("r", (d) => {
+        svg!.selectAll(".points-group circle").attr("r", (d) => {
           if (zoomScale === 1) {
             return 4;
           } else if (zoomScale > 1 && zoomScale < 1.5) {
@@ -440,7 +399,7 @@ export default function Radar() {
         });
       });
 
-    svgRef.current.call(zoom);
+    svg.call(zoom);
   }, [selectedUsers, period, topN, container, allAxes]);
 
   return (

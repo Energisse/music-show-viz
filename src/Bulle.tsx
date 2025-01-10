@@ -1,37 +1,27 @@
 import { Grid2, Typography } from "@mui/material";
-import { useEffect, createRef, useMemo, useRef } from "react";
+import { useEffect, createRef, useMemo, useState } from "react";
 import * as d3 from "d3";
 import data from "./assets/data.json";
 import { colors } from "./App";
-import { useControl } from "./controlContext";
+import { useFormBulleRadar } from "./FormBulleRadarContext";
+import { useSelectedUsers } from "./selectedUsersControl";
 
 export default function Bulle() {
   const container = createRef<HTMLDivElement>();
 
-  const svgRef = useRef<d3.Selection<
-    SVGSVGElement,
-    unknown,
-    null,
-    undefined
-  > | null>(null);
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
-  const { selectedUsers: selectedUsersRaw, top: topN, period } = useControl();
+  const { top: topN, period } = useFormBulleRadar();
 
-  const selectedUsers = useMemo(
-    () =>
-      Object.entries(selectedUsersRaw)
-        .filter(([_, v]) => v)
-        .map(([k, _]) => k),
-    [selectedUsersRaw]
-  );
+  const selectedUsers = useSelectedUsers();
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const { width, height } = entry.contentRect;
-
-        svgRef.current?.attr("width", width.toString());
-        svgRef.current?.attr("height", height.toString());
+        setWidth(width);
+        setHeight(height);
       }
     });
 
@@ -142,10 +132,8 @@ export default function Bulle() {
   useEffect(() => {
     //clear the chart
     d3.select(container.current).select(".chart").selectAll("*").remove();
-    const width = container.current!.clientWidth;
-    const height = container.current!.clientHeight;
 
-    svgRef.current = d3
+    const svg = d3
       .select(container.current)
       .select(".chart")
       .append("svg")
@@ -153,8 +141,7 @@ export default function Bulle() {
       .attr("height", height);
 
     const tooltip = d3
-      .select(container.current)
-      .select(".chart")
+      .select("body")
       .append("div")
       .style("position", "absolute")
       .style("background", "#fff")
@@ -206,7 +193,7 @@ export default function Bulle() {
       .innerRadius(0)
       .outerRadius((d) => radiusScale(d.data.average));
 
-    const zoomGroup = svgRef.current.append("g").attr("class", "zoom-group");
+    const zoomGroup = svg.append("g").attr("class", "zoom-group");
 
     const nodes = zoomGroup.selectAll("g").data(bubbles).enter().append("g");
 
@@ -276,18 +263,8 @@ export default function Bulle() {
       })
       .on("mousemove", function (event) {
         tooltip
-          .style(
-            "left",
-            `${
-              event.pageX - container.current!.getBoundingClientRect().left + 10
-            }px`
-          )
-          .style(
-            "top",
-            `${
-              event.pageY - container.current!.getBoundingClientRect().top + 10
-            }px`
-          );
+          .style("left", `${event.pageX + 10}px`)
+          .style("top", `${event.pageY + 10}px`);
       })
       .on("mouseout", function () {
         tooltip.style("visibility", "hidden");
@@ -320,8 +297,17 @@ export default function Bulle() {
         zoomGroup.attr("transform", event.transform);
       });
 
-    svgRef.current.call(zoom);
-  }, [selectedUsers, period, topN, container, combinedGenres.length, bubbles]);
+    svg.call(zoom);
+  }, [
+    selectedUsers,
+    period,
+    topN,
+    container,
+    combinedGenres.length,
+    bubbles,
+    width,
+    height,
+  ]);
 
   return (
     <Grid2
