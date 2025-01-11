@@ -18,7 +18,7 @@ export default function FormBulleRadar() {
   const dispatch = useFormBulleRadarDispatch();
 
   return (
-    <Grid2 container p={2} justifyContent={"center"}>
+    <Grid2 container justifyContent={"center"}>
       <Grid2 size={4} p={2}>
         <FormControl fullWidth>
           <InputLabel>Order</InputLabel>

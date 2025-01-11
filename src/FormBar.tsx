@@ -24,10 +24,10 @@ export default function FormBar() {
         payload: data.dataYear[0].period,
       });
     }
-  }, [dispatch, visualisation]);
+  }, [dispatch, period, visualisation]);
 
   return (
-    <Grid2 container p={2} justifyContent={"center"}>
+    <Grid2 container justifyContent={"center"}>
       <Grid2 size={4} p={2}>
         <FormControl fullWidth>
           <InputLabel>Visualisation</InputLabel>

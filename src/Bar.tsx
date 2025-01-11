@@ -19,9 +19,9 @@ export default function Bar() {
     const selectedUsersCopy = [...selectedUsers];
     let titre = "";
     if (selectedUsers.length === 1) {
-      titre = "Analyse du temps d'écoute en secondes de ";
+      titre = "Analyse du temps d'écoute en minutes de ";
     } else {
-      titre = "Comparaison du temps d'écoute en secondes de ";
+      titre = "Comparaison du temps d'écoute en minutes de ";
     }
     titre += [
       selectedUsersCopy.splice(0, selectedUsersCopy.length - 1).join(", "),
@@ -76,15 +76,7 @@ export default function Bar() {
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
     // Tooltip for hover interactions
-    const tooltip = d3
-      .select("body")
-      .append("div")
-      .style("position", "absolute")
-      .style("visibility", "hidden")
-      .style("background-color", "white")
-      .style("border", "1px solid #ccc")
-      .style("padding", "5px")
-      .style("border-radius", "5px");
+    const tooltip = d3.select(container.current).select(".tooltip");
 
     function draw(data) {
       const x = d3.scaleBand().range([0, innerWidth]).padding(0.1);
@@ -112,12 +104,22 @@ export default function Bar() {
         .attr("width", x.bandwidth())
         .attr("height", (d) => innerHeight - y(d.listens))
         .attr("fill", (d) => colors[d.user] || "gray")
-        .attr("opacity", 0.7)
+        .attr("opacity", 0.8)
         .on("mousemove", function (event, d) {
           tooltip
             .style("visibility", "visible")
             .html(
-              `Utilisateur: ${d.user}<br>Période: ${d.period}<br>Nombre de minutes d'écoute : ${d.listens}`
+              `
+              <div style="display: flex; align-items: center;">
+                        <div style="width: 12px; height: 12px; background-color: ${
+                          colors[d.user]
+                        }; margin-right: 5px;"></div>
+                        <strong>${d.user}</strong>
+                      </div><strong>Période:</strong> ${
+                        d.period
+                      }<br><strong>Temps d'écoute:</strong> ${
+                d.formatedListens
+              }`
             )
             .style("left", `${event.pageX + 10}px`)
             .style("top", `${event.pageY - 30}px`);
@@ -170,6 +172,7 @@ export default function Bar() {
         .enter()
         .append("rect")
         .attr("class", "bar1")
+        .style("opacity", 0.8)
         .attr("y", (d) => y(d.period))
         .attr("x", (d) => x1(d.listens))
         .attr("height", y.bandwidth())
@@ -196,6 +199,7 @@ export default function Bar() {
         .enter()
         .append("rect")
         .attr("class", "bar2")
+        .style("opacity", 0.8)
         .attr("y", (d) => y(d.period))
         .attr("x", 0)
         .attr("height", y.bandwidth())
@@ -215,7 +219,16 @@ export default function Bar() {
             tooltip
               .style("visibility", "visible")
               .html(
-                `Utilisateur: ${d.user}<br>Période: ${d.period}<br>Nombre de minutes d'écoute: ${d.listens}`
+                `  <div style="display: flex; align-items: center;">
+                        <div style="width: 12px; height: 12px; background-color: ${
+                          colors[d.user]
+                        }; margin-right: 5px;"></div>
+                        <strong>${d.user}</strong>
+                      </div><strong>Période:</strong> ${
+                        d.period
+                      }<br><strong>Temps d'écoute:</strong> ${
+                  d.formatedListens
+                }`
               )
               .style("left", `${event.pageX + 10}px`)
               .style("top", `${event.pageY - 30}px`);
@@ -323,7 +336,16 @@ export default function Bar() {
           tooltip
             .style("visibility", "visible")
             .html(
-              `Utilisateur: ${d.user}<br>Période: ${d.period}<br>Nombre de minutes d'écoute: ${d.listens}`
+              `  <div style="display: flex; align-items: center;">
+                        <div style="width: 12px; height: 12px; background-color: ${
+                          colors[d.user]
+                        }; margin-right: 5px;"></div>
+                        <strong>${d.user}</strong>
+                      </div><strong>Période:</strong> ${
+                        d.period
+                      }<br><strong>Temps d'écoute:</strong> ${
+                d.formatedListens
+              }`
             )
             .style("left", `${event.pageX + 10}px`)
             .style("top", `${event.pageY - 30}px`);
@@ -348,10 +370,18 @@ export default function Bar() {
       yAxisGroup.call(d3.axisLeft(y));
     }
 
-    const filteredData =
-      data[
-        `data${visualisation.charAt(0).toUpperCase() + visualisation.slice(1)}`
-      ];
+    const filteredData = data[
+      `data${visualisation.charAt(0).toUpperCase() + visualisation.slice(1)}`
+    ].map((d) => ({
+      ...d,
+      listens: d.listens / 60,
+      formatedListens:
+        d.listens > 3600
+          ? `${Math.floor(d.listens / 3600)}h${Math.floor(
+              (d.listens % 3600) / 60
+            )}min`
+          : `${Math.floor(d.listens / 60)}min`,
+    }));
 
     // Gestion des périodes dynamiques
     if (visualisation === "year") {
@@ -394,6 +424,20 @@ export default function Bar() {
         {title}
       </Typography>
       <Grid2 flex={1} ref={container}>
+        <Typography
+          className="tooltip"
+          style={{
+            position: "absolute",
+            background: "#fff",
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+            padding: "5px",
+            fontSize: "12px",
+            visibility: "hidden",
+            textAlign: "left",
+            zIndex: 9999,
+          }}
+        />
         <div
           className="chart"
           style={{

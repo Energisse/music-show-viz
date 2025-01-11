@@ -29,54 +29,30 @@ export default function Radar() {
   }, [selectedUsersRaw, order]);
 
   const allAxes = useMemo(() => {
-    // Fonction pour récupérer les Top N genres d'un utilisateur
-    function getTopGenres(
-      userData: (typeof data)["users"][number],
-      period: FormBulleRadarContextType["period"],
-      topN: FormBulleRadarContextType["top"]
-    ) {
-      // Trouver la période correspondant à "period"
-      const selectedPeriod = userData.top_genres.find(
-        (p) => p.label === period
-      );
-
-      if (selectedPeriod) {
-        // Trier les genres par "Listening Time"
-        const allGenres = selectedPeriod.ranking.map((genre) => ({
-          name: genre.Tags,
-          time: genre["Listening Time"],
-        }));
-
-        // Trier par temps d'écoute décroissant et ne garder que les top N
-        allGenres.sort((a, b) => b.time - a.time);
-        return allGenres.slice(0, topN);
-      }
-
-      return [];
-    }
-
-    const allGenres = new Set();
-
-    // Parcourir chaque utilisateur sélectionné
-    selectedUsers.forEach((user) => {
-      // Trouver l'utilisateur dans les données
-      const userData = data.users.find((u) => u.user_id === user);
-
-      if (userData) {
+    const result = selectedUsers
+      .map((user) => data.users.find((u) => u.user_id === user))
+      .filter(Boolean)
+      .flatMap((userData) => {
         // Utiliser la fonction getTopGenres pour récupérer les genres de l'utilisateur pour la période sélectionnée
-        const topGenres = getTopGenres(userData, period, topN);
+        // Trouver la période correspondant à "period"
+        const selectedPeriod =
+          userData!.top_genres.find((p) => p.label === period)?.ranking || [];
 
-        // Ajouter chaque genre dans le Set (pour éviter les doublons)
-        topGenres.forEach((d) => {
-          if (d.name) {
-            allGenres.add(d.name); // Ajouter le genre unique
-          }
-        });
-      }
-    });
+        const topGenres = selectedPeriod
+          .flatMap((genre) => ({
+            name: genre.Tags,
+            time: genre["Listening Time"],
+          }))
+          .sort((a, b) => b.time - a.time)
+          .slice(0, topN)
+          .map((genre) => genre.name)
+          .filter(Boolean);
+
+        return topGenres;
+      });
 
     // Retourner les genres sous forme de tableau
-    return Array.from(allGenres);
+    return Array.from(new Set(result));
   }, [selectedUsers, period, topN]);
 
   useEffect(() => {
@@ -112,16 +88,7 @@ export default function Radar() {
 
     const scale = d3.scaleLinear().domain([0, 100]).range([0, radius]);
 
-    const tooltip = d3
-      .select("body")
-      .append("div")
-      .style("position", "absolute")
-      .style("background", "#fff")
-      .style("border", "1px solid #ccc")
-      .style("border-radius", "5px")
-      .style("padding", "5px")
-      .style("font-size", "12px")
-      .style("visibility", "hidden");
+    const tooltip = d3.select(container.current).select(".tooltip");
 
     // Ajouter des groupes pour organiser les éléments SVG
     const radarGroup = zoomGroup.append("g").attr("class", "radar-group");
@@ -241,18 +208,7 @@ export default function Radar() {
           .append("circle")
           .attr("cx", x)
           .attr("cy", y)
-          .attr("r", function () {
-            const zoomScale = d3.zoomTransform(zoomGroup.node()).k; // Obtenir l'échelle actuelle du zoom
-            return zoomScale === 1
-              ? 4
-              : zoomScale > 1 && zoomScale < 1.5
-              ? 3
-              : zoomScale >= 1.5 && zoomScale < 2.5
-              ? 2
-              : zoomScale >= 2.5
-              ? 1
-              : 4; // Valeur par défaut
-          })
+
           .style("fill", colors[user])
           .style("cursor", "pointer")
           .on("mouseover", function () {
@@ -265,7 +221,7 @@ export default function Radar() {
                 </div>
                 <strong>Genre:</strong> ${axis}<br>
                 <strong>Proportion:</strong> ${value}%<br>
-                <strong>Temps:</strong> ${temps}<br>`
+                <strong>Temps:</strong> ${temps}`
             );
 
             // Augmenter dynamiquement le rayon
@@ -279,20 +235,7 @@ export default function Radar() {
           })
           .on("mouseout", function () {
             tooltip.style("visibility", "hidden");
-            // Réinitialiser dynamiquement le rayon en fonction du niveau de zoom
-            const zoomScale = d3.zoomTransform(zoomGroup.node()).k; // Obtenir l'échelle actuelle du zoom
-            const defaultRadius =
-              zoomScale === 1
-                ? 4
-                : zoomScale > 1 && zoomScale < 1.5
-                ? 3
-                : zoomScale >= 1.5 && zoomScale < 2.5
-                ? 2
-                : zoomScale >= 2.5
-                ? 1
-                : 4; // Par défaut
-
-            d3.select(this).attr("r", defaultRadius); // Restaurer le rayon basé sur le zoom
+            d3.select(this).attr("r", 6 - d3.zoomTransform(zoomGroup.node()).k); // Restaurer le rayon basé sur le zoom
           })
           .on("click", () => {
             // Redirection vers la page HTML correspondante
@@ -349,15 +292,14 @@ export default function Radar() {
               : 0,
 
             // Temps d'écoute formaté en heures et minutes
-            temps: genreMatch
-              ? genreMatch["Listening Time"] >= 3600
+            temps:
+              genreMatch["Listening Time"] > 3600
                 ? `${Math.floor(
                     genreMatch["Listening Time"] / 3600
                   )}h${Math.floor(
                     (genreMatch["Listening Time"] % 3600) / 60
                   )}min`
-                : `${Math.floor(genreMatch["Listening Time"] / 60)}min`
-              : "0min", // si null
+                : `${Math.floor(genreMatch["Listening Time"] / 60)}min`,
           };
         } else {
           //valeurs par défaut
@@ -379,28 +321,15 @@ export default function Radar() {
         [(width * 3) / 4, (height * 3) / 4],
       ])
       .on("zoom", function (event) {
-        svgRef
-          .current!.selectAll(".zoom-group")
-          .attr("transform", event.transform);
-        const zoomScale = event.transform.k;
-        svg!.selectAll(".points-group circle").attr("r", (d) => {
-          if (zoomScale === 1) {
-            return 4;
-          } else if (zoomScale > 1 && zoomScale < 1.5) {
-            return 3;
-          } else if (zoomScale >= 1.5 && zoomScale < 2.5) {
-            return 2;
-          } else if (zoomScale >= 2.5 && zoomScale < 3) {
-            return 1;
-          } else if (zoomScale >= 3) {
-            return 0.5;
-          }
-          return 4;
-        });
+        svg.selectAll(".zoom-group").attr("transform", event.transform);
+        svg
+          .selectAll(".points-group circle")
+          .attr("r", () => 6 - event.transform.k);
       });
-
     svg.call(zoom);
-  }, [selectedUsers, period, topN, container, allAxes]);
+    const newTransform = d3.zoomIdentity.translate(-width, -height).scale(3);
+    svg.transition().duration(750).call(zoom.transform, newTransform);
+  }, [selectedUsers, period, topN, container, allAxes, width, height]);
 
   return (
     <Grid2
@@ -410,7 +339,6 @@ export default function Radar() {
       textAlign={"center"}
     >
       <Typography variant="h4">Top genres - radar</Typography>
-
       <Typography>
         Vision radar : Top N genres par période, classés selon l'utilisateur
         principal.
@@ -423,7 +351,22 @@ export default function Radar() {
         Les proportions reflètent le temps d'écoute pour chaque utilisateur par
         rapport au total sur la période donnée.
       </Typography>
+
       <Grid2 flex={1} ref={container}>
+        <Typography
+          className="tooltip"
+          style={{
+            position: "absolute",
+            background: "#fff",
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+            padding: "5px",
+            fontSize: "12px",
+            visibility: "hidden",
+            textAlign: "left",
+            zIndex: 9999,
+          }}
+        />
         <div
           className="chart"
           style={{

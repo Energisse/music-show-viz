@@ -53,62 +53,51 @@ export default function Bulle() {
       combinedGenres.map((genreName) => {
         //console.log("Traitement du genre :", genreName); // Log pour chaque genre
 
-        const userProportions = selectedUsers.map((user) => {
-          //console.log("Utilisateur traité :", user); // Log pour chaque utilisateur
+        const userProportions = selectedUsers
+          .map((user) => {
+            //console.log("Utilisateur traité :", user); // Log pour chaque utilisateur
 
-          const userData = data.users.find((u) => u.user_id === user);
-          if (!userData) {
-            console.warn("Données utilisateur introuvables pour :", user);
-            return {
-              user,
-              proportion: 0,
-              genre: genreName,
-              temps: 0,
-            };
-          }
+            const userData = data.users.find((u) => u.user_id === user);
+            if (!userData) return null;
 
-          const periodData = userData.top_genres.find(
-            (p) => p.label === period
-          ); // Changement ici pour correspondre à la période dynamique
+            const periodData = userData.top_genres.find(
+              (p) => p.label === period
+            ); // Changement ici pour correspondre à la période dynamique
 
-          if (!periodData) {
-            console.warn(
-              "Aucune donnée trouvée pour la période :",
-              period,
-              "et l'utilisateur :",
-              user
+            if (!periodData) return null;
+
+            const totalListeningTime = d3.sum(
+              periodData.ranking,
+              (g) => g["Listening Time"]
             );
+
+            const genreData = periodData.ranking.find(
+              (g) => g.Tags === genreName
+            ) || {
+              ListeningTime: 0,
+            };
+
+            const proportion =
+              totalListeningTime === 0 || isNaN(genreData["Listening Time"])
+                ? 0
+                : genreData["Listening Time"] / totalListeningTime;
+
             return {
               user,
-              proportion: 0,
+              proportion,
               genre: genreName,
-              temps: 0,
+              temps: genreData["Listening Time"],
+              formatedTime:
+                genreData["Listening Time"] > 3600
+                  ? `${Math.floor(
+                      genreData["Listening Time"] / 3600
+                    )}h${Math.floor(
+                      (genreData["Listening Time"] % 3600) / 60
+                    )}min`
+                  : `${Math.floor(genreData["Listening Time"] / 60)}min`,
             };
-          }
-
-          const totalListeningTime = periodData.ranking.reduce(
-            (sum, genre) => sum + genre["Listening Time"],
-            0
-          );
-
-          const genreData = periodData.ranking.find(
-            (g) => g.Tags === genreName
-          ) || {
-            ListeningTime: 0,
-          };
-
-          const proportion =
-            totalListeningTime === 0 || isNaN(genreData["Listening Time"])
-              ? 0
-              : genreData["Listening Time"] / totalListeningTime;
-
-          return {
-            user,
-            proportion,
-            genre: genreName,
-            temps: genreData["Listening Time"] ?? 0,
-          };
-        });
+          })
+          .filter((d) => d !== null);
 
         const average = d3.mean(userProportions, (d) => d.proportion);
 
@@ -140,50 +129,19 @@ export default function Bulle() {
       .attr("width", width)
       .attr("height", height);
 
-    const tooltip = d3
-      .select("body")
-      .append("div")
-      .style("position", "absolute")
-      .style("background", "#fff")
-      .style("padding", "8px")
-      .style("border", "1px solid #ccc")
-      .style("border-radius", "4px")
-      .style("box-shadow", "0px 2px 4px rgba(0, 0, 0, 0.2)")
-      .style("visibility", "hidden")
-      .style("font-size", "12px")
-      .style("pointer-events", "none");
-
-    let minRadius;
-    let maxRadius;
-
-    if (combinedGenres.length === 1) {
-      minRadius = 50;
-      maxRadius = 120;
-    } else if (combinedGenres.length <= 6) {
-      minRadius = 30;
-      maxRadius = 100;
-    } else if (combinedGenres.length > 6 && combinedGenres.length <= 10) {
-      minRadius = 20;
-      maxRadius = 90;
-    } else if (combinedGenres.length > 10 && combinedGenres.length <= 13) {
-      minRadius = 10;
-      maxRadius = 80;
-    } else if (combinedGenres.length > 13) {
-      minRadius = 5;
-      maxRadius = 75;
-    }
+    const tooltip = d3.select(container.current).select(".tooltip");
 
     const radiusScale = d3
       .scaleSqrt()
       .domain([0, d3.max(bubbles, (d) => d.average)])
-      .range([minRadius, maxRadius]);
+      .range([10, 100]);
 
     d3.forceSimulation(bubbles)
       .force("x", d3.forceX(width / 2).strength(0.05))
       .force("y", d3.forceY(height / 2).strength(0.05))
       .force(
         "collide",
-        d3.forceCollide((d) => radiusScale(d.average) + 2)
+        d3.forceCollide((d) => radiusScale(d.average) + 5)
       )
       .on("tick", ticked);
 
@@ -206,7 +164,8 @@ export default function Bulle() {
         return pie(
           d.proportions.map((p) => ({
             ...p,
-            proportion: p.temps / totalListeningTime, // Calcul de la proportion
+            proportion:
+              totalListeningTime === 0 ? 0 : p.temps / totalListeningTime,
             average: d.average,
           }))
         );
@@ -218,8 +177,10 @@ export default function Bulle() {
       .attr("stroke", "#fff")
       .attr("stroke-width", 1)
       .style("cursor", "pointer")
-      .attr("class", "slice")
+      .style("transition", ".1s")
       .on("mouseover", function (event, d) {
+        console.log(d);
+        d3.select(this).style("scale", 1.1);
         // Trouve les données du genre correspondant
         const userData = data.users.find((u) => u.user_id === d.data.user);
 
@@ -242,21 +203,18 @@ export default function Bulle() {
 
         tooltip
           .html(
-            `
-                    <div>
-                      <div style="display: flex; align-items: center;">
-                        <div style="width: 12px; height: 12px; background-color: ${
-                          colors[d.data.user]
-                        }; margin-right: 5px;"></div>
-                        <strong>${d.data.user}</strong>
-                      </div>
-                      <div>Genre : ${d.data.genre}</div>
-                      <div>Heures : ${(d.data.temps / 3600).toFixed(1)}</div>
-                      <div>Self Proportion : ${realProportion}%</div>
-                      <div>Diagram Proportion : ${(
-                        d.data.proportion * 100
-                      ).toFixed(1)}%</div>
-                    </div>
+            `<div style="display: flex; align-items: center;">
+                  <div style="width: 10px; height: 10px; background-color: ${
+                    colors[d.data.user]
+                  }; margin-right: 5px; border: 1px solid #000;"></div>
+                  <strong>${d.data.user}</strong><br>
+                </div>
+                <strong>Genre:</strong> ${d.data.genre}<br>
+                <strong>Temps:</strong> ${d.data.formatedTime}<br>
+                <strong>Self Proportion:</strong> ${realProportion}%<br>
+                <strong>Diagram Proportion:</strong>  ${(
+                  d.data.proportion * 100
+                ).toFixed(1)}%
                   `
           )
           .style("visibility", "visible");
@@ -268,6 +226,7 @@ export default function Bulle() {
       })
       .on("mouseout", function () {
         tooltip.style("visibility", "hidden");
+        d3.select(this).style("scale", 1);
       })
       .on("click", function (event, d) {
         // const targetPage = `music-genre.html?user=${d.data.user}&genre=${d.data.genre}`;
@@ -280,7 +239,9 @@ export default function Bulle() {
       .attr("text-anchor", "middle")
       .attr("dy", ".3em")
       .text((d) => d.name)
-      .style("font-size", "12px");
+      .style("font-size", "18px")
+      .style("font-weight", "bold")
+      .style("fill", "#FFF");
 
     function ticked() {
       nodes.attr("transform", (d) => `translate(${d.x},${d.y})`);
@@ -288,7 +249,7 @@ export default function Bulle() {
 
     const zoom = d3
       .zoom()
-      .scaleExtent([0.5, 1.1]) // Limiter les niveaux de zoom
+      .scaleExtent([0.5, 2]) // Limiter les niveaux de zoom
       .translateExtent([
         [-width / 2, -height / 2],
         [width * 1.5, height * 1.5],
@@ -327,6 +288,20 @@ export default function Bulle() {
         Taille des bulles : Popularité du genre chez les utilisateurs.
       </Typography>
       <Grid2 flex={1} ref={container}>
+        <Typography
+          className="tooltip"
+          style={{
+            position: "absolute",
+            background: "#fff",
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+            padding: "5px",
+            fontSize: "12px",
+            visibility: "hidden",
+            textAlign: "left",
+            zIndex: 9999,
+          }}
+        />
         <div
           className="chart"
           style={{

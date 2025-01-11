@@ -44,10 +44,10 @@ function App() {
             <Grid2 size={12} component={Paper} elevation={2}>
               <FormBulleRadar />
             </Grid2>
-            <Grid2 size={6} p={2} component={Paper} elevation={2} height={400}>
+            <Grid2 size={6} p={2} component={Paper} elevation={2} height={500}>
               <Radar />
             </Grid2>
-            <Grid2 size={6} p={2} component={Paper} elevation={2} height={400}>
+            <Grid2 size={6} p={2} component={Paper} elevation={2} height={500}>
               <Bulle />
             </Grid2>
           </FormBulleRadarControlProvider>
