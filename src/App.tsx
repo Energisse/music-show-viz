@@ -81,27 +81,33 @@ function App() {
                 <Typography variant="h4">Qui a fait quoi ?</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography>
-                  <ul>
-                    <li>
+                <ul>
+                  <li>
+                    <Typography>
                       <span style={{ color: colors.clement }}>Clément</span>:
                       Création des diagrammes de Kiviat et des diagrammes en
                       bulles
-                    </li>
-                    <li>
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography>
                       <span style={{ color: colors.celine }}>Céline</span>:
                       Création des graphiques en barres avec un axe vertical
-                    </li>
-                    <li>
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography>
                       <span style={{ color: colors.matthieu }}>Matthieu</span>:
                       Formatage et traitement des données collectées
-                    </li>
-                    <li>
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography>
                       <span style={{ color: colors.thomas }}>Thomas</span>:
                       Réalisation du site web
-                    </li>
-                  </ul>
-                </Typography>
+                    </Typography>
+                  </li>
+                </ul>
               </AccordionDetails>
             </Accordion>
             <Accordion>
@@ -111,26 +117,34 @@ function App() {
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography>
-                  Les données proviennent des différentes plateformes :
-                  <ul>
-                    <li>
+                Les données proviennent des différentes plateformes :
+                <ul>
+                  <li>
+                    <Typography>
                       <span style={{ color: colors.clement }}>Clément</span>:
                       Deezer
-                    </li>
-                    <li>
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography>
                       <span style={{ color: colors.celine }}>Céline</span>:
                       Spotify
-                    </li>
-                    <li>
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography>
                       <span style={{ color: colors.matthieu }}>Matthieu</span>:
                       Spotify
-                    </li>
-                    <li>
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography>
                       <span style={{ color: colors.thomas }}>Thomas</span>:
                       Youtube musique
-                    </li>
-                  </ul>
+                    </Typography>
+                  </li>
+                </ul>
+                <Typography>
                   La collecte des données a été faite à l'aide du RGPD qui
                   permet de demander à ces plateformes de nous fournir les
                   données qu'elles ont sur nous.
@@ -142,22 +156,28 @@ function App() {
                 <Typography variant="h4">Téchnologies utilisées</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography>
-                  <ul>
-                    <li>
+                <ul>
+                  <li>
+                    <Typography>
                       <a href="https://react.dev/">React</a>
-                    </li>
-                    <li>
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography>
                       <a href="https://mui.com/">Material UI</a>
-                    </li>
-                    <li>
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography>
                       <a href="https://d3js.org/">d3js</a>
-                    </li>
-                    <li>
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography>
                       <a href="https://www.typescriptlang.org/">Typescript</a>
-                    </li>
-                  </ul>
-                </Typography>
+                    </Typography>
+                  </li>
+                </ul>
               </AccordionDetails>
             </Accordion>
             <Accordion>
