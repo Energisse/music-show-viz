@@ -3,10 +3,7 @@ import { useEffect, createRef, useMemo, useState } from "react";
 import * as d3 from "d3";
 import data from "./assets/data.json";
 import { colors } from "./App";
-import {
-  FormBulleRadarContextType,
-  useFormBulleRadar,
-} from "./FormBulleRadarContext";
+import { useFormBulleRadar } from "./FormBulleRadarContext";
 import { useSelectedUsers } from "./selectedUsersControl";
 
 export default function Radar() {
@@ -151,10 +148,7 @@ export default function Radar() {
     });
 
     // Fonction pour dessiner le radar pour chaque utilisateur
-    function drawRadar(
-      userData: (typeof data)["users"],
-      user: keyof typeof colors
-    ) {
+    function drawRadar({ user_id, username, data: userData }) {
       const radarLine = d3
         .lineRadial()
         .radius((d) => scale(d.proportion))
@@ -170,8 +164,8 @@ export default function Radar() {
         .attr("d", radarArea + "Z")
         .attr("transform", `translate(${centerX}, ${centerY})`)
         .attr("class", "radar-area")
-        .style("fill", colors[user])
-        .style("stroke", colors[user])
+        .style("fill", colors[user_id])
+        .style("stroke", colors[user_id])
         .style("opacity", 0.5);
 
       radarPath
@@ -179,8 +173,8 @@ export default function Radar() {
           d3.select(this).style("opacity", 0.8).style("stroke-width", "2px");
           tooltip.style("visibility", "visible").html(
             `<div style="display: flex; align-items: center;">
-              <div style="width: 10px; height: 10px; background-color: ${colors[user]}; margin-right: 5px; border: 1px solid #000;"></div>
-              <strong>${user} </strong><br>
+              <div style="width: 10px; height: 10px; background-color: ${colors[user_id]}; margin-right: 5px; border: 1px solid #000;"></div>
+              <strong>${username} </strong><br>
             </div>`
           );
         })
@@ -209,15 +203,15 @@ export default function Radar() {
           .attr("cx", x)
           .attr("cy", y)
 
-          .style("fill", colors[user])
+          .style("fill", colors[user_id])
           .style("cursor", "pointer")
           .on("mouseover", function () {
             radarPath.raise(); // Déplace la zone radar au-dessus des autres
 
             tooltip.style("visibility", "visible").html(
               `<div style="display: flex; align-items: center;">
-                  <div style="width: 10px; height: 10px; background-color: ${colors[user]}; margin-right: 5px; border: 1px solid #000;"></div>
-                  <strong>${user}</strong><br>
+                  <div style="width: 10px; height: 10px; background-color: ${colors[user_id]}; margin-right: 5px; border: 1px solid #000;"></div>
+                  <strong>${username}</strong><br>
                 </div>
                 <strong>Genre:</strong> ${axis}<br>
                 <strong>Proportion:</strong> ${value}%<br>
@@ -310,7 +304,11 @@ export default function Radar() {
           };
         }
       });
-      drawRadar(userFiltered, user);
+      drawRadar({
+        user_id: userData.user_id,
+        username: userData.username,
+        data: userFiltered,
+      });
     });
 
     const zoom = d3

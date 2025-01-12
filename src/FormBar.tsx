@@ -10,21 +10,41 @@ import {
   useFormBar,
   useFormBarDispatch,
 } from "./FormBarContext";
-import * as data from "./assets/data2.json";
-import { useEffect } from "react";
+import * as data from "./assets/data.json";
+import { useEffect, useMemo } from "react";
 export default function FormBar() {
   const { period, visualisation } = useFormBar();
 
   const dispatch = useFormBarDispatch();
 
+  const periodList = useMemo(() => {
+    if (visualisation === "day") return [];
+    if (visualisation === "year")
+      return [
+        ...new Set(
+          data.users.flatMap((d) =>
+            d.average_listening_time.dataYear.map((d) => d.period.split("-")[0])
+          )
+        ),
+      ];
+    return [
+      ...new Set(
+        data.users.flatMap((d) =>
+          d.average_listening_time.dataMonth.map((d) =>
+            d.period.split("-").splice(0, 2).join("-")
+          )
+        )
+      ),
+    ];
+  }, [visualisation]);
+
   useEffect(() => {
-    if (visualisation === "month" && period === "") {
-      dispatch({
-        type: "setPeriod",
-        payload: data.dataYear[0].period,
-      });
-    }
-  }, [dispatch, period, visualisation]);
+    if (visualisation === "day") return;
+    dispatch({
+      type: "setPeriod",
+      payload: periodList[0],
+    });
+  }, [dispatch, periodList, visualisation]);
 
   return (
     <Grid2 container justifyContent={"center"}>
@@ -51,7 +71,7 @@ export default function FormBar() {
         <FormControl
           fullWidth
           sx={{
-            visibility: visualisation === "month" ? "visible" : "hidden",
+            visibility: visualisation === "day" ? "hidden" : "visible",
           }}
         >
           <InputLabel>Periode</InputLabel>
@@ -65,7 +85,7 @@ export default function FormBar() {
               })
             }
           >
-            {[...new Set(data.dataYear.map((d) => d.period))].map((val) => (
+            {periodList.map((val) => (
               <MenuItem key={val} value={val}>
                 {val}
               </MenuItem>

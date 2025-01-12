@@ -51,12 +51,8 @@ export default function Bulle() {
   const bubbles = useMemo(
     () =>
       combinedGenres.map((genreName) => {
-        //console.log("Traitement du genre :", genreName); // Log pour chaque genre
-
         const userProportions = selectedUsers
           .map((user) => {
-            //console.log("Utilisateur traité :", user); // Log pour chaque utilisateur
-
             const userData = data.users.find((u) => u.user_id === user);
             if (!userData) return null;
 
@@ -83,7 +79,8 @@ export default function Bulle() {
                 : genreData["Listening Time"] / totalListeningTime;
 
             return {
-              user,
+              user_id: userData.user_id,
+              username: userData.username,
               proportion,
               genre: genreName,
               temps: genreData["Listening Time"],
@@ -173,16 +170,14 @@ export default function Bulle() {
       .enter()
       .append("path")
       .attr("d", arc)
-      .attr("fill", (d) => colors[d.data.user])
+      .attr("fill", (d) => colors[d.data.user_id])
       .attr("stroke", "#fff")
       .attr("stroke-width", 1)
       .style("cursor", "pointer")
       .style("transition", ".1s")
       .on("mouseover", function (event, d) {
-        console.log(d);
         d3.select(this).style("scale", 1.1);
-        // Trouve les données du genre correspondant
-        const userData = data.users.find((u) => u.user_id === d.data.user);
+        const userData = data.users.find((u) => u.user_id === d.data.user_id);
 
         if (!userData) return;
 
@@ -205,9 +200,9 @@ export default function Bulle() {
           .html(
             `<div style="display: flex; align-items: center;">
                   <div style="width: 10px; height: 10px; background-color: ${
-                    colors[d.data.user]
+                    colors[d.data.user_id]
                   }; margin-right: 5px; border: 1px solid #000;"></div>
-                  <strong>${d.data.user}</strong><br>
+                  <strong>${d.data.username}</strong><br>
                 </div>
                 <strong>Genre:</strong> ${d.data.genre}<br>
                 <strong>Temps:</strong> ${d.data.formatedTime}<br>

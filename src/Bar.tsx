@@ -1,7 +1,7 @@
 import { Grid2, Typography } from "@mui/material";
 import { useEffect, createRef, useMemo, useState } from "react";
 import * as d3 from "d3";
-import data from "./assets/data2.json";
+import data from "./assets/data.json";
 import { colors } from "./App";
 import { useSelectedUsers } from "./selectedUsersControl";
 import { useFormBar } from "./FormBarContext";
@@ -13,7 +13,7 @@ export default function Bar() {
   const [height, setHeight] = useState(0);
 
   const selectedUsers = useSelectedUsers();
-  const { visualisation, period } = useFormBar();
+  const { visualisation, period: selectedPeriod } = useFormBar();
 
   const title = useMemo(() => {
     const selectedUsersCopy = [...selectedUsers];
@@ -42,6 +42,55 @@ export default function Bar() {
 
     return titre;
   }, [selectedUsers, visualisation]);
+
+  const filteredData = useMemo(() => {
+    const filteredData = data.users
+      .filter(({ user_id }) => selectedUsers.includes(user_id))
+      .map(({ average_listening_time, user_id, username }) =>
+        (
+          average_listening_time[
+            `data${
+              visualisation.charAt(0).toUpperCase() + visualisation.slice(1)
+            }`
+          ] as
+            | (typeof data)["users"][number]["average_listening_time"]["dataDay"]
+            | (typeof data)["users"][number]["average_listening_time"]["dataMonth"]
+            | (typeof data)["users"][number]["average_listening_time"]["dataYear"]
+        ).map(({ listens, ...rest }) => ({
+          ...rest,
+          user_id,
+          username,
+          listens: listens / 60,
+          formatedListens:
+            listens > 3600
+              ? `${Math.floor(listens / 3600)}h${Math.floor(
+                  (listens % 3600) / 60
+                )}min`
+              : `${(listens / 60).toFixed(1)}min`,
+        }))
+      );
+
+    if (visualisation === "month" || visualisation === "year") {
+      return filteredData.map((d) =>
+        d.filter(({ period }) => period.toString().startsWith(selectedPeriod))
+      );
+    }
+
+    return filteredData;
+  }, [visualisation, selectedUsers, selectedPeriod]);
+
+  const periods = useMemo(() => {
+    const periods = new Set<string>();
+
+    filteredData.forEach((data) =>
+      data.forEach(({ period }) => periods.add(period))
+    );
+
+    if (visualisation === "day") {
+      return [...periods];
+    }
+    return [...periods].reverse();
+  }, [filteredData, visualisation]);
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
@@ -78,7 +127,7 @@ export default function Bar() {
     // Tooltip for hover interactions
     const tooltip = d3.select(container.current).select(".tooltip");
 
-    function draw(data) {
+    function draw(data: (typeof filteredData)[number]) {
       const x = d3.scaleBand().range([0, innerWidth]).padding(0.1);
       const y = d3.scaleLinear().range([innerHeight, 0]);
 
@@ -88,14 +137,13 @@ export default function Bar() {
       const yAxisGroup = svg.append("g");
 
       // Mise à jour des échelles
-      x.domain(data.map((d) => d.period));
-      y.domain([0, d3.max(data, (d) => d.listens)]).nice();
+      x.domain(periods);
+      y.domain([0, d3.max(data, (d) => d.listens)]);
 
       // // Liaison des données avec les barres
-      const bars = svg.selectAll(".bar").data(data, (d) => d.period);
-
-      // Ajouter de nouvelles barres
-      bars
+      svg
+        .selectAll(".bar")
+        .data(data)
         .enter()
         .append("rect")
         .attr("class", "bar")
@@ -103,7 +151,7 @@ export default function Bar() {
         .attr("y", (d) => y(d.listens))
         .attr("width", x.bandwidth())
         .attr("height", (d) => innerHeight - y(d.listens))
-        .attr("fill", (d) => colors[d.user] || "gray")
+        .attr("fill", (d) => colors[d.user_id])
         .attr("opacity", 0.8)
         .on("mousemove", function (event, d) {
           tooltip
@@ -112,9 +160,9 @@ export default function Bar() {
               `
               <div style="display: flex; align-items: center;">
                         <div style="width: 12px; height: 12px; background-color: ${
-                          colors[d.user]
+                          colors[d.user_id]
                         }; margin-right: 5px;"></div>
-                        <strong>${d.user}</strong>
+                        <strong>${d.username}</strong>
                       </div><strong>Période:</strong> ${
                         d.period
                       }<br><strong>Temps d'écoute:</strong> ${
@@ -142,33 +190,33 @@ export default function Bar() {
       yAxisGroup.call(d3.axisLeft(y));
     }
 
-    function drawComparison(data1, data2, user1, user2) {
+    function drawComparison(data: typeof filteredData) {
       const paddingCenter = 100;
       // Scales for the charts
       const y = d3
         .scaleBand()
         .range([0, innerHeight])
         .padding(0.2)
-        .domain(data1.map((d) => d.period));
+        .domain(periods);
 
-      console.log((innerWidth - paddingCenter) / 2);
+      const max = d3.max(data, (d) => d3.max(d, (d) => d.listens));
 
       const x1 = d3
         .scaleLinear()
         .range([(innerWidth - paddingCenter) / 2, 0])
-        .domain([0, d3.max(data1, (d) => d.listens)]);
+        .domain([0, max]);
 
       const x2 = d3
         .scaleLinear()
         .range([0, (innerWidth - paddingCenter) / 2])
-        .domain([0, d3.max(data2, (d) => d.listens)]);
+        .domain([0, max]);
 
       // Group for user1 chart (barres orientées vers la gauche)
       const group1 = svg.append("g").attr("transform", `translate(0, 0)`);
 
       group1
         .selectAll(".bar1")
-        .data(data1)
+        .data(data[0])
         .enter()
         .append("rect")
         .attr("class", "bar1")
@@ -180,7 +228,7 @@ export default function Bar() {
           "width",
           (d) => width / 2 - margin.left - paddingCenter / 2 - x1(d.listens)
         )
-        .attr("fill", (d) => colors[d.user]);
+        .attr("fill", (d) => colors[d.user_id]);
 
       // Ajouter l'axe X pour l'utilisateur 1
       group1
@@ -195,7 +243,7 @@ export default function Bar() {
 
       group2
         .selectAll(".bar2")
-        .data(data2)
+        .data(data[1])
         .enter()
         .append("rect")
         .attr("class", "bar2")
@@ -204,7 +252,7 @@ export default function Bar() {
         .attr("x", 0)
         .attr("height", y.bandwidth())
         .attr("width", (d) => x2(d.listens))
-        .attr("fill", (d) => colors[d.user]);
+        .attr("fill", (d) => colors[d.user_id]);
 
       // Ajouter l'axe X pour l'utilisateur 2
       group2
@@ -221,9 +269,9 @@ export default function Bar() {
               .html(
                 `  <div style="display: flex; align-items: center;">
                         <div style="width: 12px; height: 12px; background-color: ${
-                          colors[d.user]
+                          colors[d.user_id]
                         }; margin-right: 5px;"></div>
-                        <strong>${d.user}</strong>
+                        <strong>${d.username}</strong>
                       </div><strong>Période:</strong> ${
                         d.period
                       }<br><strong>Temps d'écoute:</strong> ${
@@ -267,7 +315,7 @@ export default function Bar() {
         .attr("y", -margin.top / 2)
         .style("text-anchor", "middle")
         .style("font-size", "14px")
-        .text(`Écoutes de ${user1}`);
+        .text(`Écoutes de ${data[0][0].username}`);
 
       svg
         .append("text")
@@ -275,10 +323,10 @@ export default function Bar() {
         .attr("y", -margin.top / 2)
         .style("text-anchor", "middle")
         .style("font-size", "14px")
-        .text(`Écoutes de ${user2}`);
+        .text(`Écoutes de ${data[1][0].username}`);
     }
 
-    function drawAdvanced(data) {
+    function drawAdvanced(data: typeof filteredData) {
       const userCount = selectedUsers.length;
 
       const x = d3.scaleBand().range([0, width - margin.left - margin.right]);
@@ -296,33 +344,26 @@ export default function Bar() {
 
       // Mettre à jour les échelles
       x.range([0, width - margin.left - margin.right])
-        .domain(data.map((d) => d.period))
+        .domain(periods)
         .paddingInner(0.001); // Réduction de l'espace entre les périodes
-      y.domain([0, d3.max(data, (d) => d.listens)]).nice();
+      y.domain([0, d3.max(data, (d) => d3.max(d, (d) => d.listens))]).nice();
 
       // Largeur dynamique des barres
       const barWidth = Math.min(18, x.bandwidth() / userCount);
 
       // Lier les données aux éléments rect
-      const bars = svg
+      svg
         .selectAll(".bar")
-        .data(data, (d) => `${d.period}-${d.user}`);
-
-      // Supprimer les anciennes barres
-      bars.exit().remove();
-
-      // Ajouter ou mettre à jour les barres
-      bars
+        .data(data.flatMap((d) => d))
         .enter()
         .append("rect")
-        .merge(bars)
         .attr("class", "bar")
         .attr(
           "x",
           (d) =>
             x(d.period) + // Position de la période
             (x.bandwidth() - userCount * barWidth) / 2 + // Décalage pour centrer les groupes
-            selectedUsers.indexOf(d.user) * barWidth // Décalage pour chaque joueur
+            selectedUsers.indexOf(d.user_id) * barWidth // Décalage pour chaque joueur
         )
         .attr("y", (d) => y(d.listens))
         .attr("width", barWidth - 2) // Ajustement pour éviter les chevauchements
@@ -330,7 +371,7 @@ export default function Bar() {
           "height",
           (d) => height - y(d.listens) - margin.top - margin.bottom
         )
-        .attr("fill", (d) => colors[d.user] || "gray")
+        .attr("fill", (d) => colors[d.user_id] || "gray")
         .attr("opacity", 0.8)
         .on("mousemove", function (event, d) {
           tooltip
@@ -338,9 +379,9 @@ export default function Bar() {
             .html(
               `  <div style="display: flex; align-items: center;">
                         <div style="width: 12px; height: 12px; background-color: ${
-                          colors[d.user]
+                          colors[d.user_id]
                         }; margin-right: 5px;"></div>
-                        <strong>${d.user}</strong>
+                        <strong>${d.username}</strong>
                       </div><strong>Période:</strong> ${
                         d.period
                       }<br><strong>Temps d'écoute:</strong> ${
@@ -370,47 +411,22 @@ export default function Bar() {
       yAxisGroup.call(d3.axisLeft(y));
     }
 
-    const filteredData = data[
-      `data${visualisation.charAt(0).toUpperCase() + visualisation.slice(1)}`
-    ].map((d) => ({
-      ...d,
-      listens: d.listens / 60,
-      formatedListens:
-        d.listens > 3600
-          ? `${Math.floor(d.listens / 3600)}h${Math.floor(
-              (d.listens % 3600) / 60
-            )}min`
-          : `${Math.floor(d.listens / 60)}min`,
-    }));
-
-    // Gestion des périodes dynamiques
-    if (visualisation === "year") {
-      const finalData = filteredData; // Ne pas appliquer de filtrage sur la période pour l'année
-      handleData(finalData, selectedUsers);
-    } else if (visualisation === "month") {
-      const finalData = filteredData.filter((d) => d.period.startsWith(period));
-      handleData(finalData, selectedUsers);
-    } else if (visualisation === "day") {
-      const finalData = filteredData; // Pas de filtrage sur les jours dans ce visualisation
-      handleData(finalData, selectedUsers);
+    if (filteredData.length === 1) {
+      draw(filteredData[0]);
+    } else if (selectedUsers.length === 2) {
+      drawComparison(filteredData);
+    } else {
+      drawAdvanced(filteredData);
     }
-    function handleData(finalData, selectedUsers) {
-      if (selectedUsers.length === 1) {
-        const playerData = finalData.filter((d) => d.user === selectedUsers[0]);
-        draw(playerData);
-      } else if (selectedUsers.length === 2) {
-        const data = selectedUsers.map((user) =>
-          finalData.filter((d) => d.user === user)
-        ) as [unknown, unknown];
-        drawComparison(...data, selectedUsers[0], selectedUsers[1]);
-      } else {
-        const advancedData = finalData.filter((d) =>
-          selectedUsers.includes(d.user)
-        );
-        drawAdvanced(advancedData);
-      }
-    }
-  }, [selectedUsers, container, width, height, visualisation, period]);
+  }, [
+    selectedUsers,
+    container,
+    width,
+    height,
+    visualisation,
+    filteredData,
+    periods,
+  ]);
 
   return (
     <Grid2
