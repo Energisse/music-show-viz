@@ -45,6 +45,8 @@ def export_music_data_to_json(input_filename, output_filename, user_id, username
     df['Date'] = df['Date'].dt.tz_localize(None)
     df["Tags"] = df["Tags"].apply(ast.literal_eval)
 
+    df = df[df['Date'] > pd.Timestamp('2023-01-01')] # Only keep 2023 year data
+
     json_data = {
         "users": [
             {
@@ -66,7 +68,7 @@ def export_music_data_to_json(input_filename, output_filename, user_id, username
         ("4 weeks", ('2024-11-22', '2024-12-22')),
         ("3 months", ('2024-09-22', '2024-12-22')),
         ("6 months", ('2024-06-22', '2024-12-22')),
-        ("1 year", ('2023-11-22', '2024-12-22')),
+        ("1 year", ('2024-01-01', '2024-12-31')),
         ("all time", ('2002-01-01', '2024-12-22'))
     ]
 
@@ -119,15 +121,43 @@ def export_music_data_to_json(input_filename, output_filename, user_id, username
             .head(15)
         )
 
+        top_artists_ranking = []
+        for _, artist_row in df_top_artists_lt.iterrows():
+            artist = artist_row['Artist']
+
+            # Filter tracks associated with this artist
+            artist_tracks = copy[copy['Artist'] == artist]
+
+            # Get top tracks associated with the artist
+            df_artist_top_tracks = (
+                artist_tracks.groupby(['Song Title'])['Listening Time']
+                .sum()
+                .reset_index(name='Listening Time')
+                .sort_values('Listening Time', ascending=False)
+                .head(5)  # Get top 5 tracks for the artist
+            )
+
+            # Add the tracks to the artist's list
+            artist_list = df_artist_top_tracks[['Song Title', 'Listening Time']].to_dict(orient="records")
+
+            # Append artist object with the "list" field
+            top_artists_ranking.append({
+                "Artist": artist,
+                "Listening Time": artist_row['Listening Time'],
+                "list": artist_list
+            })
+
         # Construct JSON objects for top artists
         obj_top_artists_lt = {
             "start": timespan[1][0],
             "end": timespan[1][1],
             "label": timespan[0],
             "count": len(df_top_artists_lt),
-            "ranking": df_top_artists_lt.to_dict(orient="records")
+            "ranking": top_artists_ranking
         }
         json_data['users'][0]["top_artists"].append(obj_top_artists_lt)
+
+        # ----
 
         # Construct JSON object for top genres with intervals
         top_genres_ranking = []
