@@ -67,6 +67,8 @@ export default function Radar() {
   useEffect(() => {
     const margin = 50;
 
+    const pointSize = (zoom) => Math.min(5, Math.max(5 - zoom, 2));
+
     //clear the chart
     d3.select(container.current).select(".chart").selectAll("*").remove();
 
@@ -229,7 +231,10 @@ export default function Radar() {
           })
           .on("mouseout", function () {
             tooltip.style("visibility", "hidden");
-            d3.select(this).attr("r", 6 - d3.zoomTransform(zoomGroup.node()).k); // Restaurer le rayon basé sur le zoom
+            d3.select(this).attr(
+              "r",
+              pointSize(d3.zoomTransform(zoomGroup.node()).k)
+            );
           })
           .on("click", () => {
             // Redirection vers la page HTML correspondante
@@ -322,7 +327,7 @@ export default function Radar() {
         svg.selectAll(".zoom-group").attr("transform", event.transform);
         svg
           .selectAll(".points-group circle")
-          .attr("r", () => 6 - event.transform.k);
+          .attr("r", pointSize(event.transform.k));
       });
     svg.call(zoom);
     const newTransform = d3.zoomIdentity.translate(-width, -height).scale(3);
