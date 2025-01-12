@@ -5,6 +5,7 @@ import data from "./assets/data.json";
 import { colors } from "./App";
 import { useFormBulleRadar } from "./FormBulleRadarContext";
 import { useSelectedUsers } from "./selectedUsersControl";
+import { formatListenTime } from "./utils";
 
 export default function Radar() {
   const container = createRef<HTMLDivElement>();
@@ -291,14 +292,7 @@ export default function Radar() {
               : 0,
 
             // Temps d'écoute formaté en heures et minutes
-            temps:
-              genreMatch["Listening Time"] > 3600
-                ? `${Math.floor(
-                    genreMatch["Listening Time"] / 3600
-                  )}h${Math.floor(
-                    (genreMatch["Listening Time"] % 3600) / 60
-                  )}min`
-                : `${Math.floor(genreMatch["Listening Time"] / 60)}min`,
+            temps: formatListenTime(genreMatch["Listening Time"]),
           };
         } else {
           //valeurs par défaut
@@ -341,7 +335,7 @@ export default function Radar() {
       flexDirection={"column"}
       textAlign={"center"}
     >
-      <Typography variant="h4">Top genres - radar</Typography>
+      <Typography variant="h4">Top genres</Typography>
       <Typography>
         Vision radar : Top N genres par période, classés selon l'utilisateur
         principal.

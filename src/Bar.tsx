@@ -5,6 +5,7 @@ import data from "./assets/data.json";
 import { colors } from "./App";
 import { useSelectedUsers } from "./selectedUsersControl";
 import { useFormBar } from "./FormBarContext";
+import { formatListenTime } from "./utils";
 
 export default function Bar() {
   const container = createRef<HTMLDivElement>();
@@ -61,12 +62,7 @@ export default function Bar() {
           user_id,
           username,
           listens: listens / 60,
-          formatedListens:
-            listens > 3600
-              ? `${Math.floor(listens / 3600)}h${Math.floor(
-                  (listens % 3600) / 60
-                )}min`
-              : `${(listens / 60).toFixed(1)}min`,
+          formatedTime: formatListenTime(listens),
         }))
       );
 
@@ -165,9 +161,7 @@ export default function Bar() {
                         <strong>${d.username}</strong>
                       </div><strong>Période:</strong> ${
                         d.period
-                      }<br><strong>Temps d'écoute:</strong> ${
-                d.formatedListens
-              }`
+                      }<br><strong>Temps d'écoute:</strong> ${d.formatedTime}`
             )
             .style("left", `${event.pageX + 10}px`)
             .style("top", `${event.pageY - 30}px`);
@@ -274,9 +268,7 @@ export default function Bar() {
                         <strong>${d.username}</strong>
                       </div><strong>Période:</strong> ${
                         d.period
-                      }<br><strong>Temps d'écoute:</strong> ${
-                  d.formatedListens
-                }`
+                      }<br><strong>Temps d'écoute:</strong> ${d.formatedTime}`
               )
               .style("left", `${event.pageX + 10}px`)
               .style("top", `${event.pageY - 30}px`);
@@ -384,9 +376,7 @@ export default function Bar() {
                         <strong>${d.username}</strong>
                       </div><strong>Période:</strong> ${
                         d.period
-                      }<br><strong>Temps d'écoute:</strong> ${
-                d.formatedListens
-              }`
+                      }<br><strong>Temps d'écoute:</strong> ${d.formatedTime}`
             )
             .style("left", `${event.pageX + 10}px`)
             .style("top", `${event.pageY - 30}px`);

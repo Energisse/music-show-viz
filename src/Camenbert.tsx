@@ -1,160 +1,251 @@
 import { Grid2, Typography } from "@mui/material";
-import { useEffect, createRef, useMemo, useRef } from "react";
+import { useEffect, createRef, useMemo, useRef, useState } from "react";
 import * as d3 from "d3";
 import data from "./assets/data.json";
 import { colors } from "./App";
 import { useFormBulleRadar } from "./FormBulleRadarContext";
+import { useSelectedUsers } from "./selectedUsersControl";
+import { formatListenTime } from "./utils";
 
 export default function Camenbert() {
   const container = createRef<HTMLDivElement>();
 
-  const svgRef = useRef<d3.Selection<
-    SVGSVGElement,
-    unknown,
-    null,
-    undefined
-  > | null>(null);
+  const { top: topN, period } = useFormBulleRadar();
 
-  const {
-    selectedUsers: selectedUsersRaw,
-    top: topN,
-    period,
-  } = useFormBulleRadar();
+  const selectedUsers = useSelectedUsers();
 
-  const selectedUsers = useMemo(
-    () =>
-      Object.entries(selectedUsersRaw)
-        .filter(([_, v]) => v)
-        .map(([k, _]) => k),
-    [selectedUsersRaw]
-  );
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const { width, height } = entry.contentRect;
 
-        svgRef.current?.attr("width", width.toString());
-        svgRef.current?.attr("height", height.toString());
+        setWidth(width);
+        setHeight(height);
       }
     });
 
     resizeObserver.observe(container.current!);
   }, [container]);
 
-  const combinedGenres = useMemo(
+  const filteredData = useMemo(
     () =>
-      selectedUsers
-        .map((user: string) => {
-          const dataUser = data.users.find(({ user_id }) => user_id === user);
-          if (!dataUser) return null;
-
-          const topArtists = dataUser?.top_artists
+      data.users
+        .filter(({ user_id }) => selectedUsers.includes(user_id))
+        .map(({ top_artists, user_id, username }) => ({
+          user_id: user_id,
+          username: username,
+          top_artists: top_artists
             .find(({ label }) => label === period)
             ?.ranking.slice(0, topN)
-            ?.sort((a, b) => b["Listening Time"] - a["Listening Time"]);
-
-          if (!topArtists) return null;
-
-          const sumArtists = d3.sum(
-            topArtists,
-            (artist) => artist["Listening Time"]
-          );
-
-          const angleScale = d3
-            .scaleLinear()
-            .domain([0, sumArtists || 0])
-            .range([0, Math.PI * 2]);
-
-          const radiusScale = d3
-            .scaleLinear()
-            .domain([
-              0,
-              d3.max(topArtists, (artist) => artist["Listening Time"]) || 0,
-            ])
-            .range([0, 100]);
-
-          let totalAngle = 0;
-
-          return {
-            user,
-            songs: topArtists.flatMap((artist) => {
-              const startAngle = totalAngle;
-              const endAngle =
-                startAngle + angleScale(artist["Listening Time"]);
-              totalAngle = endAngle;
-
-              let totalRadius = 0;
-
-              return dataUser.top_tracks
-                .find(({ label }) => label === period)
-                ?.ranking.filter((song) => song.Artist === artist.Artist)
-                .sort((a, b) => b["Listening Time"] - a["Listening Time"])
-                .map((song) => ({
-                  ...song,
-                  startAngle,
-                  endAngle,
-                  innerRadius: totalRadius,
-                  outerRadius: (totalRadius += radiusScale(
-                    song["Listening Time"]
-                  )),
-                }));
-            }),
-          };
-        })
-        .filter((x) => x),
-    [selectedUsers, period, topN]
+            .map(({ list, ...rest }) => ({
+              ...rest,
+              list: list.sort(
+                (a, b) => b["Listening Time"] - a["Listening Time"]
+              ),
+            })),
+        })),
+    [period, selectedUsers, topN]
   );
+
+  const combinedArtistes = useMemo(() => {
+    const maxArtists = d3.max(filteredData, (user) =>
+      d3.max(user.top_artists, (artist) => artist["Listening Time"])
+    );
+
+    return filteredData
+      .map((data) => {
+        const paddingAngle = 0.1;
+
+        const angleScale =
+          (Math.PI * 2 - paddingAngle * data.top_artists.length) /
+          d3.sum(data.top_artists, (artist) => artist["Listening Time"]);
+
+        const padding = 4;
+
+        const radiusScale = d3
+          .scaleLinear()
+          .domain([0, maxArtists])
+          .range([0, 200]);
+
+        let totalAngle = 0;
+        const maxSongs = 10;
+
+        const sumArtist = d3.sum(
+          data.top_artists,
+          (artist) => artist["Listening Time"]
+        );
+
+        console.log(sumArtist, data.top_artists);
+
+        return {
+          user_id: data.user_id,
+          username: data.username,
+          radius:
+            radiusScale(
+              d3.max(data.top_artists, (artist) => artist["Listening Time"])
+            ) +
+            padding *
+              Math.min(
+                d3.max(data.top_artists, (artist) => artist.list.length) - 1,
+                maxSongs + 1
+              ),
+          songs: data.top_artists.flatMap((artist) => {
+            const startAngle = totalAngle + paddingAngle;
+            const endAngle = startAngle + angleScale * artist["Listening Time"];
+            totalAngle = endAngle;
+
+            let totalRadius = 0;
+            return [
+              ...(artist.list.length > maxSongs
+                ? [
+                    {
+                      "Song Title": "Autres",
+                      artist: artist.Artist,
+                      "Listening Time": artist.list
+                        .slice(maxSongs)
+                        .reduce((acc, song) => acc + song["Listening Time"], 0),
+                    },
+                  ]
+                : []),
+              ...artist.list.slice(0, maxSongs),
+            ].map((song, index, array) => {
+              const innerRadius = totalRadius;
+              const outerRadius =
+                totalRadius + radiusScale(song["Listening Time"]);
+              totalRadius = outerRadius + padding;
+
+              console.log(song["Listening Time"], artist["Listening Time"]);
+              return {
+                artist: artist.Artist,
+                ...song,
+                startAngle,
+                endAngle,
+                innerRadius,
+                outerRadius,
+                opacity: 1 - (0.8 / (array.length - 1)) * index,
+                formatedListens: formatListenTime(song["Listening Time"]),
+                percentageArtist:
+                  (song["Listening Time"] / artist["Listening Time"]) * 100,
+                percentage: (song["Listening Time"] / sumArtist) * 100,
+              };
+            });
+          }),
+        };
+      })
+      .filter((x) => x);
+  }, [filteredData]);
 
   useEffect(() => {
     //clear the chart
     d3.select(container.current).select(".chart").selectAll("*").remove();
-    const width = container.current!.clientWidth;
-    const height = container.current!.clientHeight;
 
-    svgRef.current = d3
+    const tooltip = d3.select(container.current).select(".tooltip");
+
+    const svg = d3
       .select(container.current)
       .select(".chart")
       .append("svg")
       .attr("width", width)
       .attr("height", height);
 
-    d3.forceSimulation(combinedGenres)
-      .force("x", d3.forceX(100).strength(0.05))
-      .force("y", d3.forceY(100).strength(0.05))
-      .force("collide", d3.forceCollide(100 + 2))
+    d3.forceSimulation(combinedArtistes)
+      .force("x", d3.forceX(width / 2).strength(0.05))
+      .force("y", d3.forceY(height / 2).strength(0.05))
+      .force(
+        "collide",
+        d3.forceCollide((d) => d.radius + 2)
+      )
       .on("tick", ticked);
 
-    svgRef
-      .current!.selectAll("path")
+    const zoomGroup = svg.append("g").attr("class", "zoom-group");
+
+    zoomGroup
+      .selectAll("path")
       .data(
-        combinedGenres.flatMap(({ songs, user, ...data }, i) =>
-          songs?.flatMap((song) => ({ ...song, user }))
+        combinedArtistes.flatMap(({ songs, user_id, username, ...data }, i) =>
+          songs?.flatMap((song) => ({ ...song, user_id, username }))
         )
       )
       .enter()
+      .append("g")
+      .attr("data-user", (artist) => artist.user_id)
       .append("path")
-      .attr("fill", (artist) => colors[artist.user])
-      .attr("data-user", (artist) => artist.user)
+      .style("cursor", "pointer")
+      .style("transition", " 0.2s")
+      .attr("fill", (artist) => colors[artist.user_id])
+      .style("opacity", (artist) => artist.opacity)
       .attr("d", (artist) => {
         return d3.arc()({
           ...artist,
         });
+      })
+      .on("mouseover", (event, d) => {
+        tooltip
+          .html(
+            `<div style="display: flex; align-items: center;">
+                  <div style="width: 10px; height: 10px; background-color: ${
+                    colors[d.user_id]
+                  }; margin-right: 5px; border: 1px solid #000;"></div>
+                  <strong>${d.username}</strong><br>
+                </div>
+                <strong>Écoutes:</strong> ${d.formatedListens}<br>
+                <strong>Pourcentage artiste:</strong> ${d.percentageArtist.toFixed(
+                  2
+                )}%<br>
+                <strong>Pourcentage total: </strong> ${d.percentage.toFixed(
+                  2
+                )}%<br>
+                <strong>Artiste:</strong> ${d.artist}<br>
+                <strong>Titre:</strong> ${d["Song Title"]}<br>
+                  `
+          )
+          .style("visibility", "visible");
+
+        d3.select(event.target).attr("d", (artist) => {
+          return d3.arc()({
+            ...artist,
+            innerRadius: Math.max(artist.innerRadius - 2, 0),
+            outerRadius: artist.outerRadius + 2,
+          });
+        });
+      })
+      .on("mousemove", function (event) {
+        tooltip
+          .style("left", `${event.pageX + 10}px`)
+          .style("top", `${event.pageY + 10}px`);
+      })
+      .on("mouseout", (event) => {
+        tooltip.style("visibility", "hidden");
+        d3.select(event.target).attr("d", (artist) => {
+          return d3.arc()({
+            ...artist,
+          });
+        });
       });
 
     function ticked() {
-      combinedGenres.forEach(({ songs, user, x, y }) => {
+      combinedArtistes.forEach(({ songs, user_id, x, y }) => {
         songs.forEach((song) => {
-          svgRef
-            .current!.selectAll(`[data-user=${user}]`)
-            .style(
-              "transform",
-              `translate(${x + width / 2}px, ${y + height / 2}px)`
-            );
+          svg
+            .selectAll(`[data-user=${user_id}]`)
+            .style("transform", `translate(${x}px, ${y}px)`);
         });
       });
     }
-  }, [combinedGenres, container]);
+
+    const zoom = d3
+      .zoom()
+      .scaleExtent([0.5, 5]) // Limiter les niveaux de zoom
+
+      .on("zoom", (event) => {
+        zoomGroup.attr("transform", event.transform);
+      });
+
+    svg.call(zoom);
+  }, [combinedArtistes, container, height, width]);
 
   return (
     <Grid2
@@ -163,17 +254,22 @@ export default function Camenbert() {
       flexDirection={"column"}
       textAlign={"center"}
     >
-      <Typography variant="h4">Top genres - diagramme en bulles</Typography>
-
-      <Typography>Vision bulles : Top N genres par période</Typography>
-
-      <Typography>
-        Part des bulles : Temps d'écoute utilisateur vs total.
-      </Typography>
-      <Typography>
-        Taille des bulles : Popularité du genre chez les utilisateurs.
-      </Typography>
+      <Typography variant="h4">Top artistes </Typography>
       <Grid2 flex={1} ref={container}>
+        <Typography
+          className="tooltip"
+          style={{
+            position: "absolute",
+            background: "#fff",
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+            padding: "5px",
+            fontSize: "12px",
+            visibility: "hidden",
+            textAlign: "left",
+            zIndex: 9999,
+          }}
+        />
         <div
           className="chart"
           style={{

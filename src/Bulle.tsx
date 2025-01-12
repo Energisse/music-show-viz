@@ -5,6 +5,7 @@ import data from "./assets/data.json";
 import { colors } from "./App";
 import { useFormBulleRadar } from "./FormBulleRadarContext";
 import { useSelectedUsers } from "./selectedUsersControl";
+import { formatListenTime } from "./utils";
 
 export default function Bulle() {
   const container = createRef<HTMLDivElement>();
@@ -84,14 +85,7 @@ export default function Bulle() {
               proportion,
               genre: genreName,
               temps: genreData["Listening Time"],
-              formatedTime:
-                genreData["Listening Time"] > 3600
-                  ? `${Math.floor(
-                      genreData["Listening Time"] / 3600
-                    )}h${Math.floor(
-                      (genreData["Listening Time"] % 3600) / 60
-                    )}min`
-                  : `${Math.floor(genreData["Listening Time"] / 60)}min`,
+              formatedTime: formatListenTime(genreData["Listening Time"]),
             };
           })
           .filter((d) => d !== null);
@@ -272,7 +266,7 @@ export default function Bulle() {
       flexDirection={"column"}
       textAlign={"center"}
     >
-      <Typography variant="h4">Top genres - diagramme en bulles</Typography>
+      <Typography variant="h4">Top genres</Typography>
 
       <Typography>Vision bulles : Top N genres par période</Typography>
 

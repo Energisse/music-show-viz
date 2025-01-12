@@ -17,6 +17,7 @@ import Bar from "./Bar";
 import UserSelector from "./UserSelector";
 import FormBar from "./FormBar";
 import { FormBarControlProvider } from "./FormBarContext";
+import Camenbert from "./Camenbert";
 
 export const colors = {
   clement: orange[800],
@@ -44,11 +45,14 @@ function App() {
             <Grid2 size={12} component={Paper} elevation={2}>
               <FormBulleRadar />
             </Grid2>
-            <Grid2 size={6} p={2} component={Paper} elevation={2} height={500}>
+            <Grid2 size={4} p={2} component={Paper} elevation={2} height={500}>
               <Radar />
             </Grid2>
-            <Grid2 size={6} p={2} component={Paper} elevation={2} height={500}>
+            <Grid2 size={4} p={2} component={Paper} elevation={2} height={500}>
               <Bulle />
+            </Grid2>
+            <Grid2 size={4} p={2} component={Paper} elevation={2} height={500}>
+              <Camenbert />
             </Grid2>
           </FormBulleRadarControlProvider>
         </Grid2>
@@ -104,8 +108,20 @@ function App() {
                   <li>
                     <Typography>
                       <span style={{ color: colors.thomas }}>Thomas</span>:
-                      Réalisation du site web
                     </Typography>
+                    <ul>
+                      <li>
+                        <Typography>
+                          Création des graphiques en camembert
+                        </Typography>
+                      </li>
+                      <li>
+                        <Typography>Création du site</Typography>
+                      </li>
+                      <li>
+                        <Typography>Correction des graphiques</Typography>
+                      </li>
+                    </ul>
                   </li>
                 </ul>
               </AccordionDetails>
