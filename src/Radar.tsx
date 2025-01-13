@@ -68,7 +68,7 @@ export default function Radar() {
   useEffect(() => {
     const margin = 50;
 
-    const pointSize = (zoom) => Math.min(5, Math.max(5 - zoom, 2));
+    const pointSize = (zoom) => Math.max(2, Math.min(4 - zoom, 5));
 
     //clear the chart
     d3.select(container.current).select(".chart").selectAll("*").remove();
