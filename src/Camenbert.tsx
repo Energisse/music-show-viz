@@ -320,8 +320,7 @@ export default function Camenbert() {
         musiques si necessaire)
       </Typography>
       <Typography>
-        Largeur des arc de cercle : Pourcentage d'écoute de la musique/de
-        l'artiste
+        Largeur des arc de cercle : Pourcentage d'écoute de l'artiste
       </Typography>
       <Typography>
         Hauteur des arc de cercle : Temps d'écoute de la musique/de l'artiste
