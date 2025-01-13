@@ -17,7 +17,9 @@ export default function Bar() {
   const { visualisation, period: selectedPeriod } = useFormBar();
 
   const title = useMemo(() => {
-    const selectedUsersCopy = [...selectedUsers];
+    const selectedUsersCopy = [...selectedUsers].map(
+      (user) => data.users.find(({ user_id }) => user === user_id)?.username
+    );
     let titre = "";
     if (selectedUsers.length === 1) {
       titre = "Analyse du temps d'écoute en minutes de ";
