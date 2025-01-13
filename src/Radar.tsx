@@ -2,7 +2,7 @@ import { Grid2, Typography } from "@mui/material";
 import { useEffect, createRef, useMemo, useState } from "react";
 import * as d3 from "d3";
 import data from "./assets/data.json";
-import { colors } from "./App";
+import { colors } from "./UserSelector";
 import { useFormBulleRadar } from "./FormBulleRadarContext";
 import { useSelectedUsers } from "./selectedUsersControl";
 import { formatListenTime } from "./utils";

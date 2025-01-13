@@ -2,11 +2,13 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
   Grid2,
+  IconButton,
   Paper,
+  Tooltip,
   Typography,
 } from "@mui/material";
-import { blue, green, orange, purple } from "@mui/material/colors";
 import Bulle from "./Bulle";
 import { FormBulleRadarControlProvider } from "./FormBulleRadarContext";
 import Radar from "./Radar";
@@ -14,17 +16,13 @@ import FormBulleRadar from "./FormBulleRadar";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Bar from "./Bar";
-import UserSelector from "./UserSelector";
+import UserSelector, { colors } from "./UserSelector";
 import FormBar from "./FormBar";
 import { FormBarControlProvider } from "./FormBarContext";
 import Camenbert from "./Camenbert";
-
-export const colors = {
-  clement: orange[800],
-  celine: blue[800],
-  matthieu: purple[800],
-  thomas: green[800],
-};
+import ZoomInMapIcon from "@mui/icons-material/ZoomInMap";
+import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
+import { useState } from "react";
 
 function App() {
   return (
@@ -45,15 +43,7 @@ function App() {
             <Grid2 size={12} component={Paper} elevation={2}>
               <FormBulleRadar />
             </Grid2>
-            <Grid2 size={4} p={2} component={Paper} elevation={2} height={500}>
-              <Radar />
-            </Grid2>
-            <Grid2 size={4} p={2} component={Paper} elevation={2} height={500}>
-              <Bulle />
-            </Grid2>
-            <Grid2 size={4} p={2} component={Paper} elevation={2} height={500}>
-              <Camenbert />
-            </Grid2>
+            <ZoomableGrid items={[<Radar />, <Bulle />, <Camenbert />]} />
           </FormBulleRadarControlProvider>
         </Grid2>
 
@@ -235,3 +225,63 @@ function App() {
 }
 
 export default App;
+
+type ZoomableGridProps = {
+  items: React.ReactNode[];
+};
+
+function ZoomableGrid({ items }: ZoomableGridProps) {
+  const [zoom, setZoom] = useState<number | null>(null);
+
+  return (
+    <Grid2 container size={12} component={Paper} elevation={2} spacing={2}>
+      {items.map((item, index) =>
+        zoom !== null && index !== zoom ? null : (
+          <Grid2
+            key={index}
+            size={zoom === index ? 12 : 12 / items.length}
+            p={2}
+            component={Paper}
+            elevation={2}
+            height={zoom === index ? 1000 : 500}
+          >
+            <Box
+              sx={{
+                position: "relative",
+              }}
+            >
+              <IconButton
+                onClick={() => setZoom(zoom === index ? null : index)}
+                sx={{
+                  position: "absolute",
+                  right: 0,
+                  top: 0,
+                }}
+                size="large"
+              >
+                {zoom === index ? (
+                  <Tooltip title="Dézoomer">
+                    <ZoomOutMapIcon
+                      sx={{
+                        fontSize: "2rem",
+                      }}
+                    />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Zoomer">
+                    <ZoomInMapIcon
+                      sx={{
+                        fontSize: "2rem",
+                      }}
+                    />
+                  </Tooltip>
+                )}
+              </IconButton>
+            </Box>
+            {item}
+          </Grid2>
+        )
+      )}
+    </Grid2>
+  );
+}

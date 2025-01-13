@@ -1,19 +1,14 @@
 import { createContext, Dispatch, useContext, useReducer } from "react";
+import * as data from "./assets/data.json";
 
-export const Users = ["thomas", "matthieu", "clement", "celine"] as const;
-
-export type UsersType = (typeof Users)[number];
-
-export type SelectedUserContextType = {
-  thomas: boolean;
-  matthieu: boolean;
-  clement: boolean;
-  celine: boolean;
-};
+export type SelectedUserContextType = Record<
+  (typeof data.users)[number]["user_id"],
+  boolean
+>;
 
 type toggleUserAction = {
   type: "toggleUser";
-  payload: UsersType;
+  payload: string;
 };
 
 type Action = toggleUserAction;
@@ -27,10 +22,8 @@ const selectedUserProvider = createContext<Dispatch<Action>>(
 );
 
 const initialState: SelectedUserContextType = {
-  thomas: true,
-  matthieu: true,
-  clement: true,
-  celine: true,
+  ...data.users.reduce((acc, { user_id }) => ({ ...acc, [user_id]: true }), {}),
+  thomas: false, //FIXME: Remove this line when the data is fixed
 };
 
 export function SelectedUserProvider({

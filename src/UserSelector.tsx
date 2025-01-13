@@ -1,20 +1,24 @@
 import { Grid2, Chip, Typography } from "@mui/material";
-import { colors } from "./App";
 import {
-  UsersType,
   useSelectedUsers,
   useSelectedUsersDispatch,
 } from "./selectedUsersControl";
+import * as data from "./assets/data.json";
+import { blue, green, orange, purple } from "@mui/material/colors";
 
-const users = [
-  { name: "clement", label: "Clément" },
-  { name: "celine", label: "Céline" },
-  { name: "matthieu", label: "Matthieu" },
-  { name: "thomas", label: "Thomas" },
-] satisfies {
-  name: UsersType;
-  label: string;
-}[];
+const users = data.users
+  .map((user) => ({
+    name: user.user_id,
+    label: user.username,
+  }))
+  .filter(({ label }) => label !== "Thomas Halvick");
+
+export const colors = {
+  [data.users[0].user_id]: blue[800],
+  [data.users[1].user_id]: orange[800],
+  [data.users[2].user_id]: green[800],
+  [data.users[3].user_id]: purple[800],
+};
 
 export default function UserSelector() {
   const selectedUsers = useSelectedUsers();

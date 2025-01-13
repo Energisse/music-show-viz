@@ -2,10 +2,10 @@ import { Grid2, Typography } from "@mui/material";
 import { useEffect, createRef, useMemo, useState } from "react";
 import * as d3 from "d3";
 import data from "./assets/data.json";
-import { colors } from "./App";
 import { useFormBulleRadar } from "./FormBulleRadarContext";
 import { useSelectedUsers } from "./selectedUsersControl";
 import { formatListenTime } from "./utils";
+import { colors } from "./UserSelector";
 
 export default function Bulle() {
   const container = createRef<HTMLDivElement>();

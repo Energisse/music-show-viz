@@ -2,7 +2,7 @@ import { Grid2, Typography } from "@mui/material";
 import { useEffect, createRef, useMemo, useRef, useState } from "react";
 import * as d3 from "d3";
 import data from "./assets/data.json";
-import { colors } from "./App";
+import { colors } from "./UserSelector";
 import { useFormBulleRadar } from "./FormBulleRadarContext";
 import { useSelectedUsers } from "./selectedUsersControl";
 import { formatListenTime } from "./utils";
@@ -10,6 +10,7 @@ import { formatListenTime } from "./utils";
 const paddingAngle = 0.1;
 const padding = 4;
 const innerPadding = 10;
+const maxSongs = 5;
 
 export default function Camenbert() {
   const container = createRef<HTMLDivElement>();
@@ -71,7 +72,6 @@ export default function Camenbert() {
           .range([0, 200]);
 
         let totalAngle = 0;
-        const maxSongs = 5;
 
         const sumArtist = d3.sum(
           data.top_artists,
@@ -127,11 +127,6 @@ export default function Camenbert() {
                   totalRadius + radiusScale(song["Listening Time"]);
                 totalRadius =
                   outerRadius + (padding * maxSongs) / (array.length - 1);
-                console.log(
-                  (padding * maxSongs) / (array.length - 1),
-                  maxSongs,
-                  array.length
-                );
                 return {
                   ...song,
                   innerRadius,
@@ -319,6 +314,17 @@ export default function Camenbert() {
       textAlign={"center"}
     >
       <Typography variant="h4">Top {topN} artistes</Typography>
+
+      <Typography>
+        Top {maxSongs} des musiques par artiste (Regroupement des autres
+        musiques si necessaire)
+      </Typography>
+      <Typography>
+        Largeur des arc de cercle : Temps d'écoute par musique
+      </Typography>
+      <Typography>
+        Taille des bulles : Popularité du genre chez les utilisateurs.
+      </Typography>
       <Grid2 flex={1} ref={container}>
         <Typography
           className="tooltip"
