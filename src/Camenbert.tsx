@@ -318,7 +318,7 @@ export default function Camenbert() {
       flexDirection={"column"}
       textAlign={"center"}
     >
-      <Typography variant="h4">Top artistes </Typography>
+      <Typography variant="h4">Top {topN} artistes</Typography>
       <Grid2 flex={1} ref={container}>
         <Typography
           className="tooltip"

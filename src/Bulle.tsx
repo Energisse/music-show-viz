@@ -266,7 +266,7 @@ export default function Bulle() {
       flexDirection={"column"}
       textAlign={"center"}
     >
-      <Typography variant="h4">Top genres</Typography>
+      <Typography variant="h4">Top {topN} genres</Typography>
 
       <Typography>Vision bulles : Top N genres par période</Typography>
 
