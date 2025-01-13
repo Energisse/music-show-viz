@@ -320,11 +320,13 @@ export default function Camenbert() {
         musiques si necessaire)
       </Typography>
       <Typography>
-        Largeur des arc de cercle : Temps d'écoute par musique
+        Largeur des arc de cercle : Pourcentage d'écoute de la musique/de
+        l'artiste
       </Typography>
       <Typography>
-        Taille des bulles : Popularité du genre chez les utilisateurs.
+        Hauteur des arc de cercle : Temps d'écoute de la musique/de l'artiste
       </Typography>
+
       <Grid2 flex={1} ref={container}>
         <Typography
           className="tooltip"
