@@ -67,12 +67,12 @@ function App() {
 
         <Grid2 size={12} p={2}>
           <Paper sx={{ padding: 2 }}>
-            <Typography variant="h3" paddingBottom={2}>
+            <Typography variant="h5" paddingBottom={2}>
               À propos
             </Typography>
             <Accordion>
               <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
-                <Typography variant="h4">Qui a fait quoi ?</Typography>
+                <Typography variant="h6">Qui a fait quoi ?</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <ul>
@@ -118,7 +118,7 @@ function App() {
             </Accordion>
             <Accordion>
               <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
-                <Typography variant="h4">
+                <Typography variant="h6">
                   D'où viennent les données ?
                 </Typography>
               </AccordionSummary>
@@ -159,7 +159,7 @@ function App() {
             </Accordion>
             <Accordion>
               <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
-                <Typography variant="h4">Téchnologies utilisées</Typography>
+                <Typography variant="h6">Téchnologies utilisées</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <ul>
@@ -188,7 +188,7 @@ function App() {
             </Accordion>
             <Accordion>
               <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
-                <Typography variant="h4">Code source</Typography>
+                <Typography variant="h6">Code source</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
@@ -206,7 +206,7 @@ function App() {
             </Accordion>
             <Accordion>
               <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
-                <Typography variant="h4">Hébergement</Typography>
+                <Typography variant="h6">Hébergement</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>

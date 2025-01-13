@@ -89,10 +89,10 @@ export default function Bar() {
       )
     );
 
-    if (visualisation === "day") {
-      return [...periods];
+    if (visualisation === "month") {
+      return [...periods].reverse();
     }
-    return [...periods].reverse();
+    return [...periods];
   }, [filteredData, visualisation]);
 
   useEffect(() => {
