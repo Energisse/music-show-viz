@@ -7,6 +7,10 @@ import { useFormBulleRadar } from "./FormBulleRadarContext";
 import { useSelectedUsers } from "./selectedUsersControl";
 import { formatListenTime } from "./utils";
 
+const paddingAngle = 0.1;
+const padding = 4;
+const innerPadding = 10;
+
 export default function Camenbert() {
   const container = createRef<HTMLDivElement>();
 
@@ -57,13 +61,9 @@ export default function Camenbert() {
 
     return filteredData
       .map((data) => {
-        const paddingAngle = 0.1;
-
         const angleScale =
           (Math.PI * 2 - paddingAngle * data.top_artists.length) /
           d3.sum(data.top_artists, (artist) => artist["Listening Time"]);
-
-        const padding = 4;
 
         const radiusScale = d3
           .scaleLinear()
@@ -71,14 +71,12 @@ export default function Camenbert() {
           .range([0, 200]);
 
         let totalAngle = 0;
-        const maxSongs = 10;
+        const maxSongs = 5;
 
         const sumArtist = d3.sum(
           data.top_artists,
           (artist) => artist["Listening Time"]
         );
-
-        console.log(sumArtist, data.top_artists);
 
         return {
           user_id: data.user_id,
@@ -87,51 +85,65 @@ export default function Camenbert() {
             radiusScale(
               d3.max(data.top_artists, (artist) => artist["Listening Time"])
             ) +
+            innerPadding +
             padding *
               Math.min(
                 d3.max(data.top_artists, (artist) => artist.list.length) - 1,
                 maxSongs + 1
               ),
-          songs: data.top_artists.flatMap((artist) => {
+          artists: data.top_artists.map((artist) => {
             const startAngle = totalAngle + paddingAngle;
             const endAngle = startAngle + angleScale * artist["Listening Time"];
             totalAngle = endAngle;
 
-            let totalRadius = 0;
-            return [
-              ...(artist.list.length > maxSongs
-                ? [
-                    {
-                      "Song Title": "Autres",
-                      artist: artist.Artist,
-                      "Listening Time": artist.list
-                        .slice(maxSongs)
-                        .reduce((acc, song) => acc + song["Listening Time"], 0),
-                    },
-                  ]
-                : []),
-              ...artist.list.slice(0, maxSongs),
-            ].map((song, index, array) => {
-              const innerRadius = totalRadius;
-              const outerRadius =
-                totalRadius + radiusScale(song["Listening Time"]);
-              totalRadius = outerRadius + padding;
+            let totalRadius = innerPadding;
 
-              console.log(song["Listening Time"], artist["Listening Time"]);
-              return {
-                artist: artist.Artist,
-                ...song,
-                startAngle,
-                endAngle,
-                innerRadius,
-                outerRadius,
-                opacity: 1 - (0.8 / (array.length - 1)) * index,
-                formatedListens: formatListenTime(song["Listening Time"]),
-                percentageArtist:
-                  (song["Listening Time"] / artist["Listening Time"]) * 100,
-                percentage: (song["Listening Time"] / sumArtist) * 100,
-              };
-            });
+            if (artist.list.length === 1) {
+              totalRadius += padding * maxSongs;
+            }
+
+            return {
+              artist: artist.Artist,
+              startAngle,
+              endAngle,
+              songs: [
+                ...(artist.list.length > maxSongs
+                  ? [
+                      {
+                        "Song Title": "Autres",
+                        "Listening Time": artist.list
+                          .slice(maxSongs)
+                          .reduce(
+                            (acc, song) => acc + song["Listening Time"],
+                            0
+                          ),
+                      },
+                    ]
+                  : []),
+                ...artist.list.slice(0, maxSongs),
+              ].map((song, index, array) => {
+                const innerRadius = totalRadius;
+                const outerRadius =
+                  totalRadius + radiusScale(song["Listening Time"]);
+                totalRadius =
+                  outerRadius + (padding * maxSongs) / (array.length - 1);
+                console.log(
+                  (padding * maxSongs) / (array.length - 1),
+                  maxSongs,
+                  array.length
+                );
+                return {
+                  ...song,
+                  innerRadius,
+                  outerRadius,
+                  opacity: 1 - (0.8 / (array.length - 1)) * index,
+                  formatedListens: formatListenTime(song["Listening Time"]),
+                  percentageArtist:
+                    (song["Listening Time"] / artist["Listening Time"]) * 100,
+                  percentage: (song["Listening Time"] / sumArtist) * 100,
+                };
+              }),
+            };
           }),
         };
       })
@@ -151,27 +163,61 @@ export default function Camenbert() {
       .attr("width", width)
       .attr("height", height);
 
-    d3.forceSimulation(combinedArtistes)
-      .force("x", d3.forceX(width / 2).strength(0.05))
-      .force("y", d3.forceY(height / 2).strength(0.05))
-      .force(
-        "collide",
-        d3.forceCollide((d) => d.radius + 2)
-      )
-      .on("tick", ticked);
-
     const zoomGroup = svg.append("g").attr("class", "zoom-group");
 
-    zoomGroup
-      .selectAll("path")
-      .data(
-        combinedArtistes.flatMap(({ songs, user_id, username, ...data }, i) =>
-          songs?.flatMap((song) => ({ ...song, user_id, username }))
-        )
+    const userGroup = zoomGroup
+      .selectAll("g")
+      .data(combinedArtistes)
+      .enter()
+      .append("g")
+      .attr("data-user", (d) => d.user_id);
+
+    const artistGroup = userGroup
+      .selectAll("g")
+      .data(({ artists, ...data }) =>
+        artists.flatMap((dataArtist) => ({
+          ...data,
+          ...dataArtist,
+        }))
       )
       .enter()
       .append("g")
-      .attr("data-user", (artist) => artist.user_id)
+      .attr("data-artiste", (d) => d.artist);
+
+    artistGroup
+      .append("g")
+      .style(
+        "transform",
+        ({ endAngle, startAngle, songs }) =>
+          `rotate(${
+            (((endAngle + startAngle) / 2) * 180) / Math.PI - 90
+          }deg) translate(${songs.at(-1).outerRadius + padding}px, 0px)`
+      )
+      .append("text")
+      .attr("class", "artist-name")
+      .attr("data-start-radius", ({ songs }) => songs.at(-1).outerRadius)
+      .text((d) => d.artist)
+      .style("text-anchor", ({ endAngle, startAngle }) =>
+        ((((endAngle + startAngle) / 2) * 180) / Math.PI) % 360 > 180
+          ? "end"
+          : "start"
+      )
+      .style("rotate", ({ endAngle, startAngle }) =>
+        ((((endAngle + startAngle) / 2) * 180) / Math.PI) % 360 > 180
+          ? "180deg"
+          : 0
+      );
+
+    artistGroup
+      .append("g")
+      .selectAll("g")
+      .data(({ songs, ...data }) =>
+        songs.flatMap((song) => ({
+          ...data,
+          ...song,
+        }))
+      )
+      .enter()
       .append("path")
       .style("cursor", "pointer")
       .style("transition", " 0.2s")
@@ -209,6 +255,8 @@ export default function Camenbert() {
             ...artist,
             innerRadius: Math.max(artist.innerRadius - 2, 0),
             outerRadius: artist.outerRadius + 2,
+            startAngle: artist.startAngle - 0.05,
+            endAngle: artist.endAngle + 0.05,
           });
         });
       })
@@ -226,19 +274,35 @@ export default function Camenbert() {
         });
       });
 
+    d3.forceSimulation(combinedArtistes)
+      .force("x", d3.forceX(width / 2).strength(0.05))
+      .force("y", d3.forceY(height / 2).strength(0.05))
+      .force(
+        "collide",
+        d3.forceCollide((d) =>
+          d3.max(
+            d3.selectAll(`g[data-user=${d.user_id}] .artist-name`).nodes(),
+            (n) => n.getComputedTextLength() + +n.dataset.startRadius
+          )
+        )
+      )
+      .on("tick", ticked);
+
     function ticked() {
-      combinedArtistes.forEach(({ songs, user_id, x, y }) => {
-        songs.forEach((song) => {
-          svg
-            .selectAll(`[data-user=${user_id}]`)
-            .style("transform", `translate(${x}px, ${y}px)`);
+      combinedArtistes.forEach(({ artists, user_id, x, y }) => {
+        artists.forEach(({ songs }) => {
+          songs.forEach(() => {
+            svg
+              .selectAll(`[data-user=${user_id}]`)
+              .style("transform", `translate(${x}px, ${y}px)`);
+          });
         });
       });
     }
 
     const zoom = d3
       .zoom()
-      .scaleExtent([0.5, 5]) // Limiter les niveaux de zoom
+      .scaleExtent([0.5, 100]) // Limiter les niveaux de zoom
 
       .on("zoom", (event) => {
         zoomGroup.attr("transform", event.transform);
