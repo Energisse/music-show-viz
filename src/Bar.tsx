@@ -1,50 +1,52 @@
-import { Grid2, Typography } from "@mui/material";
+import {
+  Checkbox,
+  Grid2,
+  ListSubheader,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import { useEffect, createRef, useMemo, useState } from "react";
 import * as d3 from "d3";
 import data from "./assets/data.json";
 import { colors } from "./UserSelector";
 import { useSelectedUsers } from "./selectedUsersControl";
-import { useFormBar } from "./FormBarContext";
 import { formatListenTime } from "./utils";
 
-export default function Bar() {
+export type BarProps = {
+  visualisation: "month" | "year" | "day";
+};
+
+export default function Bar({ visualisation }: BarProps) {
   const container = createRef<HTMLDivElement>();
+
+  const periodList = useMemo(() => {
+    if (visualisation === "day") return [];
+    if (visualisation === "year")
+      return [
+        ...new Set(
+          data.users.flatMap((d) =>
+            d.average_listening_time.dataYear.map((d) => d.period.split("-")[0])
+          )
+        ),
+      ].sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+    return [
+      ...new Set(
+        data.users.flatMap((d) =>
+          d.average_listening_time.dataMonth.map((d) =>
+            d.period.split("-").splice(0, 2).join("-")
+          )
+        )
+      ),
+    ].sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+  }, [visualisation]);
+
+  const [selectedPeriod, setSelectedPeriod] = useState([periodList[0]]);
 
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
   const selectedUsers = useSelectedUsers();
-  const { visualisation, period: selectedPeriod } = useFormBar();
-
-  const title = useMemo(() => {
-    const selectedUsersCopy = [...selectedUsers].map(
-      (user) => data.users.find(({ user_id }) => user === user_id)?.username
-    );
-    let titre = "";
-    if (selectedUsers.length === 1) {
-      titre = "Analyse du temps d'écoute en minutes de ";
-    } else {
-      titre = "Comparaison du temps d'écoute en minutes de ";
-    }
-    titre += [
-      selectedUsersCopy.splice(0, selectedUsersCopy.length - 1).join(", "),
-      selectedUsersCopy.at(-1),
-    ].join(" et ");
-
-    switch (visualisation) {
-      case "month":
-        titre += " par mois";
-        break;
-      case "year":
-        titre += " par année";
-        break;
-      case "day":
-        titre += " par jour";
-        break;
-    }
-
-    return titre;
-  }, [selectedUsers, visualisation]);
 
   const filteredData = useMemo(() => {
     const filteredData = data.users
@@ -52,16 +54,11 @@ export default function Bar() {
       .map(({ average_listening_time, user_id, username }) => ({
         user_id,
         username,
-        average_listening_time: (
-          average_listening_time[
-            `data${
-              visualisation.charAt(0).toUpperCase() + visualisation.slice(1)
-            }`
-          ] as
-            | (typeof data)["users"][number]["average_listening_time"]["dataDay"]
-            | (typeof data)["users"][number]["average_listening_time"]["dataMonth"]
-            | (typeof data)["users"][number]["average_listening_time"]["dataYear"]
-        ).map(({ listens, ...rest }) => ({
+        average_listening_time: average_listening_time[
+          `data${
+            visualisation.charAt(0).toUpperCase() + visualisation.slice(1)
+          }` as keyof typeof average_listening_time
+        ].map(({ listens, ...rest }) => ({
           ...rest,
           listens: listens / 60,
           formatedTime: formatListenTime(listens),
@@ -72,13 +69,46 @@ export default function Bar() {
       return filteredData.map(({ average_listening_time, ...data }) => ({
         ...data,
         average_listening_time: average_listening_time.filter(({ period }) =>
-          period.toString().startsWith(selectedPeriod)
+          selectedPeriod.some((selectedPeriod) =>
+            period.toString().startsWith(selectedPeriod)
+          )
         ),
       }));
     }
 
     return filteredData;
   }, [visualisation, selectedUsers, selectedPeriod]);
+
+  const selectPeriods = useMemo(() => {
+    const selectPeriods = Array<React.ReactNode>();
+
+    if (visualisation === "day") return selectPeriods;
+
+    if (visualisation === "year") {
+      return periodList.map((val) => (
+        <MenuItem key={val} value={val}>
+          <Checkbox checked={selectedPeriod.includes(val)} />
+          {new Date(val).toLocaleDateString("fr-FR", { year: "numeric" })}
+        </MenuItem>
+      ));
+    }
+
+    periodList.forEach((year, index, array) => {
+      if (index === 0 || year.split("-")[0] !== array[index - 1].split("-")[0])
+        selectPeriods.push(
+          <ListSubheader> {year.split("-")[0]} </ListSubheader>
+        );
+
+      selectPeriods.push(
+        <MenuItem key={year} value={year}>
+          <Checkbox checked={selectedPeriod.includes(year)} />
+          {new Date(year).toLocaleDateString("fr-FR", { month: "long" })}
+        </MenuItem>
+      );
+    });
+
+    return selectPeriods;
+  }, [visualisation, selectedPeriod, periodList]);
 
   const periods = useMemo(() => {
     const periods = new Set<string>();
@@ -89,11 +119,10 @@ export default function Bar() {
       )
     );
 
-    if (visualisation === "month") {
-      return [...periods].reverse();
-    }
-    return [...periods];
-  }, [filteredData, visualisation]);
+    return [...periods].sort(
+      (a, b) => new Date(a).getTime() - new Date(b).getTime()
+    );
+  }, [filteredData]);
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
@@ -112,7 +141,7 @@ export default function Bar() {
     //clear the chart
     d3.select(container.current).select(".chart").selectAll("*").remove();
 
-    const margin = { top: 40, right: 100, bottom: 70, left: 100 };
+    const margin = { top: 40, right: 50, bottom: 70, left: 50 };
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
 
@@ -443,9 +472,49 @@ export default function Bar() {
       flexDirection={"column"}
       textAlign={"center"}
     >
-      <Typography variant="h4" paddingBottom={2}>
-        {title}
+      <Typography variant="h5">
+        {visualisation === "day"
+          ? "Jour"
+          : visualisation === "month"
+          ? "Mois"
+          : "Année" + (selectedPeriod.length > 1 ? "s" : "")}
+        {visualisation !== "day" && (
+          <>
+            :
+            <Select
+              variant="standard"
+              multiple
+              value={selectedPeriod}
+              onChange={(e) =>
+                setSelectedPeriod((prev) => {
+                  if (e.target.value.length < prev.length)
+                    return e.target.value as string[];
+                  if (prev.length > 5) return prev;
+                  return e.target.value as string[];
+                })
+              }
+              sx={{
+                fontSize: "1.25rem",
+              }}
+              renderValue={(selected) =>
+                selected
+                  .map((date) =>
+                    new Date(date).toLocaleDateString(
+                      "fr-FR",
+                      visualisation === "year"
+                        ? { year: "numeric" }
+                        : { month: "long", year: "numeric" }
+                    )
+                  )
+                  .join(", ")
+              }
+            >
+              {selectPeriods}
+            </Select>
+          </>
+        )}
       </Typography>
+
       <Grid2 flex={1} ref={container}>
         <div
           className="chart"

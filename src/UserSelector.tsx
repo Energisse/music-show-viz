@@ -1,4 +1,4 @@
-import { Grid2, Chip, Typography } from "@mui/material";
+import { Grid2, Chip } from "@mui/material";
 import {
   useSelectedUsers,
   useSelectedUsersDispatch,

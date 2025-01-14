@@ -15,14 +15,12 @@ import Radar from "./Radar";
 import FormBulleRadar from "./FormBulleRadar";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import Bar from "./Bar";
 import UserSelector, { colors } from "./UserSelector";
-import FormBar from "./FormBar";
-import { FormBarControlProvider } from "./FormBarContext";
 import Camenbert from "./Camenbert";
 import ZoomInMapIcon from "@mui/icons-material/ZoomInMap";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import { useState } from "react";
+import BarGroupe from "./BarGroupe";
 
 function App() {
   return (
@@ -31,45 +29,23 @@ function App() {
         <Grid2
           size={12}
           component={Paper}
-          elevation={2}
           position={"sticky"}
           top={0}
           zIndex={1000}
         >
           <UserSelector />
         </Grid2>
-        <Grid2
-          container
-          size={12}
-          p={2}
-          component={Paper}
-          elevation={2}
-          spacing={2}
-        >
+        <Grid2 container size={12} p={2} component={Paper} spacing={2}>
           <FormBulleRadarControlProvider>
-            <Grid2 size={12} component={Paper} elevation={2}>
+            <Grid2 size={12} component={Paper}>
               <FormBulleRadar />
             </Grid2>
             <ZoomableGrid items={[<Radar />, <Bulle />, <Camenbert />]} />
           </FormBulleRadarControlProvider>
         </Grid2>
 
-        <Grid2
-          container
-          size={12}
-          p={2}
-          spacing={2}
-          component={Paper}
-          elevation={2}
-        >
-          <FormBarControlProvider>
-            <Grid2 size={12} component={Paper} elevation={2}>
-              <FormBar />
-            </Grid2>
-            <Grid2 size={12} p={2} component={Paper} elevation={2} height={500}>
-              <Bar />
-            </Grid2>
-          </FormBarControlProvider>
+        <Grid2 container size={12} p={2} spacing={2} component={Paper}>
+          <BarGroupe />
         </Grid2>
 
         <Grid2 size={12} p={2}>
