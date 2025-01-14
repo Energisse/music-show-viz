@@ -28,7 +28,14 @@ function App() {
   return (
     <>
       <Grid2 container p={2} spacing={2}>
-        <Grid2 size={12} component={Paper} elevation={2}>
+        <Grid2
+          size={12}
+          component={Paper}
+          elevation={2}
+          position={"sticky"}
+          top={0}
+          zIndex={1000}
+        >
           <UserSelector />
         </Grid2>
         <Grid2

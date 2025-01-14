@@ -33,9 +33,6 @@ export default function UserSelector() {
       p={2}
       justifyContent={"center"}
     >
-      <Grid2 size={12} textAlign={"center"}>
-        <Typography variant="h6">Utilisateurs :</Typography>
-      </Grid2>
       {users.map(({ name, label }) => (
         <Chip
           key={name}
