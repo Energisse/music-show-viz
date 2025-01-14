@@ -7,7 +7,11 @@ import { useSelectedUsers } from "./selectedUsersControl";
 import { formatListenTime } from "./utils";
 import { colors } from "./UserSelector";
 
-export default function Bulle() {
+export type BulleProps = {
+  zoomed?: boolean;
+};
+
+export default function Bulle({ zoomed }: BulleProps) {
   const container = createRef<HTMLDivElement>();
 
   const [width, setWidth] = useState(0);
@@ -268,14 +272,18 @@ export default function Bulle() {
     >
       <Typography variant="h4">Top {topN} genres</Typography>
 
-      <Typography>Vision bulles : Top N genres par période</Typography>
+      {zoomed && (
+        <>
+          <Typography>Vision bulles : Top N genres par période</Typography>
 
-      <Typography>
-        Part des bulles : Temps d'écoute utilisateur vs total.
-      </Typography>
-      <Typography>
-        Taille des bulles : Popularité du genre chez les utilisateurs.
-      </Typography>
+          <Typography>
+            Part des bulles : Temps d'écoute utilisateur vs total.
+          </Typography>
+          <Typography>
+            Taille des bulles : Popularité du genre chez les utilisateurs.
+          </Typography>
+        </>
+      )}
       <Grid2 flex={1} ref={container}>
         <div
           className="chart"

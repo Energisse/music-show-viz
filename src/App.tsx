@@ -16,10 +16,10 @@ import FormBulleRadar from "./FormBulleRadar";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import UserSelector, { colors } from "./UserSelector";
-import Camenbert from "./Camenbert";
+import Camembert from "./Camembert";
 import ZoomInMapIcon from "@mui/icons-material/ZoomInMap";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
-import { useState } from "react";
+import { cloneElement, useState } from "react";
 import BarGroupe from "./BarGroupe";
 
 function App() {
@@ -40,7 +40,7 @@ function App() {
             <Grid2 size={12} component={Paper}>
               <FormBulleRadar />
             </Grid2>
-            <ZoomableGrid items={[<Radar />, <Bulle />, <Camenbert />]} />
+            <ZoomableGrid items={[<Radar />, <Bulle />, <Camembert />]} />
           </FormBulleRadarControlProvider>
         </Grid2>
 
@@ -210,14 +210,16 @@ function App() {
 export default App;
 
 type ZoomableGridProps = {
-  items: React.ReactNode[];
+  items: React.ReactElement<{
+    zoomed: boolean;
+  }>[];
 };
 
 function ZoomableGrid({ items }: ZoomableGridProps) {
   const [zoom, setZoom] = useState<number | null>(null);
 
   return (
-    <Grid2 container size={12} component={Paper} elevation={2} spacing={2}>
+    <Grid2 container size={12} spacing={2}>
       {items.map((item, index) =>
         zoom !== null && index !== zoom ? null : (
           <Grid2
@@ -225,7 +227,6 @@ function ZoomableGrid({ items }: ZoomableGridProps) {
             size={zoom === index ? 12 : 12 / items.length}
             p={2}
             component={Paper}
-            elevation={2}
             height={zoom === index ? 1000 : 500}
           >
             <Box
@@ -244,7 +245,7 @@ function ZoomableGrid({ items }: ZoomableGridProps) {
               >
                 {zoom === index ? (
                   <Tooltip title="Dézoomer">
-                    <ZoomOutMapIcon
+                    <ZoomInMapIcon
                       sx={{
                         fontSize: "2rem",
                       }}
@@ -252,7 +253,7 @@ function ZoomableGrid({ items }: ZoomableGridProps) {
                   </Tooltip>
                 ) : (
                   <Tooltip title="Zoomer">
-                    <ZoomInMapIcon
+                    <ZoomOutMapIcon
                       sx={{
                         fontSize: "2rem",
                       }}
@@ -261,7 +262,7 @@ function ZoomableGrid({ items }: ZoomableGridProps) {
                 )}
               </IconButton>
             </Box>
-            {item}
+            {cloneElement(item, { zoomed: zoom === index })}
           </Grid2>
         )
       )}

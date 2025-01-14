@@ -7,7 +7,11 @@ import { useFormBulleRadar } from "./FormBulleRadarContext";
 import { useSelectedUsers } from "./selectedUsersControl";
 import { formatListenTime } from "./utils";
 
-export default function Radar() {
+export type RadarProps = {
+  zoomed?: boolean;
+};
+
+export default function Radar({ zoomed }: RadarProps) {
   const container = createRef<HTMLDivElement>();
 
   const [width, setWidth] = useState(0);
@@ -68,7 +72,7 @@ export default function Radar() {
   useEffect(() => {
     const margin = 50;
 
-    const pointSize = (zoom) => Math.max(2, Math.min(4 - zoom, 5));
+    const pointSize = (zoom) => Math.max(1, Math.min(5 - zoom, 4));
 
     //clear the chart
     d3.select(container.current).select(".chart").selectAll("*").remove();
@@ -312,7 +316,7 @@ export default function Radar() {
 
     const zoom = d3
       .zoom()
-      .scaleExtent([1, 5])
+      .scaleExtent([1, 10])
       .translateExtent([
         [width / 4, height / 4],
         [(width * 3) / 4, (height * 3) / 4],
@@ -336,18 +340,22 @@ export default function Radar() {
       textAlign={"center"}
     >
       <Typography variant="h4">Top {topN} genres</Typography>
-      <Typography>
-        Vision radar : Top N genres par période, classés selon l'utilisateur
-        principal.
-      </Typography>
-      <Typography>
-        Le radar compare les proportions de temps d'écoute des différents
-        utilisateurs sur leur top genre.
-      </Typography>
-      <Typography>
-        Les proportions reflètent le temps d'écoute pour chaque utilisateur par
-        rapport au total sur la période donnée.
-      </Typography>
+      {zoomed && (
+        <>
+          <Typography>
+            Vision radar : Top N genres par période, classés selon l'utilisateur
+            principal.
+          </Typography>
+          <Typography>
+            Le radar compare les proportions de temps d'écoute des différents
+            utilisateurs sur leur top genre.
+          </Typography>
+          <Typography>
+            Les proportions reflètent le temps d'écoute pour chaque utilisateur
+            par rapport au total sur la période donnée.
+          </Typography>
+        </>
+      )}
 
       <Grid2 flex={1} ref={container}>
         <div

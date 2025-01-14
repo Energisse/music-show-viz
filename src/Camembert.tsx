@@ -12,7 +12,11 @@ const padding = 4;
 const innerPadding = 10;
 const maxSongs = 5;
 
-export default function Camenbert() {
+export type CamembertProps = {
+  zoomed?: boolean;
+};
+
+export default function Camembert({ zoomed }: CamembertProps) {
   const container = createRef<HTMLDivElement>();
 
   const { top: topN, period } = useFormBulleRadar();
@@ -315,16 +319,21 @@ export default function Camenbert() {
     >
       <Typography variant="h4">Top {topN} artistes</Typography>
 
-      <Typography>
-        Top {maxSongs} des musiques par artiste (Regroupement des autres
-        musiques si necessaire)
-      </Typography>
-      <Typography>
-        Largeur des arc de cercle : Pourcentage d'écoute de l'artiste
-      </Typography>
-      <Typography>
-        Hauteur des arc de cercle : Temps d'écoute de la musique/de l'artiste
-      </Typography>
+      {zoomed && (
+        <>
+          <Typography>
+            Top {maxSongs} des musiques par artiste (Regroupement des autres
+            musiques si necessaire)
+          </Typography>
+          <Typography>
+            Largeur des arc de cercle : Pourcentage d'écoute de l'artiste
+          </Typography>
+          <Typography>
+            Hauteur des arc de cercle : Temps d'écoute de la musique/de
+            l'artiste
+          </Typography>
+        </>
+      )}
 
       <Grid2 flex={1} ref={container}>
         <div
