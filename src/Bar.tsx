@@ -68,11 +68,16 @@ export default function Bar({ visualisation }: BarProps) {
     if (visualisation === "month" || visualisation === "year") {
       return filteredData.map(({ average_listening_time, ...data }) => ({
         ...data,
-        average_listening_time: average_listening_time.filter(({ period }) =>
-          selectedPeriod.some((selectedPeriod) =>
-            period.toString().startsWith(selectedPeriod)
+        average_listening_time: average_listening_time
+          .filter(({ period }) =>
+            selectedPeriod.some((selectedPeriod) =>
+              period.toString().startsWith(selectedPeriod)
+            )
           )
-        ),
+          .sort(
+            (a, b) =>
+              new Date(a.period).getTime() - new Date(b.period).getTime()
+          ),
       }));
     }
 
@@ -164,16 +169,21 @@ export default function Bar({ visualisation }: BarProps) {
       user_id,
       username,
     }: (typeof filteredData)[number]) {
-      const x = d3.scaleBand().range([0, innerWidth]).padding(0.1);
-      const y = d3.scaleLinear().range([innerHeight, 0]);
+      const x = d3
+        .scaleBand()
+        .domain(periods)
+        .range([0, innerWidth])
+        .padding(0.1);
+
+      const y = d3
+        .scaleLinear()
+        .domain([0, d3.max(average_listening_time, (d) => d.listens) || 0])
+        .range([0, innerHeight]);
 
       const xAxisGroup = svg
         .append("g")
         .attr("transform", `translate(0,${innerHeight})`);
       const yAxisGroup = svg.append("g");
-      // Mise à jour des échelles
-      x.domain(periods);
-      y.domain([0, d3.max(average_listening_time, (d) => d.listens) || 0]);
 
       // // Liaison des données avec les barres
       svg
@@ -183,9 +193,8 @@ export default function Bar({ visualisation }: BarProps) {
         .append("rect")
         .attr("class", "bar")
         .attr("x", ({ period }) => x(period.toString()) || 0)
-        .attr("y", ({ listens }) => y(listens))
+        .attr("y", innerHeight)
         .attr("width", x.bandwidth())
-        .attr("height", ({ listens }) => innerHeight - y(listens))
         .attr("fill", colors[user_id])
         .attr("opacity", 0.8)
         .on("mousemove", function (event, { formatedTime, period }) {
@@ -209,7 +218,13 @@ export default function Bar({ visualisation }: BarProps) {
         .on("mouseout", function () {
           tooltip.style("visibility", "hidden");
           d3.select(this).attr("opacity", 0.8).attr("stroke", "none");
-        });
+        })
+        .transition()
+        .attr("animation-direction", "reverse")
+        .duration(500)
+        .delay((_, i) => i * 10)
+        .attr("y", ({ listens }) => innerHeight - y(listens))
+        .attr("height", ({ listens }) => y(listens));
       // Mise à jour des axes
       xAxisGroup
         .call(d3.axisBottom(x))
@@ -254,13 +269,20 @@ export default function Bar({ visualisation }: BarProps) {
         .attr("class", "bar1")
         .style("opacity", 0.8)
         .attr("y", (d) => y(d.period.toString()) || 0)
-        .attr("x", (d) => x1(d.listens))
+        .attr("x", (d) => width / 2 - margin.left - paddingCenter / 2)
         .attr("height", y.bandwidth())
+        .attr("fill", colors[data[0].user_id]);
+
+      bar1
+        .transition()
+        .duration(500)
+        .delay((_, i) => i * 10)
+        .attr("x", (d) => x1(d.listens))
+
         .attr(
           "width",
           (d) => width / 2 - margin.left - paddingCenter / 2 - x1(d.listens)
-        )
-        .attr("fill", colors[data[0].user_id]);
+        );
 
       // Ajouter l'axe X pour l'utilisateur 1
       group1
@@ -283,8 +305,13 @@ export default function Bar({ visualisation }: BarProps) {
         .attr("y", (d) => y(d.period.toString()) || 0)
         .attr("x", 0)
         .attr("height", y.bandwidth())
-        .attr("width", (d) => x2(d.listens))
         .attr("fill", colors[data[1].user_id]);
+
+      bar2
+        .transition()
+        .duration(500)
+        .delay((_, i) => i * 10)
+        .attr("width", (d) => x2(d.listens));
 
       // Ajouter l'axe X pour l'utilisateur 2
       group2
@@ -358,10 +385,22 @@ export default function Bar({ visualisation }: BarProps) {
     function drawAdvanced(data: typeof filteredData) {
       const userCount = selectedUsers.length;
 
-      const x = d3.scaleBand().range([0, width - margin.left - margin.right]);
+      const x = d3
+        .scaleBand()
+        .domain(periods)
+        .range([0, width - margin.left - margin.right])
+        .paddingInner(0.01);
+
       const y = d3
         .scaleLinear()
-        .range([height - margin.top - margin.bottom, 0]);
+        .domain([
+          0,
+          d3.max(data, ({ average_listening_time }) =>
+            d3.max(average_listening_time, ({ listens }) => listens)
+          ) || 0,
+        ])
+        .range([height - margin.top - margin.bottom, 0])
+        .nice();
 
       const xAxisGroup = svg
         .append("g")
@@ -371,27 +410,18 @@ export default function Bar({ visualisation }: BarProps) {
         );
       const yAxisGroup = svg.append("g");
 
-      // Mettre à jour les échelles
-      x.range([0, width - margin.left - margin.right])
-        .domain(periods)
-        .paddingInner(0.001); // Réduction de l'espace entre les périodes
-      y.domain([
-        0,
-        d3.max(data, ({ average_listening_time }) =>
-          d3.max(average_listening_time, ({ listens }) => listens)
-        ) || 0,
-      ]).nice();
-
       // Largeur dynamique des barres
       const barWidth = Math.min(18, x.bandwidth() / userCount);
 
       // Lier les données aux éléments rect
       svg
         .selectAll(".bar")
-        .data(
-          data.flatMap(({ average_listening_time, ...data }) =>
-            average_listening_time.flatMap((d) => [{ ...d, ...data }])
-          )
+        .data(data)
+        .enter()
+        .selectAll("g")
+        .append("g")
+        .data(({ average_listening_time, ...data }) =>
+          average_listening_time.flatMap((d) => ({ ...d, ...data }))
         )
         .enter()
         .append("rect")
@@ -403,12 +433,8 @@ export default function Bar({ visualisation }: BarProps) {
             (x.bandwidth() - userCount * barWidth) / 2 + // Décalage pour centrer les groupes
             selectedUsers.indexOf(d.user_id) * barWidth // Décalage pour chaque joueur
         )
-        .attr("y", (d) => y(d.listens))
+        .attr("y", innerHeight)
         .attr("width", barWidth - 2) // Ajustement pour éviter les chevauchements
-        .attr(
-          "height",
-          (d) => height - y(d.listens) - margin.top - margin.bottom
-        )
         .attr("fill", (d) => colors[d.user_id] || "gray")
         .attr("opacity", 0.8)
         .on("mousemove", function (event, d) {
@@ -435,7 +461,15 @@ export default function Bar({ visualisation }: BarProps) {
         .on("mouseout", function () {
           tooltip.style("visibility", "hidden");
           d3.select(this).attr("opacity", 0.8).attr("stroke", "none");
-        });
+        })
+        .transition()
+        .duration(500)
+        .delay((_, i) => i * 10)
+        .attr("y", (d) => y(d.listens))
+        .attr(
+          "height",
+          (d) => height - y(d.listens) - margin.top - margin.bottom
+        );
 
       // Mise à jour des axes
       xAxisGroup

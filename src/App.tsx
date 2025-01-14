@@ -227,7 +227,7 @@ function ZoomableGrid({ items }: ZoomableGridProps) {
             size={zoom === index ? 12 : 12 / items.length}
             p={2}
             component={Paper}
-            height={zoom === index ? 1000 : 500}
+            height={zoom === index ? 800 : 500}
           >
             <Box
               sx={{
