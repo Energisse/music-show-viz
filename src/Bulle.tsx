@@ -120,7 +120,7 @@ export default function Bulle() {
       .attr("width", width)
       .attr("height", height);
 
-    const tooltip = d3.select(container.current).select(".tooltip");
+    const tooltip = d3.select("#tooltip");
 
     const radiusScale = d3
       .scaleSqrt()
@@ -277,20 +277,6 @@ export default function Bulle() {
         Taille des bulles : Popularité du genre chez les utilisateurs.
       </Typography>
       <Grid2 flex={1} ref={container}>
-        <Typography
-          className="tooltip"
-          style={{
-            position: "absolute",
-            background: "#fff",
-            border: "1px solid #ccc",
-            borderRadius: "5px",
-            padding: "5px",
-            fontSize: "12px",
-            visibility: "hidden",
-            textAlign: "left",
-            zIndex: 9999,
-          }}
-        />
         <div
           className="chart"
           style={{

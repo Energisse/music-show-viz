@@ -149,7 +149,7 @@ export default function Camenbert() {
     //clear the chart
     d3.select(container.current).select(".chart").selectAll("*").remove();
 
-    const tooltip = d3.select(container.current).select(".tooltip");
+    const tooltip = d3.select("#tooltip");
 
     const svg = d3
       .select(container.current)
@@ -327,20 +327,6 @@ export default function Camenbert() {
       </Typography>
 
       <Grid2 flex={1} ref={container}>
-        <Typography
-          className="tooltip"
-          style={{
-            position: "absolute",
-            background: "#fff",
-            border: "1px solid #ccc",
-            borderRadius: "5px",
-            padding: "5px",
-            fontSize: "12px",
-            visibility: "hidden",
-            textAlign: "left",
-            zIndex: 9999,
-          }}
-        />
         <div
           className="chart"
           style={{

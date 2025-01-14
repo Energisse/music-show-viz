@@ -128,7 +128,7 @@ export default function Bar() {
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
     // Tooltip for hover interactions
-    const tooltip = d3.select(container.current).select(".tooltip");
+    const tooltip = d3.select("#tooltip");
 
     function draw({
       average_listening_time,
@@ -447,20 +447,6 @@ export default function Bar() {
         {title}
       </Typography>
       <Grid2 flex={1} ref={container}>
-        <Typography
-          className="tooltip"
-          style={{
-            position: "absolute",
-            background: "#fff",
-            border: "1px solid #ccc",
-            borderRadius: "5px",
-            padding: "5px",
-            fontSize: "12px",
-            visibility: "hidden",
-            textAlign: "left",
-            zIndex: 9999,
-          }}
-        />
         <div
           className="chart"
           style={{
