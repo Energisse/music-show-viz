@@ -30,13 +30,13 @@ export default function BarGroupe() {
       <Typography variant="h4" paddingBottom={2}>
         {title}
       </Typography>
-      <Grid2 size={12} p={2} component={Paper} height={500}>
+      <Grid2 size={12} p={2} component={Paper}>
         <Bar visualisation="day" />
       </Grid2>
-      <Grid2 size={12} p={2} component={Paper} height={500}>
+      <Grid2 size={12} p={2} component={Paper}>
         <Bar visualisation="month" />
       </Grid2>
-      <Grid2 size={12} p={2} component={Paper} height={500}>
+      <Grid2 size={12} p={2} component={Paper}>
         <Bar visualisation="year" />
       </Grid2>
     </Grid2>

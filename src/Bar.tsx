@@ -98,19 +98,28 @@ export default function Bar({ visualisation }: BarProps) {
       ));
     }
 
-    periodList.forEach((year, index, array) => {
-      if (index === 0 || year.split("-")[0] !== array[index - 1].split("-")[0])
-        selectPeriods.push(
-          <ListSubheader> {year.split("-")[0]} </ListSubheader>
-        );
+    periodList
+      .sort(
+        (a, b) =>
+          new Date(b).getFullYear() - new Date(a).getFullYear() ||
+          new Date(a).getTime() - new Date(b).getTime()
+      )
+      .forEach((year, index, array) => {
+        if (
+          index === 0 ||
+          year.split("-")[0] !== array[index - 1].split("-")[0]
+        )
+          selectPeriods.push(
+            <ListSubheader> {year.split("-")[0]} </ListSubheader>
+          );
 
-      selectPeriods.push(
-        <MenuItem key={year} value={year}>
-          <Checkbox checked={selectedPeriod.includes(year)} />
-          {new Date(year).toLocaleDateString("fr-FR", { month: "long" })}
-        </MenuItem>
-      );
-    });
+        selectPeriods.push(
+          <MenuItem key={year} value={year}>
+            <Checkbox checked={selectedPeriod.includes(year)} />
+            {new Date(year).toLocaleDateString("fr-FR", { month: "long" })}
+          </MenuItem>
+        );
+      });
 
     return selectPeriods;
   }, [visualisation, selectedPeriod, periodList]);
@@ -239,7 +248,7 @@ export default function Bar({ visualisation }: BarProps) {
       // Scales for the charts
       const y = d3
         .scaleBand()
-        .range([0, innerHeight])
+        .range([innerHeight, 0])
         .padding(0.2)
         .domain(periods);
 
@@ -502,7 +511,9 @@ export default function Bar({ visualisation }: BarProps) {
     <Grid2
       container
       size={12}
-      height={"100%"}
+      height={
+        selectedUsers.length === 2 ? Math.max(500, periods.length * 20) : 500
+      }
       flexDirection={"column"}
       textAlign={"center"}
     >
@@ -514,7 +525,8 @@ export default function Bar({ visualisation }: BarProps) {
           : "Année" + (selectedPeriod.length > 1 ? "s" : "")}
         {visualisation !== "day" && (
           <>
-            :
+            {" "}
+            :{" "}
             <Select
               variant="standard"
               multiple

@@ -4,3 +4,7 @@ body {
   padding: 0;
   height: 100%;
 }
+
+text {
+  font-family: "Roboto", sans-serif;
+}
