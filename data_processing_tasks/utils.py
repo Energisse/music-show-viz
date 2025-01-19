@@ -4,6 +4,7 @@ import pandas as pd
 import ast
 import json
 import requests
+import re
 
 def fetch_tags(title, artist):
     """
@@ -249,10 +250,31 @@ def export_music_data_to_json(input_filename, output_filename, user_id, username
     })
     json_data['users'][0]["average_listening_time"]["dataYear"] = average_monthly_sums.to_dict(orient="records")
 
-    # Calculate hourly sums
-    hourly_sums = df.groupby(df['Date'].dt.hour)['Listening Time'].mean().reset_index()
-    hourly_sums = hourly_sums[["Date", "Listening Time"]].rename(
-        columns={"Date": "period", "Listening Time": "listens"})
+    # Calculate df_hourly sums
+
+    df_hourly = df.copy()
+
+    # Computer total number of days
+    df_hourly['Hour'] = df_hourly['Date'].dt.hour
+
+    # Determine the min and max date
+    min_date = df_hourly['Date'].min()
+    max_date = df_hourly['Date'].max()
+
+    # Calculate the total number of days (inclusive)
+    total_days = (max_date - min_date).days + 1
+
+    # Aggregate total listening time per hour
+    hourly_sums = df_hourly.groupby('Hour')['Listening Time'].sum().reset_index()
+
+    # Compute the average listening time per hour (divide by total days)
+    hourly_sums['Listening Time'] = hourly_sums['Listening Time'] / total_days
+
+    # Rename columns to match JSON structure
+    hourly_sums = hourly_sums.rename(
+        columns={"Hour": "period", "Listening Time": "listens"}
+    )
+
     json_data['users'][0]["average_listening_time"]["dataDay"] = hourly_sums.to_dict(orient="records")
 
     # Serializing json
@@ -263,3 +285,29 @@ def export_music_data_to_json(input_filename, output_filename, user_id, username
         outfile.write(output_json)
 
     print(f"Data has been processed and saved to {output_filename}")
+
+def fetch_video_durations(video_ids):
+    url = "https://www.googleapis.com/youtube/v3/videos"
+    params = {
+        'part': 'contentDetails',
+        'id': ','.join(video_ids),
+        'key': "API_KEY"
+    }
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    items = response.json().get('items', [])
+    durations = {item['id']: item['contentDetails']['duration'] for item in items}
+    return durations
+
+def iso8601_to_seconds(duration):
+    # Regular expression to parse ISO 8601 duration format
+    match = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', duration)
+    if not match:
+        return 0  # Return 0 if the format is invalid
+
+    hours = int(match.group(1)) if match.group(1) else 0
+    minutes = int(match.group(2)) if match.group(2) else 0
+    seconds = int(match.group(3)) if match.group(3) else 0
+
+    # Calculate total seconds
+    return hours * 3600 + minutes * 60 + seconds
