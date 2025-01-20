@@ -167,8 +167,7 @@ export default function Camembert({ zoomed }: CamembertProps) {
     const userGroup = zoomGroup
       .selectAll("g")
       .data(combinedArtistes)
-      .enter()
-      .append("g")
+      .join("g")
       .attr("data-user", (d) => d.user_id);
 
     const artistGroup = userGroup
@@ -179,8 +178,7 @@ export default function Camembert({ zoomed }: CamembertProps) {
           ...dataArtist,
         }))
       )
-      .enter()
-      .append("g")
+      .join("g")
       .attr("data-artiste", (d) => d.artist);
 
     artistGroup
@@ -216,8 +214,7 @@ export default function Camembert({ zoomed }: CamembertProps) {
           ...song,
         }))
       )
-      .enter()
-      .append("path")
+      .join("path")
       .style("cursor", "pointer")
       .style("transition", " 0.2s")
       .attr("fill", (artist) => colors[artist.user_id])

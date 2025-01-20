@@ -203,8 +203,7 @@ export default function Bar({ visualisation }: BarProps) {
       const bar1 = group1
         .selectAll(".bar1")
         .data(data[0].average_listening_time)
-        .enter()
-        .append("rect")
+        .join("rect")
         .attr("class", "bar1")
         .style("opacity", 0.8)
         .attr("y", (d) => y(d.period.toString()) || 0)
@@ -237,8 +236,7 @@ export default function Bar({ visualisation }: BarProps) {
       const bar2 = group2
         .selectAll(".bar2")
         .data(data[1].average_listening_time)
-        .enter()
-        .append("rect")
+        .join("rect")
         .attr("class", "bar2")
         .style("opacity", 0.8)
         .attr("y", (d) => y(d.period.toString()) || 0)
@@ -354,15 +352,14 @@ export default function Bar({ visualisation }: BarProps) {
       const barWidth = x.bandwidth() / userCount;
 
       // Lier les données aux éléments rect
-      const users = svg.selectAll(".bar").data(data).enter().append("g");
+      const users = svg.selectAll(".bar").data(data).join("g");
 
       users
         .selectAll("g")
         .data(({ average_listening_time, ...data }) =>
           average_listening_time.flatMap((d) => ({ ...d, ...data }))
         )
-        .enter()
-        .append("rect")
+        .join("rect")
         .attr("class", "bar")
         .attr(
           "x",

@@ -149,8 +149,7 @@ export default function Bulle({ zoomed }: BulleProps) {
     const nodes = zoomGroup
       .selectAll("g")
       .data(bubbles)
-      .enter()
-      .append("g")
+      .join("g")
       .attr("data-name", ({ name }) => name)
       .on("mouseover", function (_, { users }) {
         d3.select(this).selectAll("path").style("scale", 1.1);
@@ -213,8 +212,7 @@ export default function Bulle({ zoomed }: BulleProps) {
     nodes
       .selectAll("path")
       .data(({ users }) => pie(users))
-      .enter()
-      .append("path")
+      .join("path")
       .attr("data-user", ({ data: { user_id } }) => user_id)
       .attr("d", arc)
       .attr("fill", ({ data: { user_id } }) => colors[user_id])
