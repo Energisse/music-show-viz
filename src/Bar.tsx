@@ -12,6 +12,7 @@ import data from "./assets/data.json";
 import { colors } from "./UserSelector";
 import { useSelectedUsers } from "./selectedUsersControl";
 import { formatListenTime } from "./utils";
+import useWatchSize from "./hooks/useWatchSize";
 
 export type BarProps = {
   visualisation: "month" | "year" | "day";
@@ -43,8 +44,7 @@ export default function Bar({ visualisation }: BarProps) {
 
   const [selectedPeriod, setSelectedPeriod] = useState([periodList[0]]);
 
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  const { height, width } = useWatchSize(container);
 
   const selectedUsers = useSelectedUsers();
 
@@ -139,19 +139,6 @@ export default function Bar({ visualisation }: BarProps) {
   }, [filteredData]);
 
   useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const { width, height } = entry.contentRect;
-
-        setWidth(width);
-        setHeight(height);
-      }
-    });
-
-    resizeObserver.observe(container.current!);
-  }, [container]);
-
-  useEffect(() => {
     //clear the chart
     d3.select(container.current).select(".chart").selectAll("*").remove();
 
@@ -207,7 +194,7 @@ export default function Bar({ visualisation }: BarProps) {
         .attr("class", "bar1")
         .style("opacity", 0.8)
         .attr("y", (d) => y(d.period.toString()) || 0)
-        .attr("x", (d) => width / 2 - margin.left - paddingCenter / 2)
+        .attr("x", width / 2 - margin.left - paddingCenter / 2)
         .attr("height", y.bandwidth())
         .attr("fill", colors[data[0].user_id]);
 

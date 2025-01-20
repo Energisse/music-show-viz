@@ -1,11 +1,12 @@
 import { Grid2, Typography } from "@mui/material";
-import { useEffect, createRef, useMemo, useRef, useState } from "react";
+import { useEffect, createRef, useMemo } from "react";
 import * as d3 from "d3";
 import data from "./assets/data.json";
 import { colors } from "./UserSelector";
 import { useFormBulleRadar } from "./FormBulleRadarContext";
 import { useSelectedUsers } from "./selectedUsersControl";
 import { formatListenTime } from "./utils";
+import useWatchSize from "./hooks/useWatchSize";
 
 const paddingAngle = 0.1;
 const padding = 4;
@@ -23,21 +24,7 @@ export default function Camembert({ zoomed }: CamembertProps) {
 
   const selectedUsers = useSelectedUsers();
 
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const { width, height } = entry.contentRect;
-
-        setWidth(width);
-        setHeight(height);
-      }
-    });
-
-    resizeObserver.observe(container.current!);
-  }, [container]);
+  const { height, width } = useWatchSize(container);
 
   const filteredData = useMemo(
     () =>

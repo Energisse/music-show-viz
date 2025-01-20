@@ -1,11 +1,12 @@
 import { Grid2, Typography } from "@mui/material";
-import { useEffect, createRef, useMemo, useState } from "react";
+import { useEffect, createRef, useMemo } from "react";
 import * as d3 from "d3";
 import data from "./assets/data.json";
 import { useFormBulleRadar } from "./FormBulleRadarContext";
 import { useSelectedUsers } from "./selectedUsersControl";
 import { formatListenTime } from "./utils";
 import { colors } from "./UserSelector";
+import useWatchSize from "./hooks/useWatchSize";
 
 export type BulleProps = {
   zoomed?: boolean;
@@ -14,24 +15,11 @@ export type BulleProps = {
 export default function Bulle({ zoomed }: BulleProps) {
   const container = createRef<HTMLDivElement>();
 
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
-
   const { top: topN, period } = useFormBulleRadar();
 
   const selectedUsers = useSelectedUsers();
 
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const { width, height } = entry.contentRect;
-        setWidth(width);
-        setHeight(height);
-      }
-    });
-
-    resizeObserver.observe(container.current!);
-  }, [container]);
+  const { height, width } = useWatchSize(container);
 
   const bubbles = useMemo(() => {
     return Object.entries(

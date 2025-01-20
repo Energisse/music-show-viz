@@ -1,11 +1,12 @@
 import { Grid2, Typography } from "@mui/material";
-import { useEffect, createRef, useMemo, useState } from "react";
+import { useEffect, createRef, useMemo } from "react";
 import * as d3 from "d3";
 import data from "./assets/data.json";
 import { colors } from "./UserSelector";
 import { useFormBulleRadar } from "./FormBulleRadarContext";
 import { useSelectedUsers } from "./selectedUsersControl";
 import { formatListenTime } from "./utils";
+import useWatchSize from "./hooks/useWatchSize";
 
 export type RadarProps = {
   zoomed?: boolean;
@@ -14,8 +15,7 @@ export type RadarProps = {
 export default function Radar({ zoomed }: RadarProps) {
   const container = createRef<HTMLDivElement>();
 
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  const { height, width } = useWatchSize(container);
 
   const { top: topN, period, order } = useFormBulleRadar();
 
@@ -84,18 +84,6 @@ export default function Radar({ zoomed }: RadarProps) {
 
     return [axes, userData];
   }, [selectedUsers, period, topN]);
-
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const { width, height } = entry.contentRect;
-        setWidth(width);
-        setHeight(height);
-      }
-    });
-
-    resizeObserver.observe(container.current!);
-  }, [container]);
 
   useEffect(() => {
     const margin = 50;
