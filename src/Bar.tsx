@@ -173,77 +173,7 @@ export default function Bar({ visualisation }: BarProps) {
     // Tooltip for hover interactions
     const tooltip = d3.select("#tooltip");
 
-    function draw({
-      average_listening_time,
-      user_id,
-      username,
-    }: (typeof filteredData)[number]) {
-      const x = d3
-        .scaleBand()
-        .domain(periods)
-        .range([0, innerWidth])
-        .padding(0.1);
-
-      const y = d3
-        .scaleLinear()
-        .domain([0, d3.max(average_listening_time, (d) => d.listens) || 0])
-        .range([0, innerHeight]);
-
-      const xAxisGroup = svg
-        .append("g")
-        .attr("transform", `translate(0,${innerHeight})`);
-      const yAxisGroup = svg.append("g");
-
-      // // Liaison des données avec les barres
-      svg
-        .selectAll(".bar")
-        .data(average_listening_time)
-        .enter()
-        .append("rect")
-        .attr("class", "bar")
-        .attr("x", ({ period }) => x(period.toString()) || 0)
-        .attr("y", innerHeight)
-        .attr("width", x.bandwidth())
-        .attr("fill", colors[user_id])
-        .attr("opacity", 0.8)
-        .on("mousemove", function (event, { formatedTime, period }) {
-          tooltip
-            .style("visibility", "visible")
-            .html(
-              `
-              <div style="display: flex; align-items: center;">
-                        <div style="width: 12px; height: 12px; background-color: ${colors[user_id]}; margin-right: 5px;"></div>
-                        <strong>${username}</strong>
-                      </div><strong>Période:</strong> ${period}<br><strong>Temps d'écoute:</strong> ${formatedTime}`
-            )
-            .style("left", `${event.pageX + 10}px`)
-            .style("top", `${event.pageY - 30}px`);
-
-          d3.select(this)
-            .attr("opacity", 1)
-            .attr("stroke", "black")
-            .attr("stroke-width", 2);
-        })
-        .on("mouseout", function () {
-          tooltip.style("visibility", "hidden");
-          d3.select(this).attr("opacity", 0.8).attr("stroke", "none");
-        })
-        .transition()
-        .attr("animation-direction", "reverse")
-        .duration(500)
-        .delay((_, i) => i * 10)
-        .attr("y", ({ listens }) => innerHeight - y(listens))
-        .attr("height", ({ listens }) => y(listens));
-      // Mise à jour des axes
-      xAxisGroup
-        .call(d3.axisBottom(x))
-        .selectAll("text")
-        .attr("transform", "rotate(45)")
-        .style("text-anchor", "start");
-      yAxisGroup.call(d3.axisLeft(y));
-    }
-
-    function drawComparison(data: typeof filteredData) {
+    function drawHorizontal(data: typeof filteredData) {
       const paddingCenter = 100;
       // Scales for the charts
       const y = d3
@@ -391,14 +321,15 @@ export default function Bar({ visualisation }: BarProps) {
         .text(`Écoutes de ${selectedUsers[1]}`);
     }
 
-    function drawAdvanced(data: typeof filteredData) {
+    function drawVertical(data: typeof filteredData) {
       const userCount = selectedUsers.length;
 
       const x = d3
         .scaleBand()
         .domain(periods)
         .range([0, width - margin.left - margin.right])
-        .paddingInner(0.01);
+        .paddingInner(0.2)
+        .paddingOuter(0.2);
 
       const y = d3
         .scaleLinear()
@@ -420,15 +351,13 @@ export default function Bar({ visualisation }: BarProps) {
       const yAxisGroup = svg.append("g");
 
       // Largeur dynamique des barres
-      const barWidth = Math.min(18, x.bandwidth() / userCount);
+      const barWidth = x.bandwidth() / userCount;
 
       // Lier les données aux éléments rect
-      svg
-        .selectAll(".bar")
-        .data(data)
-        .enter()
+      const users = svg.selectAll(".bar").data(data).enter().append("g");
+
+      users
         .selectAll("g")
-        .append("g")
         .data(({ average_listening_time, ...data }) =>
           average_listening_time.flatMap((d) => ({ ...d, ...data }))
         )
@@ -444,7 +373,7 @@ export default function Bar({ visualisation }: BarProps) {
         )
         .attr("y", innerHeight)
         .attr("width", barWidth - 2) // Ajustement pour éviter les chevauchements
-        .attr("fill", (d) => colors[d.user_id] || "gray")
+        .attr("fill", (d) => colors[d.user_id])
         .attr("opacity", 0.8)
         .on("mousemove", function (event, d) {
           tooltip
@@ -490,12 +419,10 @@ export default function Bar({ visualisation }: BarProps) {
       yAxisGroup.call(d3.axisLeft(y));
     }
 
-    if (filteredData.length === 1) {
-      draw(filteredData[0]);
-    } else if (selectedUsers.length === 2) {
-      drawComparison(filteredData);
+    if (selectedUsers.length === 2) {
+      drawHorizontal(filteredData);
     } else {
-      drawAdvanced(filteredData);
+      drawVertical(filteredData.splice(0, filteredData.length));
     }
   }, [
     selectedUsers,

@@ -6,12 +6,10 @@ import {
 import * as data from "./assets/data.json";
 import { blue, green, orange, purple } from "@mui/material/colors";
 
-const users = data.users
-  .map((user) => ({
-    name: user.user_id,
-    label: user.username,
-  }))
-  .filter(({ label }) => label !== "Thomas Halvick");
+const users = data.users.map((user) => ({
+  name: user.user_id,
+  label: user.username,
+}));
 
 export const colors = {
   [data.users[0].user_id]: blue[800],

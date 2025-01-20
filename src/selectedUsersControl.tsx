@@ -23,7 +23,6 @@ const selectedUserProvider = createContext<Dispatch<Action>>(
 
 const initialState: SelectedUserContextType = {
   ...data.users.reduce((acc, { user_id }) => ({ ...acc, [user_id]: true }), {}),
-  thomas: false, //FIXME: Remove this line when the data is fixed
 };
 
 export function SelectedUserProvider({

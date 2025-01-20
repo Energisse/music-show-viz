@@ -156,7 +156,6 @@ export default function Bulle({ zoomed }: BulleProps) {
       .attr("data-name", (d) => d.name)
       .on("mouseover", function (event, d) {
         d3.select(this).selectAll("path").style("scale", 1.1);
-        console.log(d);
         tooltip
           .html(
             `
@@ -284,7 +283,8 @@ export default function Bulle({ zoomed }: BulleProps) {
           <Typography>Vision bulles : Top N genres par période</Typography>
 
           <Typography>
-            Part des bulles : Temps d'écoute utilisateur vs total.
+            Part des bulles : Temps d'écoute utilisateur vs total d'écoute sur
+            leur top genre
           </Typography>
           <Typography>
             Taille des bulles : Popularité du genre chez les utilisateurs.
