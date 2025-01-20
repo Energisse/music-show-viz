@@ -33,87 +33,83 @@ export default function Bulle({ zoomed }: BulleProps) {
     resizeObserver.observe(container.current!);
   }, [container]);
 
-  const combinedGenres = useMemo(
-    () =>
-      Array.from(
-        new Set(
-          selectedUsers.flatMap(
-            (user: string) =>
-              data.users
-                .find((u) => u.user_id === user)
-                ?.top_genres.find((p) => p.label === period)
-                ?.ranking.sort(
-                  (a, b) => b["Listening Time"] - a["Listening Time"]
-                )
-                .slice(0, topN)
-                .map((d) => d.Tags) || []
-          )
-        )
-      ),
-    [selectedUsers, period, topN]
-  );
+  const bubbles = useMemo(() => {
+    return Object.entries(
+      selectedUsers.reduce(
+        (acc, user) => {
+          const userData = data.users.find((u) => u.user_id === user)!;
 
-  const bubbles = useMemo(
-    () =>
-      combinedGenres.map((genreName) => {
-        const userProportions = selectedUsers
-          .map((user) => {
-            const userData = data.users.find((u) => u.user_id === user);
-            if (!userData) return null;
+          const periodData = userData.top_genres.find(
+            (p) => p.label === period
+          );
 
-            const periodData = userData.top_genres.find(
-              (p) => p.label === period
-            ); // Changement ici pour correspondre à la période dynamique
+          if (!periodData) return acc;
 
-            if (!periodData) return null;
+          const totalListeningTime = d3.sum(
+            periodData.ranking,
+            (g) => g["Listening Time"]
+          );
 
-            const totalListeningTime = d3.sum(
-              periodData.ranking,
-              (g) => g["Listening Time"]
-            );
+          if (!totalListeningTime) return acc;
 
-            if (!totalListeningTime) return null;
+          periodData.ranking
+            .sort((a, b) => b["Listening Time"] - a["Listening Time"])
+            .slice(0, topN)
+            .forEach((genre) => {
+              const genreName = genre.Tags;
+              const listeningTime = genre["Listening Time"];
+              const selfProportion = listeningTime / totalListeningTime;
 
-            const listeningTime = periodData.ranking.find(
-              (g) => g.Tags === genreName
-            )?.["Listening Time"];
+              if (!acc[genreName]) {
+                acc[genreName] = {
+                  average: 0,
+                  users: [],
+                };
+              }
 
-            if (!listeningTime) return null;
+              acc[genreName].average += listeningTime;
 
-            const selfProportion = listeningTime / totalListeningTime;
+              acc[genreName].users.push({
+                user_id: userData.user_id,
+                username: userData.username,
+                selfProportion,
+                genre: genreName,
+                temps: listeningTime,
+                formatedTime: formatListenTime(listeningTime),
+              });
+            });
 
-            return {
-              user_id: userData.user_id,
-              username: userData.username,
-              selfProportion,
-              genre: genreName,
-              temps: listeningTime,
-              formatedTime: formatListenTime(listeningTime),
-            };
-          })
-          .filter((d) => d !== null);
-
-        const totalTime = d3.sum(userProportions, (d) => d.temps);
-
-        const average = d3.mean(userProportions, (d) => d.temps);
-
-        const result = {
-          name: genreName,
-          average,
-          users: userProportions.map((p) => ({
-            average,
-            ...p,
-            proportion: totalTime === 0 ? 0 : p.temps / totalTime,
-          })),
-        };
-
-        return result;
-      }),
-    [combinedGenres, selectedUsers, period]
-  );
+          return acc;
+        },
+        {} as Record<
+          string,
+          {
+            average: number;
+            users: {
+              user_id: string;
+              username: string;
+              selfProportion: number;
+              genre: string;
+              temps: number;
+              formatedTime: string;
+            }[];
+          }
+        >
+      )
+    ).map(([name, { average, users }]) => ({
+      name,
+      average,
+      users: users.map((u) => ({
+        ...u,
+        average,
+        proportion: u.temps / average,
+      })),
+      x: 0,
+      y: 0,
+    }));
+  }, [selectedUsers, topN, period]);
 
   useEffect(() => {
-    //clear the chart
     d3.select(container.current).select(".chart").selectAll("*").remove();
 
     const svg = d3
@@ -135,16 +131,18 @@ export default function Bulle({ zoomed }: BulleProps) {
       .force("y", d3.forceY(height / 2).strength(0.05))
       .force(
         "collide",
-        d3.forceCollide((d) => radiusScale(d.average) + 5)
+        d3.forceCollide(({ average }) => radiusScale(average) + 5)
       )
       .on("tick", ticked);
 
-    const pie = d3.pie().value((d) => d.proportion);
+    const pie = d3
+      .pie<(typeof bubbles)[number]["users"][number]>()
+      .value(({ proportion }) => proportion);
 
     const arc = d3
-      .arc()
+      .arc<ReturnType<typeof pie>[number]>()
       .innerRadius(0)
-      .outerRadius((d) => radiusScale(d.data.average));
+      .outerRadius(({ data: { average } }) => radiusScale(average));
 
     const zoomGroup = svg.append("g").attr("class", "zoom-group");
 
@@ -153,8 +151,8 @@ export default function Bulle({ zoomed }: BulleProps) {
       .data(bubbles)
       .enter()
       .append("g")
-      .attr("data-name", (d) => d.name)
-      .on("mouseover", function (event, d) {
+      .attr("data-name", ({ name }) => name)
+      .on("mouseover", function (_, { users }) {
         d3.select(this).selectAll("path").style("scale", 1.1);
         tooltip
           .html(
@@ -170,7 +168,7 @@ export default function Bulle({ zoomed }: BulleProps) {
           </tr>
               </thead>
               <tbody>
-          ${d.users
+          ${users
             .map(
               ({
                 formatedTime,
@@ -212,24 +210,18 @@ export default function Bulle({ zoomed }: BulleProps) {
         d3.select(this).selectAll("path").style("scale", 1);
       });
 
-    // Mise à jour de la création des chemins (paths)
     nodes
       .selectAll("path")
-      .data((d) => pie(d.users))
+      .data(({ users }) => pie(users))
       .enter()
       .append("path")
-      .attr("data-user", (d) => d.data.user_id)
+      .attr("data-user", ({ data: { user_id } }) => user_id)
       .attr("d", arc)
-      .attr("fill", (d) => colors[d.data.user_id])
+      .attr("fill", ({ data: { user_id } }) => colors[user_id])
       .attr("stroke", "#fff")
       .attr("stroke-width", 1)
       .style("cursor", "pointer")
       .style("transition", ".1s");
-    // .on("click", function (event, d) {
-    //   // const targetPage = `music-genre.html?user=${d.data.user}&genre=${d.data.genre}`;
-    //   // window.location.href = targetPage;
-    //   //TODO:
-    // });
 
     nodes
       .append("text")
@@ -243,11 +235,11 @@ export default function Bulle({ zoomed }: BulleProps) {
       .style("fill", "#FFF");
 
     function ticked() {
-      nodes.attr("transform", (d) => `translate(${d.x},${d.y})`);
+      nodes.attr("transform", ({ x, y }) => `translate(${x},${y})`);
     }
 
     const zoom = d3
-      .zoom()
+      .zoom<SVGSVGElement, unknown>()
       .scaleExtent([0.5, 2]) // Limiter les niveaux de zoom
       .translateExtent([
         [-width / 2, -height / 2],
@@ -258,16 +250,7 @@ export default function Bulle({ zoomed }: BulleProps) {
       });
 
     svg.call(zoom);
-  }, [
-    selectedUsers,
-    period,
-    topN,
-    container,
-    combinedGenres.length,
-    bubbles,
-    width,
-    height,
-  ]);
+  }, [selectedUsers, period, topN, container, bubbles, width, height]);
 
   return (
     <Grid2
