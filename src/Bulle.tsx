@@ -72,39 +72,38 @@ export default function Bulle({ zoomed }: BulleProps) {
               (g) => g["Listening Time"]
             );
 
-            const genreData = periodData.ranking.find(
-              (g) => g.Tags === genreName
-            ) || {
-              ListeningTime: 0,
-            };
+            if (!totalListeningTime) return null;
 
-            const proportion =
-              totalListeningTime === 0 || isNaN(genreData["Listening Time"])
-                ? 0
-                : genreData["Listening Time"] / totalListeningTime;
+            const listeningTime = periodData.ranking.find(
+              (g) => g.Tags === genreName
+            )?.["Listening Time"];
+
+            if (!listeningTime) return null;
+
+            const selfProportion = listeningTime / totalListeningTime;
 
             return {
               user_id: userData.user_id,
               username: userData.username,
-              proportion,
+              selfProportion,
               genre: genreName,
-              temps: genreData["Listening Time"],
-              formatedTime: formatListenTime(genreData["Listening Time"]),
+              temps: listeningTime,
+              formatedTime: formatListenTime(listeningTime),
             };
           })
           .filter((d) => d !== null);
 
-        const average = d3.mean(userProportions, (d) => d.proportion);
+        const totalTime = d3.sum(userProportions, (d) => d.temps);
 
-        const totalProportion = d3.sum(userProportions, (d) => d.proportion);
+        const average = d3.mean(userProportions, (d) => d.temps);
 
         const result = {
           name: genreName,
-          average: average,
-          proportions: userProportions.map((p) => ({
+          average,
+          users: userProportions.map((p) => ({
+            average,
             ...p,
-            proportion:
-              totalProportion === 0 ? 0 : p.proportion / totalProportion,
+            proportion: totalTime === 0 ? 0 : p.temps / totalTime,
           })),
         };
 
@@ -128,7 +127,7 @@ export default function Bulle({ zoomed }: BulleProps) {
 
     const radiusScale = d3
       .scaleSqrt()
-      .domain([0, d3.max(bubbles, (d) => d.average)])
+      .domain([0, d3.max(bubbles, (d) => d.average)!])
       .range([10, 100]);
 
     d3.forceSimulation(bubbles)
@@ -141,6 +140,7 @@ export default function Bulle({ zoomed }: BulleProps) {
       .on("tick", ticked);
 
     const pie = d3.pie().value((d) => d.proportion);
+
     const arc = d3
       .arc()
       .innerRadius(0)
@@ -148,67 +148,58 @@ export default function Bulle({ zoomed }: BulleProps) {
 
     const zoomGroup = svg.append("g").attr("class", "zoom-group");
 
-    const nodes = zoomGroup.selectAll("g").data(bubbles).enter().append("g");
-
-    // Mise à jour de la création des chemins (paths)
-    nodes
-      .selectAll("path")
-      .data((d) => {
-        // Calcule les proportions basées sur `Listening Time`
-        const totalListeningTime = d3.sum(d.proportions, (p) => p.temps);
-        return pie(
-          d.proportions.map((p) => ({
-            ...p,
-            proportion:
-              totalListeningTime === 0 ? 0 : p.temps / totalListeningTime,
-            average: d.average,
-          }))
-        );
-      })
+    const nodes = zoomGroup
+      .selectAll("g")
+      .data(bubbles)
       .enter()
-      .append("path")
-      .attr("d", arc)
-      .attr("fill", (d) => colors[d.data.user_id])
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 1)
-      .style("cursor", "pointer")
-      .style("transition", ".1s")
+      .append("g")
+      .attr("data-name", (d) => d.name)
       .on("mouseover", function (event, d) {
-        d3.select(this).style("scale", 1.1);
-        const userData = data.users.find((u) => u.user_id === d.data.user_id);
-
-        if (!userData) return;
-
-        const periodData = userData.top_genres.find((p) => p.label === period);
-
-        if (!periodData) return;
-
-        const genre = periodData.ranking.find((g) => g.Tags === d.data.genre);
-
-        const totalListeningTime = d3.sum(
-          periodData.ranking,
-          (g) => g["Listening Time"]
-        );
-
-        const realProportion = genre
-          ? ((genre["Listening Time"] / totalListeningTime) * 100).toFixed(1)
-          : 0;
-
+        d3.select(this).selectAll("path").style("scale", 1.1);
+        console.log(d);
         tooltip
           .html(
-            `<div style="display: flex; align-items: center;">
-                  <div style="width: 10px; height: 10px; background-color: ${
-                    colors[d.data.user_id]
-                  }; margin-right: 5px; border: 1px solid #000;"></div>
-                  <strong>${d.data.username}</strong><br>
-                </div>
-                <strong>Genre:</strong> ${d.data.genre}<br>
-                <strong>Temps:</strong> ${d.data.formatedTime}<br>
-                <strong>Self Proportion:</strong> ${realProportion}%<br>
-                <strong>Diagram Proportion:</strong>  ${(
-                  d.data.proportion * 100
-                ).toFixed(1)}%
-                  `
+            `
+            <table>
+              <thead>
+          <tr>
+            <th style="padding: 0 5px;"></th>
+            <th style="padding: 0 5px;">Utilisateur</th>
+            <th style="padding: 0 5px;">Temps</th>
+            <th style="padding: 0 5px;">Self Proportion</th>
+            <th style="padding: 0 5px;">Diagram Proportion</th>
+          </tr>
+              </thead>
+              <tbody>
+          ${d.users
+            .map(
+              ({
+                formatedTime,
+                user_id,
+                username,
+                proportion,
+                selfProportion,
+              }) => `
+              <tr>
+                <td style="padding: 0 5px;">
+            <div style="width: 10px; height: 10px; background-color: ${
+              colors[user_id]
+            }; border: 1px solid #000;"></div>
+                </td>
+                <td style="padding: 0 5px;">${username}</td>
+                <td style="padding: 0 5px;">${formatedTime}</td>
+                <td style="padding: 0 5px;">${(selfProportion * 100).toFixed(
+                  1
+                )}%</td>
+                <td style="padding: 0 5px;">${(proportion * 100).toFixed(
+                  1
+                )}%</td>
+              </tr>`
+            )
+            .join("")}
+              </tbody>
+            </table>
+            `
           )
           .style("visibility", "visible");
       })
@@ -219,21 +210,37 @@ export default function Bulle({ zoomed }: BulleProps) {
       })
       .on("mouseout", function () {
         tooltip.style("visibility", "hidden");
-        d3.select(this).style("scale", 1);
-      })
-      .on("click", function (event, d) {
-        // const targetPage = `music-genre.html?user=${d.data.user}&genre=${d.data.genre}`;
-        // window.location.href = targetPage;
-        //TODO:
+        d3.select(this).selectAll("path").style("scale", 1);
       });
+
+    // Mise à jour de la création des chemins (paths)
+    nodes
+      .selectAll("path")
+      .data((d) => pie(d.users))
+      .enter()
+      .append("path")
+      .attr("data-user", (d) => d.data.user_id)
+      .attr("d", arc)
+      .attr("fill", (d) => colors[d.data.user_id])
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 1)
+      .style("cursor", "pointer")
+      .style("transition", ".1s");
+    // .on("click", function (event, d) {
+    //   // const targetPage = `music-genre.html?user=${d.data.user}&genre=${d.data.genre}`;
+    //   // window.location.href = targetPage;
+    //   //TODO:
+    // });
 
     nodes
       .append("text")
       .attr("text-anchor", "middle")
       .attr("dy", ".3em")
       .text((d) => d.name)
-      .style("font-size", "18px")
+      .style("font-size", "12px")
       .style("font-weight", "bold")
+      .style("overflow", "hidden")
+      .style("text-overflow", "ellipsis")
       .style("fill", "#FFF");
 
     function ticked() {
