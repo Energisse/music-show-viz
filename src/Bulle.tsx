@@ -115,8 +115,8 @@ export default function Bulle({ zoomed }: BulleProps) {
       .range([10, 100]);
 
     d3.forceSimulation(bubbles)
-      .force("x", d3.forceX(width / 2).strength(0.05))
-      .force("y", d3.forceY(height / 2).strength(0.05))
+      .force("x", d3.forceX(width / 2).strength(0.02))
+      .force("y", d3.forceY(height / 2).strength(0.02))
       .force(
         "collide",
         d3.forceCollide(({ average }) => radiusScale(average) + 5)
@@ -139,13 +139,16 @@ export default function Bulle({ zoomed }: BulleProps) {
       .data(bubbles)
       .join("g")
       .attr("data-name", ({ name }) => name)
-      .on("mouseover", function (_, { users }) {
+      .on("mouseover", function (_, { name, users }) {
         d3.select(this).selectAll("path").style("scale", 1.1);
         tooltip
           .html(
             `
             <table>
               <thead>
+              <tr>
+              <th colspan="5" style="padding: 0 5px; text-align: center;">${name}</th>
+              </tr>
           <tr>
             <th style="padding: 0 5px;"></th>
             <th style="padding: 0 5px;">Utilisateur</th>
@@ -218,7 +221,20 @@ export default function Bulle({ zoomed }: BulleProps) {
       .style("font-weight", "bold")
       .style("overflow", "hidden")
       .style("text-overflow", "ellipsis")
-      .style("fill", "#FFF");
+      .style("fill", "#FFF")
+      //Reduit la taille du texte si il est trop grand
+      .each(function () {
+        //tant que la largeur du texte est plus grande que la hauteur(=largeur mais contrairement a la largeur la taille du texte ne l'affecte pas) de son parent
+        while (
+          this.parentNode &&
+          this.getBBox().width > this.parentNode.getBBox().height
+        ) {
+          d3.select(this).style(
+            "font-size",
+            +d3.select(this).style("font-size").replace("px", "") - 1 + "px"
+          );
+        }
+      });
 
     function ticked() {
       nodes.attr("transform", ({ x, y }) => `translate(${x},${y})`);
@@ -226,7 +242,7 @@ export default function Bulle({ zoomed }: BulleProps) {
 
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
-      .scaleExtent([0.5, 2]) // Limiter les niveaux de zoom
+      .scaleExtent([0.5, 4]) // Limiter les niveaux de zoom
       .translateExtent([
         [-width / 2, -height / 2],
         [width * 1.5, height * 1.5],
