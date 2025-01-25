@@ -33,23 +33,25 @@ export default function Camembert({ zoomed }: CamembertProps) {
         .map(({ top_artists, user_id, username }) => ({
           user_id: user_id,
           username: username,
-          top_artists: top_artists
-            .find(({ label }) => label === period)
-            ?.ranking.slice(0, topN)
-            .map(({ list, ...rest }) => ({
-              ...rest,
-              list: list.sort(
-                (a, b) => b["Listening Time"] - a["Listening Time"]
-              ),
-            })),
+          top_artists:
+            top_artists
+              .find(({ label }) => label === period)
+              ?.ranking.slice(0, topN)
+              .map(({ list, ...rest }) => ({
+                ...rest,
+                list: list.sort(
+                  (a, b) => b["Listening Time"] - a["Listening Time"]
+                ),
+              })) || [],
         })),
     [period, selectedUsers, topN]
   );
 
   const combinedArtistes = useMemo(() => {
-    const maxArtists = d3.max(filteredData, (user) =>
-      d3.max(user.top_artists, (artist) => artist["Listening Time"])
-    );
+    const maxArtists =
+      d3.max(filteredData, (user) =>
+        d3.max(user.top_artists, (artist) => artist["Listening Time"])
+      ) || 0;
 
     return filteredData
       .map((data) => {
@@ -74,12 +76,14 @@ export default function Camembert({ zoomed }: CamembertProps) {
           username: data.username,
           radius:
             radiusScale(
-              d3.max(data.top_artists, (artist) => artist["Listening Time"])
+              d3.max(data.top_artists, (artist) => artist["Listening Time"]) ||
+                0
             ) +
             innerPadding +
             padding *
               Math.min(
-                d3.max(data.top_artists, (artist) => artist.list.length) - 1,
+                (d3.max(data.top_artists, (artist) => artist.list.length) ||
+                  0) - 1,
                 maxSongs + 1
               ),
           artists: data.top_artists.map((artist) => {
@@ -175,11 +179,11 @@ export default function Camembert({ zoomed }: CamembertProps) {
         ({ endAngle, startAngle, songs }) =>
           `rotate(${
             (((endAngle + startAngle) / 2) * 180) / Math.PI - 90
-          }deg) translate(${songs.at(-1).outerRadius + padding}px, 0px)`
+          }deg) translate(${songs.at(-1)!.outerRadius + padding}px, 0px)`
       )
       .append("text")
       .attr("class", "artist-name")
-      .attr("data-start-radius", ({ songs }) => songs.at(-1).outerRadius)
+      .attr("data-start-radius", ({ songs }) => songs.at(-1)!.outerRadius)
       .text((d) => d.artist)
       .style("text-anchor", ({ endAngle, startAngle }) =>
         ((((endAngle + startAngle) / 2) * 180) / Math.PI) % 360 > 180
@@ -211,50 +215,67 @@ export default function Camembert({ zoomed }: CamembertProps) {
           ...artist,
         });
       })
-      .on("mouseover", (event, d) => {
-        tooltip
-          .html(
-            `<div style="display: flex; align-items: center;">
+      .on(
+        "mouseover",
+        (
+          event,
+          {
+            username,
+            user_id,
+            artist,
+            "Song Title": songTitle,
+            formatedListens,
+            percentageArtist,
+            percentage,
+            innerRadius,
+            outerRadius,
+            endAngle,
+            startAngle,
+          }
+        ) => {
+          tooltip
+            .html(
+              `<div style="display: flex; align-items: center;">
                   <div style="width: 10px; height: 10px; background-color: ${
-                    colors[d.user_id]
+                    colors[user_id]
                   }; margin-right: 5px; border: 1px solid #000;"></div>
-                  <strong>${d.username}</strong><br>
+                  <strong>${username}</strong><br>
                 </div>
-                <strong>Écoutes:</strong> ${d.formatedListens}<br>
-                <strong>Pourcentage artiste:</strong> ${d.percentageArtist.toFixed(
+                <strong>Écoutes:</strong> ${formatedListens}<br>
+                <strong>Pourcentage artiste:</strong> ${percentageArtist.toFixed(
                   2
                 )}%<br>
-                <strong>Pourcentage total: </strong> ${d.percentage.toFixed(
+                <strong>Pourcentage total: </strong> ${percentage.toFixed(
                   2
                 )}%<br>
-                <strong>Artiste:</strong> ${d.artist}<br>
-                <strong>Titre:</strong> ${d["Song Title"]}<br>
+                <strong>Artiste:</strong> ${artist}<br>
+                <strong>Titre:</strong> ${songTitle}<br>
                   `
-          )
-          .style("visibility", "visible");
+            )
+            .style("visibility", "visible");
 
-        d3.select(event.target).attr("d", (artist) => {
-          return d3.arc()({
-            ...artist,
-            innerRadius: Math.max(artist.innerRadius - 2, 0),
-            outerRadius: artist.outerRadius + 2,
-            startAngle: artist.startAngle - 0.05,
-            endAngle: artist.endAngle + 0.05,
+          d3.select(event.target).attr("d", () => {
+            return d3.arc()({
+              innerRadius: Math.max(innerRadius - 2, 0),
+              outerRadius: outerRadius + 2,
+              startAngle: startAngle - 0.05,
+              endAngle: endAngle + 0.05,
+            });
           });
-        });
-      })
+        }
+      )
       .on("mousemove", function (event) {
         tooltip
           .style("left", `${event.pageX + 10}px`)
           .style("top", `${event.pageY + 10}px`);
       })
-      .on("mouseout", (event) => {
+      .on("mouseout", (event, data) => {
         tooltip.style("visibility", "hidden");
-        d3.select(event.target).attr("d", (artist) => {
-          return d3.arc()({
-            ...artist,
-          });
-        });
+        d3.select(event.target).attr("d", () =>
+          d3.arc()({
+            ...data,
+          })
+        );
       });
 
     d3.forceSimulation(combinedArtistes)
@@ -284,7 +305,7 @@ export default function Camembert({ zoomed }: CamembertProps) {
     }
 
     const zoom = d3
-      .zoom()
+      .zoom<SVGSVGElement, unknown>()
       .scaleExtent([0.5, 100]) // Limiter les niveaux de zoom
 
       .on("zoom", (event) => {
