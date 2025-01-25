@@ -27,7 +27,7 @@ export default function BarGroupe() {
 
   return (
     <Grid2 container spacing={2} size={12} justifyContent={"center"}>
-      <Typography variant="h4" paddingBottom={2}>
+      <Typography variant="h4" paddingBottom={2} textAlign={"center"}>
         {title}
       </Typography>
       <Grid2 size={12} p={2} component={Paper}>

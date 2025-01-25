@@ -110,7 +110,9 @@ export default function Bar({ visualisation }: BarProps) {
           year.split("-")[0] !== array[index - 1].split("-")[0]
         )
           selectPeriods.push(
-            <ListSubheader> {year.split("-")[0]} </ListSubheader>
+            <ListSubheader key={year.split("-")[0]}>
+              {year.split("-")[0]}
+            </ListSubheader>
           );
 
         selectPeriods.push(
